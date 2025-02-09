@@ -1,0 +1,303 @@
+---
+const currentPath = Astro.url.pathname;
+const links = [
+    { path: '/', label: 'Home' },
+    { path: '/portfolio', label: 'UX Design' },
+    { path: '/writing', label: 'Writing' },    // Changed from '/blog'
+    { path: '/about', label: 'About Me' },
+];
+---
+
+<header>
+    <div class="container">
+        <nav>
+            <a href="/" class="logo">JS</a>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+            <ul class="nav-links">
+                {links.map(({ path, label }) => (
+                    <li>
+                        <a 
+                            href={path} 
+                            class:list={['nav-link', { active: currentPath === path }]}
+                        >
+                            {label}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<style>
+    header {
+        background: rgba(242, 240, 236, 0.8);  /* Match the bg color */
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        height: 5rem;
+        width: 100%;
+        z-index: 100;
+    }
+
+    .container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 var(--space-md);
+        height: 100%;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+    }
+
+    .logo {
+        font-family: var(--font-display);
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--color-fg);
+        position: relative;
+    }
+
+    .logo::after {
+        content: '';
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: var(--color-accent);
+        border-radius: 50%;
+        right: -8px;
+        top: 2px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: var(--space-md);
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-link {
+        color: var(--color-muted);
+        font-weight: 500;
+        position: relative;
+        padding: 0.5em 0;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--gradient-bold);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s var(--ease-out-spring);
+    }
+
+    .nav-link:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+
+    .nav-link:hover {
+        color: var(--color-fg);
+    }
+
+    .nav-link.active {
+        color: var(--color-accent);
+    }
+
+    .active::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: var(--color-accent);
+        margin-top: 4px;
+        border-radius: 2px;
+    }
+
+    @media (max-width: 768px) {
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4rem;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 100%;
+            padding: 0 var(--space-md);
+        }
+
+        .nav-links {
+            position: fixed;
+            inset: 0;
+            top: 4rem; /* Match header height */
+            background: var(--color-bg);
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-top: var(--space-xl);
+            align-items: center;
+            gap: var(--space-lg);
+            transform: translateX(100%);
+            transition: transform 0.4s var(--ease-out-spring);
+            z-index: 999;
+        }
+
+        .nav-links.active {
+            transform: translateX(0);
+        }
+
+        .nav-link {
+            font-size: 1.25rem;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.3s var(--ease-out-spring);
+        }
+
+        .nav-links.active .nav-link {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: calc(var(--index) * 0.1s);
+        }
+
+        .menu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .hamburger {
+            position: relative;
+            width: 24px;
+            height: 20px;
+        }
+
+        .hamburger span {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--color-fg);
+            transition: all 0.3s var(--ease-out-spring);
+        }
+
+        .hamburger span:first-child { top: 0; }
+        .hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+        .hamburger span:last-child { bottom: 0; }
+
+        .menu-toggle.active .hamburger span:first-child {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .menu-toggle.active .hamburger span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active .hamburger span:last-child {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+    }
+
+    .menu-toggle {
+        display: none;
+        position: relative;
+        width: 24px;
+        height: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .menu-toggle span {
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background: var(--color-fg);
+        transition: all 0.3s var(--ease-out-spring);
+    }
+
+    .menu-toggle span:first-child { top: 6px; }
+    .menu-toggle span:nth-child(2) { top: 12px; }
+    .menu-toggle span:last-child { top: 18px; }
+
+    .menu-toggle.active span:first-child {
+        transform: rotate(45deg) translate(4px, 4px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active span:last-child {
+        transform: rotate(-45deg) translate(4px, -4px);
+    }
+
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+    }
+</style>
+
+<script>
+    const menuToggle = document.querySelector('.menu-toggle') as HTMLButtonElement;
+    const navLinks = document.querySelector('.nav-links') as HTMLElement;
+    const links = document.querySelectorAll('.nav-link');
+
+    // Add index for staggered animation
+    links.forEach((link, index) => {
+        (link as HTMLElement).style.setProperty('--index', index.toString());
+    });
+
+    // Toggle menu
+    menuToggle?.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        navLinks?.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+    });
+
+    // Close menu when clicking links
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        });
+    });
+
+    // Close menu on resize if open
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && navLinks?.classList.contains('active')) {
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+    });
+</script>

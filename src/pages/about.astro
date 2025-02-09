@@ -1,0 +1,193 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const skills = [
+    { category: "Research", items: ["User Research", "Usability Testing", "Data Analysis", "Journey Mapping"] },
+    { category: "Design", items: ["UI Design", "Design Systems", "Prototyping", "Accessibility"] },
+    { category: "Strategy", items: ["Product Strategy", "Design Thinking", "Workshop Facilitation", "Stakeholder Management"] }
+];
+
+const experience = [
+    {
+        role: "Senior Product Designer",
+        company: "Company Name",
+        period: "2022 - Present",
+        description: "Leading design initiatives and mentoring team members."
+    },
+    // Add more experiences...
+];
+---
+
+<Layout>
+    <div class="about-container">
+        <header class="portfolio-header">
+            <div class="header-content">
+                <h1 class="section-title">About Me</h1>
+                <div class="category-tags">
+                    <span class="tag active">Background</span>
+                    <span class="tag">Experience</span>
+                    <span class="tag">Skills</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="content-grid">
+            <section class="intro-section">
+                <div class="profile-area">
+                    <img src="/profile.jpg" alt="Johanna Sneed" class="profile-image" />
+                    <div class="social-links">
+                        <a href="#" class="social-link">LinkedIn</a>
+                        <a href="#" class="social-link">Twitter</a>
+                        <a href="#" class="social-link">Email</a>
+                    </div>
+                </div>
+                <div class="bio-content">
+                    <h2>Hi, I'm Johanna</h2>
+                    <p class="bio-text">
+                        A product designer focused on creating intuitive and impactful digital experiences. 
+                        With over 8 years of experience in UX design and research, I help companies build 
+                        products that users love.
+                    </p>
+                </div>
+            </section>
+
+            <section class="skills-section">
+                <h2>Skills & Expertise</h2>
+                <div class="skills-grid">
+                    {skills.map(({ category, items }) => (
+                        <div class="skill-category">
+                            <h3>{category}</h3>
+                            <ul>
+                                {items.map(item => <li>{item}</li>)}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            <section class="experience-section">
+                <h2>Experience</h2>
+                <div class="timeline">
+                    {experience.map(({ role, company, period, description }) => (
+                        <div class="timeline-item">
+                            <div class="timeline-meta">
+                                <span class="period">{period}</span>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>{role}</h3>
+                                <h4>{company}</h4>
+                                <p>{description}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .about-container {
+        padding-top: 8rem;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding-inline: var(--space-md);
+    }
+
+    .portfolio-header {
+        margin-bottom: var(--space-xl);
+    }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding-bottom: var(--space-lg);
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .section-title {
+        font-family: var(--font-special);
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        line-height: 1;
+        margin: 0;
+    }
+
+    .content-grid {
+        display: grid;
+        gap: var(--space-xl);
+    }
+
+    .intro-section {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: var(--space-xl);
+        align-items: start;
+    }
+
+    .profile-image {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border-radius: var(--curve-sm);
+    }
+
+    .social-links {
+        margin-top: var(--space-md);
+        display: flex;
+        gap: var(--space-sm);
+    }
+
+    .social-link {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
+    }
+
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: var(--space-xl);
+    }
+
+    .skill-category h3 {
+        font-family: var(--font-special);
+        font-size: 1.5rem;
+        margin-bottom: var(--space-md);
+    }
+
+    .skill-category ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .skill-category li {
+        color: var(--color-muted);
+        margin-bottom: var(--space-xs);
+    }
+
+    .timeline {
+        display: grid;
+        gap: var(--space-xl);
+    }
+
+    .timeline-item {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: var(--space-lg);
+    }
+
+    .period {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
+    }
+
+    @media (max-width: 768px) {
+        .intro-section,
+        .timeline-item {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

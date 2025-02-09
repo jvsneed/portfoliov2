@@ -1,0 +1,253 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/interactions.css';
+
+// Define categories for filtering
+const categories = ["All", "Research", "Design", "Strategy"];
+
+const projects = [
+    {
+        title: "Project One",
+        category: "UX Research",
+        year: "2024",
+        description: "Mixed-methods research study",
+        image: "/tatemodern-thumbnail2.png"
+    },
+    {
+        title: "Project Two",
+        category: "Design Strategy",
+        year: "2023",
+        description: "Product strategy & vision",
+        image: "/zocdoc-thumbnail.png"
+    },
+    // Add more projects as needed
+];
+---
+
+<Layout>
+    <div class="portfolio-container">
+        <header class="portfolio-header">
+            <div class="header-content">
+                <h1 class="section-title">Selected Work</h1>
+                <div class="category-tags">
+                    {categories.map(category => (
+                        <span class="tag" class:list={[{ active: category === 'All' }]}>
+                            {category}
+                        </span>
+                    ))}
+                </div>
+            </div>
+        </header>
+
+        <div class="projects-grid">
+            {projects.map((project) => (
+                <article class="project-card hover-lift">
+                    <div class="project-image">
+                        <img src={project.image} alt={project.title} />
+                        <div class="image-overlay"></div>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-meta">
+                            <span class="category">{project.category}</span>
+                            <span class="year">{project.year}</span>
+                        </div>
+                        <h2 class="project-title">{project.title}</h2>
+                        <p class="project-description">{project.description}</p>
+                    </div>
+                </article>
+            ))}
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .portfolio-container {
+        padding-top: 8rem;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding-inline: var(--space-md);
+    }
+
+    .portfolio-header {
+        margin-bottom: var(--space-xl);
+    }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        padding-bottom: var(--space-lg);
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .section-title {
+        font-family: var(--font-special);
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        line-height: 1;
+        margin: 0;
+    }
+
+    .category-tags {
+        display: flex;
+        gap: var(--space-sm);
+        padding-bottom: 0.5rem;
+    }
+
+    .tag {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
+        padding: 0.5rem 1rem;
+        border-radius: 2px;
+        cursor: pointer;
+        transition: all 0.3s var(--ease-out-spring);
+        border: 1px solid var(--color-border);
+    }
+
+    .tag:hover {
+        color: var(--color-fg);
+        background: var(--color-surface);
+    }
+
+    .tag.active {
+        background: var(--color-fg);
+        color: var(--color-bg);
+        border-color: var(--color-fg);
+    }
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: var(--space-xl);
+        padding: var(--space-xl) 0;
+    }
+
+    .project-card {
+        position: relative;
+        transition: transform 0.3s var(--ease-out-spring);
+    }
+
+    .project-card:hover {
+        transform: translateY(-8px);
+    }
+
+    .project-image {
+        position: relative;
+        aspect-ratio: 16/9;
+        overflow: hidden;
+        border-radius: var(--curve-sm);
+        margin-bottom: var(--space-md);
+    }
+
+    .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .image-overlay {
+        position: absolute;
+        inset: 0;
+        background: var(--color-fg);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .project-card:hover .image-overlay {
+        opacity: 0.1;
+    }
+
+    .project-meta {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: var(--space-xs);
+    }
+
+    .category {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
+    }
+
+    .year {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
+    }
+
+    .project-title {
+        font-family: var(--font-special);
+        font-size: 1.5rem;
+        margin: 0;
+        margin-bottom: var(--space-xs);
+    }
+
+    .project-description {
+        color: var(--color-muted);
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .portfolio-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--space-md);
+        }
+
+        .category-tags {
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: var(--space-sm);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .projects-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .project-card {
+            margin-inline: calc(var(--space-md) * -1);
+            border-radius: 0;
+        }
+    }
+</style>
+
+<script>
+    import { initMagnetic } from '../scripts/magnetic';
+
+    // Add tag filtering functionality
+    const tags = document.querySelectorAll('.tag');
+    const projects = document.querySelectorAll('.project-card');
+
+    tags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            // Update active state
+            tags.forEach(t => t.classList.remove('active'));
+            tag.classList.add('active');
+
+            // Filter projects
+            const filter = tag.textContent?.trim();
+            projects.forEach(project => {
+                if (filter === 'All') {
+                    (project as HTMLElement).style.display = 'block';
+                    return;
+                }
+                
+                const projectCategory = project.querySelector('.category')?.textContent;
+                (project as HTMLElement).style.display = 
+                    projectCategory === filter ? 'block' : 'none';
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        initMagnetic();
+        
+        // Add staggered reveal animation
+        const cards = document.querySelectorAll('.project-card');
+        cards.forEach((card, index) => {
+            (card as HTMLElement).style.animationDelay = `${index * 0.1}s`;
+            card.classList.add('text-reveal');
+        });
+    });
+</script>

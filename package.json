@@ -9,6 +9,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.2.5"
+    "@motionone/dom": "^10.18.0",
+    "astro": "^5.2.5",
+    "gsap": "^3.12.7",
+    "motion": "^12.4.1",
+    "split-type": "^0.3.4"
   }
 }

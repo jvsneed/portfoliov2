@@ -1,22 +1,630 @@
+---
+import Header from '../components/Header.astro';
+import '../styles/responsive.css';
+const currentPath = Astro.url.pathname;
+const links = [
+    { path: '/', label: 'Home' },
+    { path: '/portfolio', label: 'Portfolio' },
+    { path: '/writing', label: 'Writing' },
+];
+---
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+        <script src="https://unpkg.com/split-type"></script>
+        <meta name="generator" content={Astro.generator} />
+        <title>Johanna Sneed | Digital Product Designer</title>
+    </head>
+    <body>
+        <Header />
+        <main class="main-content">
+            <slot />
+        </main>
+    </body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+<style is:global>
+    @font-face {
+        font-family: 'YourFont';
+        src: url('/fonts/YourFont-Regular.woff2') format('woff2'),
+             url('/fonts/YourFont-Regular.woff') format('woff');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'YourFont';
+        src: url('/fonts/YourFont-Bold.woff2') format('woff2'),
+             url('/fonts/YourFont-Bold.woff') format('woff');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Star Inversion';
+        src: url('/fonts/3617-star-inversion-web.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Formation';
+        src: url('/fonts/3603-formation-web.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Karrik';
+        src: url('/fonts/Karrik-Regular.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Karrik';
+        src: url('/fonts/Karrik-Italic.woff') format('woff');
+        font-weight: normal;
+        font-style: italic;
+        font-display: swap;
+    }
+
+    :root {
+        --accent: #FF3366;
+        --accent-light: #FF6B93;
+        --accent-dark: #E61E4D;
+        --accent-alt: #0066FF;
+        --bg-light: #FFFFFF;
+        --bg-dark: #0A0A0A;
+        --text-primary: #0A0A0A;
+        --text-secondary: #666666;
+        --gradient-primary: linear-gradient(135deg, var(--accent), var(--accent-light));
+        --gradient-alt: linear-gradient(135deg, var(--accent-alt), #00C2FF);
+        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.1);
+        --space-xl: clamp(4rem, 8vw, 8rem);
+        --space-lg: clamp(2rem, 4vw, 4rem);
+        --grid-max: 1400px;
+        --radius-sm: 4px;
+        --radius-md: 8px;
+        --radius-lg: 16px;
+
+        --breakpoint-sm: 640px;
+        --breakpoint-md: 768px;
+        --breakpoint-lg: 1024px;
+        --breakpoint-xl: 1280px;
+        
+        --container-padding: clamp(1rem, 5vw, 2rem);
+        --header-height: clamp(3.5rem, 10vh, 4.5rem);
+        --space-xs: clamp(0.75rem, 2vw, 1rem);
+        --space-sm: clamp(1rem, 3vw, 1.5rem);
+        --space-md: clamp(1.5rem, 5vw, 2.5rem);
+        --space-lg: clamp(2rem, 7vw, 4rem);
+        --space-xl: clamp(3rem, 10vw, 6rem);
+        
+        --font-size-sm: clamp(0.875rem, 2vw, 1rem);
+        --font-size-base: clamp(1rem, 2.5vw, 1.125rem);
+        --font-size-lg: clamp(1.25rem, 3vw, 1.5rem);
+        --font-size-xl: clamp(1.5rem, 4vw, 2rem);
+        --font-size-2xl: clamp(2rem, 5vw, 3rem);
+        --font-size-3xl: clamp(2.5rem, 6vw, 4rem);
+
+        /* Core colors */
+        --color-paper: #F5F5F5;
+        --color-ink: #14141B;
+        --color-pop: #FF3D00;
+        --color-pop-alt: #0066FF;
+        --color-accent: #FFB800;
+        
+        /* Dynamic gradients */
+        --gradient-main: linear-gradient(135deg, 
+            #FF3D00 0%, 
+            #FF8A00 100%);
+        --gradient-subtle: linear-gradient(to right,
+            var(--color-paper),
+            #FFF5EA,
+            var(--color-paper));
+        --gradient-alt: linear-gradient(135deg, 
+            #0066FF 0%, 
+            #00D1FF 100%);
+        
+        /* Shadows and effects */
+        --shadow-soft: 0 8px 40px rgba(0, 0, 0, 0.08);
+        --shadow-pop: 0 12px 32px rgba(255, 107, 78, 0.2);
+        --blur-light: blur(12px);
+        
+        /* Typography */
+        --font-display: 'Space Grotesk', sans-serif;
+        --font-body: 'Inter', sans-serif;
+        --line-height-tight: 1.1;
+        --line-height-normal: 1.6;
+        
+        /* Spacing and layout */
+        --curve-sm: 4px;
+        --curve-md: 12px;
+        --curve-lg: 24px;
+
+        /* Container sizes */
+        --container-width: min(1200px, 95%);
+        --container-padding: max(2.5rem, 5vw);
+
+        /* New Colors */
+        --color-canvas: #0F0F13;
+        --color-surface: #1A1A22;
+        --color-coral: #FF6B5C;
+        --color-peach: #FFAB9C;
+        --color-teal: #2DD4BF;
+        --color-navy: #0F172A;
+        
+        /* New Gradients */
+        --gradient-warm: linear-gradient(
+            135deg,
+            var(--color-coral) 0%,
+            var(--color-peach) 100%
+        );
+        --gradient-cool: linear-gradient(
+            135deg,
+            var(--color-teal) 0%,
+            color-mix(in srgb, var(--color-teal) 70%, white) 100%
+        );
+        
+        /* New Typography */
+        --font-display: 'Obviously', sans-serif;
+        --font-body: 'Cabinet Grotesk', sans-serif;
+        --font-mono: ui-monospace, 'SF Mono', monospace;
+        
+        /* New Animations */
+        --ease-out-soft: cubic-bezier(0.33, 1, 0.68, 1);
+        --ease-out-spring: cubic-bezier(0.33, 1.4, 0.68, 1);
+        --duration-short: 0.2s;
+        --duration-medium: 0.4s;
+        --duration-long: 0.8s;
+
+        /* New refined color system */
+        --color-bg: #FAFAFA;
+        --color-fg: #161618;
+        --color-accent: #1A5EF5;
+        --color-muted: #71717A;
+        --color-surface: #FFFFFF;
+        --color-surface-alt: #F4F4F5;
+        
+        /* New gradients */
+        --gradient-subtle: linear-gradient(
+            to bottom right,
+            rgb(26, 94, 245, 0.1),
+            rgb(26, 94, 245, 0.05)
+        );
+        
+        /* Typography */
+        --font-display: 'Fraunces', serif;
+        --font-body: 'Plus Jakarta Sans', sans-serif;
+        
+        /* Spacing */
+        --space-unit: 0.5rem;
+        --space-xs: calc(var(--space-unit) * 2);
+        --space-sm: calc(var(--space-unit) * 3);
+        --space-md: calc(var(--space-unit) * 5);
+        --space-lg: calc(var(--space-unit) * 8);
+        --space-xl: calc(var(--space-unit) * 13);
+        
+        /* Misc */
+        --border-radius: 12px;
+        --max-width: 72rem;
+
+        /* New color system */
+        --color-bg: #080808;
+        --color-fg: #FFFFFF;
+        --color-accent: #FF4444;
+        --color-accent-alt: #FFB800;
+        --color-muted: #999999;
+        --color-surface: #111111;
+        --color-surface-alt: #1A1A1A;
+        
+        /* New gradient */
+        --gradient-bold: linear-gradient(
+            135deg,
+            var(--color-accent) 0%,
+            var(--color-accent-alt) 100%
+        );
+        
+        /* Typography */
+        --font-display: 'Fraunces', serif;
+        --font-body: 'Plus Jakarta Sans', sans-serif;
+
+        /* Fresh color system */
+        --color-bg: #FFFFFF;
+        --color-fg: #111111;
+        --color-accent: #FF4D00;
+        --color-accent-alt: #FF9500;
+        --color-surface: #F8F8F8;
+        --color-surface-alt: #EEEEEE;
+        --color-muted: #666666;
+        
+        /* Vibrant gradients */
+        --gradient-bold: linear-gradient(
+            135deg,
+            #FF4D00 0%,
+            #FF9500 100%
+        );
+        
+        --gradient-subtle: linear-gradient(
+            to bottom right,
+            rgba(255, 77, 0, 0.08),
+            rgba(255, 149, 0, 0.08)
+        );
+
+        /* Mouse interaction variables */
+        --cursor-size: 20px;
+        --cursor-hover-size: 40px;
+        --cursor-color: var(--color-accent);
+
+        --color-bg: #0F0F0F;
+        --color-fg: #FFFFFF;
+        --color-accent: #FF4444;
+        --color-cyan: #00FFFF;
+        --color-muted: #666666;
+
+        /* New sophisticated color palette */
+        --color-cream: #F6F3E9;
+        --color-ink: #1A1A1A;
+        --color-accent: #FF4444;
+        --color-muted: #666666;
+        --color-surface: #FFFFFF;
+        --color-surface-hover: #FAFAF8;
+        --color-border: rgba(0,0,0,0.1);
+
+        /* Typography */
+        --font-serif: 'Fraunces', serif;
+        --font-mono: 'Space Mono', monospace;
+
+        --font-custom: 'YourFont', sans-serif;
+        --font-special: 'Karrik', sans-serif;
+
+        /* Updated sophisticated color palette */
+        --color-bg: #F2F0EC;  /* Warm off-white */
+        --color-fg: #2C2C2C;  /* Soft charcoal */
+        --color-accent: #FF4444; /* Terracotta */
+        --color-muted: #666666;
+        --color-surface: #FFFFFF;
+        --color-surface-hover: #E9E6E0; /* Slightly darker than bg */
+        --color-border: rgba(0,0,0,0.08);
+        
+        /* Remove dark mode overrides since we want consistent colors */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* Keep the same colors as light mode */
+            }
+        }
+    }
+
+    /* Menu open state */
+    body.menu-open {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+    }
+
+    .main-content {
+        position: relative;
+        min-height: 100vh;
+        width: 100%;
+        transition: transform 0.3s var(--ease-out-spring);
+    }
+
+    /* Update menu open state to not hide content on desktop */
+    @media (min-width: 769px) {
+        body.menu-open .main-content {
+            transform: none;
+            pointer-events: all;
+        }
+    }
+
+    @media (max-width: 768px) {
+        body.menu-open .main-content {
+            transform: translateX(-100%);
+            pointer-events: none;
+        }
+    }
+
+    /* Custom cursor styles */
+    body {
+        cursor: none;
+        background: var(--color-cream);
+        color: var(--color-ink);
+        background: var(--color-bg);
+        color: var(--color-fg);
+    }
+
+    .cursor {
+        width: var(--cursor-size);
+        height: var(--cursor-size);
+        background: var(--cursor-color);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        opacity: 0.5;
+        mix-blend-mode: difference;
+        transition: transform 0.2s ease;
+    }
+
+    .cursor.hover {
+        transform: scale(2);
+        mix-blend-mode: difference;
+    }
+
+    /* Add hover interaction class */
+    .hover-target {
+        cursor: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --text-primary: #FFFFFF;
+            --text-secondary: #AAAAAA;
+            --bg-light: #0A0A0A;
+            --bg-dark: #111111;
+
+            --color-paper: #121212;
+            --color-ink: #FFFCF8;
+            --gradient-subtle: linear-gradient(to right,
+                var(--color-paper),
+                #1A1818,
+                var(--color-paper));
+
+            --color-bg: #161618;
+            --color-fg: #FAFAFA;
+            --color-accent: #60A5FA;
+            --color-muted: #A1A1AA;
+            --color-surface: #1E1E20;
+            --color-surface-alt: #27272A;
+        }
+    }
+
+    html {
+        font-family: 'Inter', sans-serif;
+        background: var(--bg-light);
+        color: var(--text-primary);
+        scroll-behavior: smooth;
+    }
+
+    h1, h2, h3, h4 {
+        font-family: 'Formation', sans-serif;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+    }
+
+    ::selection {
+        background: var(--accent);
+        color: white;
+    }
+
+    /* Add smooth transitions for dark mode */
+    body {
+        transition: background-color 0.3s ease, color 0.3s ease;
+        margin: 0;
+        min-height: 100vh;
+        line-height: 1.65;
+        background: var(--color-canvas);
+        color: var(--color-paper);
+        font-family: var(--font-body);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        position: relative;
+        background: var(--color-bg);
+        color: var(--color-fg);
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            radial-gradient(circle at 0% 0%, rgba(255, 61, 0, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 100% 100%, rgba(0, 102, 255, 0.05) 0%, transparent 50%);
+        opacity: 0.03;
+        z-index: -1;
+        background: 
+            radial-gradient(circle at 0% 0%, rgba(255, 77, 0, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 100% 100%, rgba(255, 149, 0, 0.05) 0%, transparent 50%);
+    }
+
+    main {
+        padding: 0;  /* Remove default padding */
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        overflow-x: hidden;
+        animation: fadeIn 0.6s var(--ease-out-spring);
+    }
+
+    @media (max-width: 768px) {
+        :root {
+            --grid-max: 100%;
+        }
+        body {
+            padding-top: 4rem; /* Match header height */
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            padding-inline: var(--space-md);
+        }
+    }
+
+    /* Hide scrollbar but keep functionality */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--text-secondary);
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    /* Typography enhancements */
+    h1, h2, h3 {
+        font-family: var(--font-display);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+    }
+
+    /* Smooth scrolling and transitions */
+    * {
+        transition: background-color 0.3s ease, 
+                    color 0.3s ease,
+                    transform 0.3s ease;
+    }
+
+    /* Selection styling */
+    ::selection {
+        background: var(--color-pop);
+        color: var(--color-paper);
+    }
+
+    .split-text {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .split-text.reveal {
+        opacity: 1;
+        transform: translateY(0);
+        transition: all var(--duration-medium) var(--ease-out-spring);
+    }
+
+    .hover-lift {
+        transition: transform var(--duration-short) var(--ease-out-spring);
+    }
+
+    .hover-lift:hover {
+        transform: translateY(-4px);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :root {
+            --duration-short: 0s;
+            --duration-medium: 0s;
+            --duration-long: 0s;
+        }
+    }
+
+    .cursor {
+        pointer-events: none;
+        position: fixed;
+        width: var(--cursor-size);
+        height: var(--cursor-size);
+        border-radius: 50%;
+        background: var(--color-accent);
+        mix-blend-mode: difference;
+        opacity: 0.5;
+        z-index: 9999;
+        transition: transform 0.3s var(--ease-out-spring);
+    }
+
+    .cursor.hover {
+        transform: scale(2);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .link-hover {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .link-hover::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s var(--ease-out-spring);
+    }
+
+    .link-hover:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
 </style>
+
+<script>
+    // Update the import to use the correct package
+    import { inView } from '@motionone/dom';
+    
+    // Type declaration for SplitType
+    declare const SplitType: any;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initialize text splitting
+        if (typeof SplitType !== 'undefined') {
+            const splitText = document.querySelectorAll('.split-text');
+            splitText.forEach(text => {
+                new SplitType(text, { types: 'words' });
+            });
+        }
+
+        // Scroll animations
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+            inView(section, ({ target }) => {
+                target.classList.add('reveal');
+            });
+        });
+
+        // Add cursor element to body
+        const cursor = document.createElement('div');
+        cursor.classList.add('cursor');
+        document.body.appendChild(cursor);
+
+        // Mouse movement handler
+        document.addEventListener('mousemove', (e) => {
+            requestAnimationFrame(() => {
+                cursor.style.left = e.clientX - cursor.offsetWidth / 2 + 'px';
+                cursor.style.top = e.clientY - cursor.offsetHeight / 2 + 'px';
+            });
+        });
+
+        // Hover effect handler
+        document.querySelectorAll('.hover-target').forEach(target => {
+            target.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            target.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // Add hover effects
+        const hoverTargets = document.querySelectorAll('a, button, .hover-target');
+        hoverTargets.forEach(target => {
+            target.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            target.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+    });
+</script>

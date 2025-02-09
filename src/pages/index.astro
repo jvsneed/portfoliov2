@@ -1,11 +1,587 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Update the blog posts import path
+const posts = await Astro.glob('./writing/*.md');
+
+// Add this to your existing imports
+const projects = [
+{
+        title: "UX Research Study",
+        category: "Research",
+        year: "2024",
+        description: "Mixed-methods research study for digital product",
+        image: "/tatemodern-thumbnail2.png"
+    },
+    {
+        title: "Design System",
+        category: "Design",
+        year: "2024",
+        description: "Mixed-methods research study for digital product",
+
+        image: "/zocdoc-thumbnail.png"
+    },
+    {
+        title: "Product Strategy",
+        category: "Strategy",
+        year: "2024",
+        description: "Mixed-methods research study for digital product",
+        image: "/tatemodern-thumbnail2.png"
+    }
+];
 ---
 
 <Layout>
-	<Welcome />
+    <div class="editorial-container">
+
+        <main class="content-area" data-section="intro">
+            <div class="intro-sequence">
+                <div class="name-block">
+                    <div class="title-wrapper">
+                        <span class="first-name split-chars">
+                         johanna sneed
+                    </span>
+                    </div>
+                    <div class="accent-bars">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                </div>
+                <div class="meta-text split-text">Usability Research / Inclusive Design / UX Leadership</div>
+
+            </div>
+        </main>
+
+        <div class="interaction-layer">
+            <div class="magnetic-area" data-strength="0.2"></div>
+            <div class="cursor-follower"></div>
+        </div>
+
+        <section class="portfolio-preview" data-section="work">
+            <div class="preview-header">
+                <h2 class="section-title">Selected Work</h2>
+                <div class="preview-nav">
+                    <div class="nav-line"></div>
+                    <a href="/portfolio" class="view-all">View Portfolio →</a>
+                </div>
+            </div>
+            
+            <div class="featured-projects">
+                {projects.slice(0, 3).map((project, index) => (
+                    <article class="project-item" data-index={index}>
+                        <div class="project-content">
+                            <div class="project-meta">
+                                <span class="project-number">0{index + 1}</span>
+                                <span class="project-category">{project.category}</span>
+                            </div>
+                            <h3 class="project-title">{project.title}</h3>
+                            <p class="project-description">{project.description}</p>
+                        </div>
+                        <div class="project-image">
+                            <img src={project.image} alt={project.title} />
+                        </div>
+                    </article>
+                ))}
+            </div>
+        </section>
+
+        <section class="blog-preview" data-section="blog">
+            <div class="preview-header">
+                <h2 class="section-title">Latest Writing</h2>
+                <div class="preview-nav">
+                    <div class="nav-line"></div>
+                    <a href="/writing" class="view-all">View Writing →</a>
+                </div>
+            </div>
+            
+            <div class="blog-posts">
+                {posts.slice(0, 3).map((post) => (
+                    <article class="blog-card">
+                        <time class="post-date">{post.frontmatter.date}</time>
+                        <h3 class="post-title">{post.frontmatter.title}</h3>
+                        <p class="post-excerpt">{post.frontmatter.excerpt}</p>
+                        <a href={post.url} class="read-more">
+                            Read More <span>→</span>
+                        </a>
+                    </article>
+                ))}
+            </div>
+        </section>
+    </div>
 </Layout>
+
+<style>
+    .editorial-container {
+        min-height: 100vh;
+        display: block;  
+        background: var(--color-bg);
+        position: relative;
+    }
+
+
+    .content-area {
+        padding: 15vh 4rem;
+        max-width: var(--max-width);
+        margin: 0 auto;
+    }
+
+    .meta-text {
+        box-sizing: border-box;
+        font-family: var(--font-mono);
+        font-size: 1rem;
+        letter-spacing: 0.2em;
+        color: white;
+        max-width: 92.5%;
+        padding: 0 2rem;
+        background-color: var(--color-accent);
+        margin: 0 0 0 2.5rem;
+    }
+
+    .name-block {
+        position: relative;
+        margin-left: -0.5rem;
+    }
+
+    .first-name {
+        font-family: var(--font-special);
+        font-size: clamp(4rem, 12vw, 11rem);
+        margin-bottom:-1rem;
+
+    }
+
+    .accent-bars {
+        position: absolute;
+        left: 0;
+        bottom: -2rem;
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .bar {
+        height: 4px;
+        background: var(--color-accent);
+    }
+
+    .bar:nth-child(1) { width: 40%; }
+    .bar:nth-child(2) { width: 20%; }
+    .bar:nth-child(3) { width: 10%; }
+
+    @keyframes fadeUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes growBar {
+        to { transform: scaleX(1); }
+    }
+
+    @keyframes fadeIn {
+        to { opacity: 1; }
+    }
+
+    .interaction-layer {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 10;
+    }
+
+    .magnetic-area {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border: 1px solid var(--color-accent);
+        border-radius: 50%;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .cursor-follower {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        background: var(--color-accent);
+        border-radius: 50%;
+        mix-blend-mode: difference;
+        pointer-events: none;
+        opacity: 0;
+        transition: transform 0.1s ease, opacity 0.3s ease;
+    }
+
+    .first-name:hover {
+        transform: perspective(1000px) rotateX(5deg);
+        color: var(--color-accent);
+    }
+
+    .accent-bars {
+        transition: transform 0.3s var(--ease-out-spring);
+    }
+
+    .name-block:hover .accent-bars {
+        transform: translateX(20px);
+    }
+
+    .portfolio-preview {
+        padding: var(--space-xl) var(--space-lg);
+        margin: 0 auto;
+        max-width: var(--max-width);
+    }
+
+    .preview-header {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: var(--space-lg);
+        margin-bottom: var(--space-xl);
+    }
+
+    .preview-nav {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+    }
+
+    .nav-line {
+        width: 60px;
+        height: 1px;
+        background: var(--color-accent);
+    }
+
+    .featured-projects {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-lg);
+    }
+
+    .project-item {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: center;
+        padding: var(--space-lg);
+        position: relative;
+        border: 1px solid var(--color-border);
+        background: transparent;
+        border-radius: var(--curve-sm);
+        transition: all 0.4s var(--ease-out-spring);
+        transition: all 0.4s var(--ease-out-spring),
+                    border-color 0.3s ease;
+    }
+
+    .project-item:hover {
+        border-color: var(--color-accent);
+        transform: translateX(var(--space-sm));
+    }
+
+    .project-content,
+    .project-image {
+        position: relative;
+        z-index: 1;
+    }
+
+    .project-meta {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+        margin-bottom: var(--space-md);
+    }
+
+    .project-number {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
+    }
+
+    .project-category {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
+    }
+
+    .project-title {
+        font-family: var(--font-special);
+        font-size: clamp(1.5rem, 3vw, 2.5rem);
+        margin: 0;
+        margin-bottom: var(--space-sm);
+    }
+
+    .project-description {
+        color: var(--color-muted);
+        margin: 0;
+        max-width: 40ch;
+    }
+
+    .project-image {
+        position: relative;
+        border-radius: var(--curve-sm);
+        overflow: hidden;
+    }
+
+    .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s var(--ease-out-spring);
+    }
+
+    .project-item:hover .project-image img {
+        transform: scale(1.05);
+    }
+
+
+    @media (max-width: 768px) {
+        .project-item,
+        .project-item:nth-child(even) {
+            grid-template-columns: 1fr;
+            padding: var(--space-md);
+        }
+
+        .project-item:nth-child(even) .project-content {
+            order: 1;
+        }
+    }
+
+    .view-all {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: gap 0.3s var(--ease-out-spring);
+    }
+
+    .view-all:hover {
+        gap: 1rem;
+    }
+
+    .blog-preview {
+        padding: var(--space-xl) var(--space-lg);
+        margin: 0 auto;
+        max-width: var(--max-width);
+    }
+
+    .blog-posts {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--space-lg);
+    }
+
+    .blog-card {
+        padding: var(--space-lg);
+        border: 1px solid var(--color-border);
+        border-radius: var(--curve-sm);
+        transition: all 0.3s var(--ease-out-spring);
+    }
+
+    .blog-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--color-accent);
+    }
+
+    .post-date {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
+        display: block;
+        margin-bottom: var(--space-sm);
+    }
+
+    .post-title {
+        font-family: var(--font-special);
+        font-size: 1.5rem;
+        margin: 0;
+        margin-bottom: var(--space-sm);
+    }
+
+    .post-excerpt {
+        color: var(--color-muted);
+        margin: 0;
+        margin-bottom: var(--space-md);
+    }
+
+    .read-more {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var (--color-accent);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: fit-content;
+    }
+
+    .read-more span {
+        transition: transform 0.3s var (--ease-out-spring);
+    }
+
+    .read-more:hover span {
+        transform: translateX(4px);
+    }
+
+
+
+    .first-name {
+        display: inline-block;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            animation: none !important;
+            transition: none !important;
+        }
+    }
+
+    /* Remove potentially conflicting animations */
+    .split-text,
+    .split-chars {
+        opacity: 1;
+        transform: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .split-text,
+        .split-chars,
+        .project-item,
+        .blog-card {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+        }
+    }
+</style>
+
+<script>
+    import gsap from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+    import SplitType from 'split-type';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initial hero animation - simpler version first
+        const nameBlock = document.querySelector('.first-name');
+        const metaText = document.querySelector('.meta-text');
+        const bars = document.querySelectorAll('.bar');
+
+        gsap.from(metaText, {
+            y: 30,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out"
+        });
+
+        gsap.from(nameBlock, {
+            y: 50,
+            opacity: 0,
+            duration: 1.2,
+            delay: 0.3,
+            ease: "power3.out"
+        });
+
+        gsap.from(bars, {
+            scaleX: 0,
+            duration: 1,
+            delay: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+            transformOrigin: "left"
+        });
+
+        // Project cards
+        const projectItems = document.querySelectorAll('.project-item');
+        projectItems.forEach((item, index) => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top bottom-=100",
+                    toggleActions: "play none none reverse"
+                },
+                y: 100,
+                opacity: 0,
+                duration: 1,
+                delay: index * 0.2,
+                ease: "power3.out"
+            });
+        });
+
+        // Blog cards
+        const blogCards = document.querySelectorAll('.blog-card');
+        blogCards.forEach((card, index) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top bottom-=100",
+                    toggleActions: "play none none reverse"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: index * 0.1,
+                ease: "power3.out"
+            });
+        });
+    });
+
+    // Add scroll progress indicator
+    window.addEventListener('scroll', () => {
+        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        const progressBar = document.querySelector('.scroll-progress') as HTMLElement;
+        progressBar?.style.setProperty('--scroll', `${scrollPercent}%`);
+    });
+
+    // Magnetic effect and cursor follower
+    document.addEventListener('DOMContentLoaded', () => {
+        const cursor = document.querySelector('.cursor-follower') as HTMLElement;
+        const magnetic = document.querySelector('.magnetic-area') as HTMLElement;
+        const nameBlock = document.querySelector('.name-block') as HTMLElement;
+
+        if (!cursor || !magnetic || !nameBlock) return;
+
+        document.addEventListener('mousemove', (e) => {
+            // Update cursor position
+            cursor.style.opacity = '1';
+            cursor.style.transform = `translate(${e.clientX - 4}px, ${e.clientY - 4}px)`;
+
+            // Check if mouse is near the name
+            const rect = nameBlock.getBoundingClientRect();
+            const distance = Math.hypot(
+                e.clientX - (rect.left + rect.width / 2),
+                e.clientY - (rect.top + rect.height / 2)
+            );
+
+            if (distance < 200) {
+                magnetic.style.opacity = '0.2';
+                magnetic.style.transform = `translate(${e.clientX - 50}px, ${e.clientY - 50}px)`;
+                
+                // Subtle movement of name based on mouse position
+                const moveX = (e.clientX - (rect.left + rect.width / 2)) * 0.1;
+                const moveY = (e.clientY - (rect.top + rect.height / 2)) * 0.1;
+                nameBlock.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            } else {
+                magnetic.style.opacity = '0';
+                nameBlock.style.transform = 'translate(0, 0)';
+            }
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursor.style.opacity = '0';
+            magnetic.style.opacity = '0';
+            nameBlock.style.transform = 'translate(0, 0)';
+        });
+
+        // Add hover effect for preview cards
+        document.querySelectorAll('.preview-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                if (cursor) cursor.classList.add('hover');
+            });
+            card.addEventListener('mouseleave', () => {
+                if (cursor) cursor.classList.remove('hover');
+            });
+        });
+    });
+</script>
