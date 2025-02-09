@@ -1,5 +1,6 @@
 ---
 import Header from '../components/Header.astro';
+import '../styles/global.css';  // Add this import
 import '../styles/responsive.css';
 const currentPath = Astro.url.pathname;
 const links = [
@@ -16,15 +17,15 @@ const links = [
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
         <script src="https://unpkg.com/split-type"></script>
         <meta name="generator" content={Astro.generator} />
         <title>Johanna Sneed | Digital Product Designer</title>
     </head>
     <body>
         <Header />
-        <main class="main-content">
+        <main class="main-content" role="main" id="main-content">
+            <a href="#main-content" class="skip-link">Skip to main content</a>
             <slot />
         </main>
     </body>
@@ -82,74 +83,14 @@ const links = [
     }
 
     :root {
-        --accent: #FF3366;
-        --accent-light: #FF6B93;
-        --accent-dark: #E61E4D;
-        --accent-alt: #0066FF;
-        --bg-light: #FFFFFF;
-        --bg-dark: #0A0A0A;
-        --text-primary: #0A0A0A;
-        --text-secondary: #666666;
-        --gradient-primary: linear-gradient(135deg, var(--accent), var(--accent-light));
-        --gradient-alt: linear-gradient(135deg, var(--accent-alt), #00C2FF);
-        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
-        --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.1);
-        --space-xl: clamp(4rem, 8vw, 8rem);
-        --space-lg: clamp(2rem, 4vw, 4rem);
-        --grid-max: 1400px;
-        --radius-sm: 4px;
-        --radius-md: 8px;
-        --radius-lg: 16px;
+  
 
-        --breakpoint-sm: 640px;
-        --breakpoint-md: 768px;
-        --breakpoint-lg: 1024px;
-        --breakpoint-xl: 1280px;
-        
-        --container-padding: clamp(1rem, 5vw, 2rem);
-        --header-height: clamp(3.5rem, 10vh, 4.5rem);
-        --space-xs: clamp(0.75rem, 2vw, 1rem);
-        --space-sm: clamp(1rem, 3vw, 1.5rem);
-        --space-md: clamp(1.5rem, 5vw, 2.5rem);
-        --space-lg: clamp(2rem, 7vw, 4rem);
-        --space-xl: clamp(3rem, 10vw, 6rem);
-        
-        --font-size-sm: clamp(0.875rem, 2vw, 1rem);
-        --font-size-base: clamp(1rem, 2.5vw, 1.125rem);
-        --font-size-lg: clamp(1.25rem, 3vw, 1.5rem);
-        --font-size-xl: clamp(1.5rem, 4vw, 2rem);
-        --font-size-2xl: clamp(2rem, 5vw, 3rem);
-        --font-size-3xl: clamp(2.5rem, 6vw, 4rem);
-
-        /* Core colors */
-        --color-paper: #F5F5F5;
-        --color-ink: #14141B;
-        --color-pop: #FF3D00;
-        --color-pop-alt: #0066FF;
-        --color-accent: #FFB800;
-        
-        /* Dynamic gradients */
-        --gradient-main: linear-gradient(135deg, 
-            #FF3D00 0%, 
-            #FF8A00 100%);
-        --gradient-subtle: linear-gradient(to right,
-            var(--color-paper),
-            #FFF5EA,
-            var(--color-paper));
-        --gradient-alt: linear-gradient(135deg, 
-            #0066FF 0%, 
-            #00D1FF 100%);
-        
+    
         /* Shadows and effects */
         --shadow-soft: 0 8px 40px rgba(0, 0, 0, 0.08);
         --shadow-pop: 0 12px 32px rgba(255, 107, 78, 0.2);
         --blur-light: blur(12px);
-        
-        /* Typography */
-        --font-display: 'Space Grotesk', sans-serif;
-        --font-body: 'Inter', sans-serif;
-        --line-height-tight: 1.1;
-        --line-height-normal: 1.6;
+       
         
         /* Spacing and layout */
         --curve-sm: 4px;
@@ -160,14 +101,6 @@ const links = [
         --container-width: min(1200px, 95%);
         --container-padding: max(2.5rem, 5vw);
 
-        /* New Colors */
-        --color-canvas: #0F0F13;
-        --color-surface: #1A1A22;
-        --color-coral: #FF6B5C;
-        --color-peach: #FFAB9C;
-        --color-teal: #2DD4BF;
-        --color-navy: #0F172A;
-        
         /* New Gradients */
         --gradient-warm: linear-gradient(
             135deg,
@@ -180,11 +113,7 @@ const links = [
             color-mix(in srgb, var(--color-teal) 70%, white) 100%
         );
         
-        /* New Typography */
-        --font-display: 'Obviously', sans-serif;
-        --font-body: 'Cabinet Grotesk', sans-serif;
-        --font-mono: ui-monospace, 'SF Mono', monospace;
-        
+      
         /* New Animations */
         --ease-out-soft: cubic-bezier(0.33, 1, 0.68, 1);
         --ease-out-spring: cubic-bezier(0.33, 1.4, 0.68, 1);
@@ -192,24 +121,6 @@ const links = [
         --duration-medium: 0.4s;
         --duration-long: 0.8s;
 
-        /* New refined color system */
-        --color-bg: #FAFAFA;
-        --color-fg: #161618;
-        --color-accent: #1A5EF5;
-        --color-muted: #71717A;
-        --color-surface: #FFFFFF;
-        --color-surface-alt: #F4F4F5;
-        
-        /* New gradients */
-        --gradient-subtle: linear-gradient(
-            to bottom right,
-            rgb(26, 94, 245, 0.1),
-            rgb(26, 94, 245, 0.05)
-        );
-        
-        /* Typography */
-        --font-display: 'Fraunces', serif;
-        --font-body: 'Plus Jakarta Sans', sans-serif;
         
         /* Spacing */
         --space-unit: 0.5rem;
@@ -223,77 +134,16 @@ const links = [
         --border-radius: 12px;
         --max-width: 72rem;
 
-        /* New color system */
-        --color-bg: #080808;
-        --color-fg: #FFFFFF;
-        --color-accent: #FF4444;
-        --color-accent-alt: #FFB800;
-        --color-muted: #999999;
-        --color-surface: #111111;
-        --color-surface-alt: #1A1A1A;
-        
-        /* New gradient */
-        --gradient-bold: linear-gradient(
-            135deg,
-            var(--color-accent) 0%,
-            var(--color-accent-alt) 100%
-        );
-        
-        /* Typography */
-        --font-display: 'Fraunces', serif;
-        --font-body: 'Plus Jakarta Sans', sans-serif;
-
-        /* Fresh color system */
-        --color-bg: #FFFFFF;
-        --color-fg: #111111;
-        --color-accent: #FF4D00;
-        --color-accent-alt: #FF9500;
-        --color-surface: #F8F8F8;
-        --color-surface-alt: #EEEEEE;
-        --color-muted: #666666;
-        
-        /* Vibrant gradients */
-        --gradient-bold: linear-gradient(
-            135deg,
-            #FF4D00 0%,
-            #FF9500 100%
-        );
-        
-        --gradient-subtle: linear-gradient(
-            to bottom right,
-            rgba(255, 77, 0, 0.08),
-            rgba(255, 149, 0, 0.08)
-        );
+    
 
         /* Mouse interaction variables */
         --cursor-size: 20px;
         --cursor-hover-size: 40px;
         --cursor-color: var(--color-accent);
 
-        --color-bg: #0F0F0F;
-        --color-fg: #FFFFFF;
-        --color-accent: #FF4444;
-        --color-cyan: #00FFFF;
-        --color-muted: #666666;
-
-        /* New sophisticated color palette */
-        --color-cream: #F6F3E9;
-        --color-ink: #1A1A1A;
-        --color-accent: #FF4444;
-        --color-muted: #666666;
-        --color-surface: #FFFFFF;
-        --color-surface-hover: #FAFAF8;
-        --color-border: rgba(0,0,0,0.1);
-
-        /* Typography */
-        --font-serif: 'Fraunces', serif;
-        --font-mono: 'Space Mono', monospace;
-
-        --font-custom: 'YourFont', sans-serif;
-        --font-special: 'Karrik', sans-serif;
 
         /* Updated sophisticated color palette */
-        --color-bg: #F2F0EC;  /* Warm off-white */
+        --color-bg: #f6f5f3;  /* Warm off-white */
         --color-fg: #2C2C2C;  /* Soft charcoal */
         --color-accent: #FF4444; /* Terracotta */
         --color-muted: #666666;
@@ -484,12 +334,6 @@ const links = [
         background: transparent;
     }
 
-    /* Typography enhancements */
-    h1, h2, h3 {
-        font-family: var(--font-display);
-        font-weight: 700;
-        letter-spacing: -0.03em;
-    }
 
     /* Smooth scrolling and transitions */
     * {
@@ -574,6 +418,36 @@ const links = [
     .link-hover:hover::after {
         transform: scaleX(1);
         transform-origin: left;
+    }
+
+    /* Improved focus styles */
+    a:focus-visible,
+    button:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 2px;
+        border-radius: 2px;
+    }
+
+    .skip-link {
+        position: absolute;
+        top: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--color-accent);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 0 0 4px 4px;
+        z-index: 1001;
+        transition: top 0.3s;
+    }
+
+    .skip-link:focus {
+        top: 0;
+    }
+
+    /* Fluid spacing utilities */
+    .content-area {
+        padding: clamp(4rem, 8vw, 10rem) clamp(1rem, 5vw, 4rem);
     }
 </style>
 

@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "build:css": "postcss src/styles/global.css -o public/styles/global.css"
   },
   "dependencies": {
     "@motionone/dom": "^10.18.0",

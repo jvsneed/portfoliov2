@@ -2,24 +2,31 @@
 const currentPath = Astro.url.pathname;
 const links = [
     { path: '/', label: 'Home' },
-    { path: '/portfolio', label: 'UX Design' },
+    { path: '/portfolio', label: 'Portfolio' },
     { path: '/writing', label: 'Writing' },    // Changed from '/blog'
     { path: '/about', label: 'About Me' },
 ];
 ---
 
 <header>
-    <div class="container">
+    <div class="header-container">
         <nav>
-            <a href="/" class="logo">JS</a>
-            <button class="menu-toggle" aria-label="Toggle menu">
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+            <a href="/" class="logo">
+                <div class="logo-wrapper">
+                    <span class="logo-short">js</span>
+                    <span class="logo-full">johanna sneed</span>
+                    <span class="logo-dot"></span>
                 </div>
+            </a>
+            <button 
+                type="button" 
+                class="menu-button" 
+                aria-expanded="false"
+                aria-controls="nav-menu"
+            >
+                Menu
             </button>
-            <ul class="nav-links">
+            <ul class="nav-links" id="nav-menu">
                 {links.map(({ path, label }) => (
                     <li>
                         <a 
@@ -37,18 +44,21 @@ const links = [
 
 <style>
     header {
-        background: rgba(242, 240, 236, 0.8);  /* Match the bg color */
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-        height: 5rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
         width: 100%;
+        height: 3rem;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
         z-index: 100;
     }
 
-    .container {
+    .header-container {
         max-width: var(--max-width);
         margin: 0 auto;
-        padding: 0 var(--space-md);
+        padding: 0 var(--space-xl);
         height: 100%;
     }
 
@@ -60,22 +70,68 @@ const links = [
     }
 
     .logo {
-        font-family: var(--font-display);
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: var(--color-fg);
         position: relative;
+        font-family: var(--font-special);
+        font-size: 1.5rem;
+        text-decoration: none;
+        color: var(--color-fg);
+        overflow: visible;
     }
 
-    .logo::after {
-        content: '';
+    .logo-wrapper {
+        position: relative;
+        display: inline-block;
+        padding: 0.25em 0;
+        will-change: transform;
+    }
+
+    .logo-short,
+    .logo-full {
+        display: block;
+        will-change: transform, opacity;
+    }
+
+    .logo-short {
+        transform: translateY(0);
+        opacity: 1;
+        transition: all 0.4s var(--ease-out-spring);
+    }
+
+    .logo-full {
+        position: absolute;
+        left: 0;
+        top: 0.25em;
+        transform: translateY(100%);
+        opacity: 0;
+        transition: all 0.4s var(--ease-out-spring);
+        white-space: nowrap;
+    }
+
+    .logo-dot {
         position: absolute;
         width: 4px;
         height: 4px;
         background: var(--color-accent);
         border-radius: 50%;
-        right: -8px;
-        top: 2px;
+        right: -10px;
+        top: 60%;
+        transform: translateY(-90%);
+        transition: transform 0.4s var(--ease-out-spring);
+        will-change: transform;
+    }
+
+    .logo:hover .logo-short {
+        transform: translateY(-150%);
+        opacity: 0;
+    }
+
+    .logo:hover .logo-full {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .logo:hover .logo-dot {
+        transform: translate(140px, -100%);
     }
 
     .nav-links {
@@ -91,24 +147,12 @@ const links = [
         font-weight: 500;
         position: relative;
         padding: 0.5em 0;
+        text-decoration: none; /* Add this line */
     }
 
+    /* Remove or modify these hover/active states */
     .nav-link::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background: var(--gradient-bold);
-        transform: scaleX(0);
-        transform-origin: right;
-        transition: transform 0.3s var(--ease-out-spring);
-    }
-
-    .nav-link:hover::after {
-        transform: scaleX(1);
-        transform-origin: left;
+        display: none; /* Remove underline effect */
     }
 
     .nav-link:hover {
@@ -120,138 +164,76 @@ const links = [
     }
 
     .active::after {
-        content: '';
-        display: block;
-        width: 100%;
-        height: 2px;
-        background: var(--color-accent);
-        margin-top: 4px;
-        border-radius: 2px;
+        display: none; /* Remove active underline */
+    }
+
+    .menu-button {
+        display: none;
+        background: none;
+        border: none;
+        padding: 0.75rem;
+        font-family: var(--font-sans);
+        font-size: 0.875rem;
+        color: var(--color-fg);
+        cursor: pointer;
     }
 
     @media (max-width: 768px) {
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4rem;
-            z-index: 1000;
+        .header-container {
+            padding: 0 var(--space-sm);
         }
 
-        .container {
-            width: 100%;
-            padding: 0 var(--space-md);
+        .menu-button {
+            display: block;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .menu-button.active {
+            color: var(--color-accent);
         }
 
         .nav-links {
             position: fixed;
             inset: 0;
-            top: 4rem; /* Match header height */
+            top: 3rem;
             background: var(--color-bg);
+            display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            padding-top: var(--space-xl);
             align-items: center;
             gap: var(--space-lg);
-            transform: translateX(100%);
-            transition: transform 0.4s var(--ease-out-spring);
-            z-index: 999;
+            padding: var(--space-xl);
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s var(--ease-out-spring);
+            z-index: 1000;
         }
 
         .nav-links.active {
-            transform: translateX(0);
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: all;
         }
 
         .nav-link {
-            font-size: 1.25rem;
+            font-size: 2rem;
+            font-family: var(--font-special);
             opacity: 0;
-            transform: translateX(20px);
-            transition: all 0.3s var(--ease-out-spring);
+            transform: translateY(20px);
+            transition: transform 0.3s var(--ease-out-spring),
+                      opacity 0.3s var(--ease-out-spring);
         }
 
         .nav-links.active .nav-link {
             opacity: 1;
-            transform: translateX(0);
-            transition-delay: calc(var(--index) * 0.1s);
-        }
-
-        .menu-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            z-index: 100;
-        }
-
-        .hamburger {
-            position: relative;
-            width: 24px;
-            height: 20px;
-        }
-
-        .hamburger span {
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--color-fg);
-            transition: all 0.3s var(--ease-out-spring);
-        }
-
-        .hamburger span:first-child { top: 0; }
-        .hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
-        .hamburger span:last-child { bottom: 0; }
-
-        .menu-toggle.active .hamburger span:first-child {
-            transform: translateY(9px) rotate(45deg);
-        }
-
-        .menu-toggle.active .hamburger span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .menu-toggle.active .hamburger span:last-child {
-            transform: translateY(-9px) rotate(-45deg);
+            transform: translateY(0);
+            transition-delay: calc(var(--index) * 0.1s + 0.2s);
         }
     }
 
     .menu-toggle {
         display: none;
-        position: relative;
-        width: 24px;
-        height: 24px;
-        background: none;
-        border: none;
-        cursor: pointer;
-    }
-
-    .menu-toggle span {
-        position: absolute;
-        width: 100%;
-        height: 2px;
-        background: var(--color-fg);
-        transition: all 0.3s var(--ease-out-spring);
-    }
-
-    .menu-toggle span:first-child { top: 6px; }
-    .menu-toggle span:nth-child(2) { top: 12px; }
-    .menu-toggle span:last-child { top: 18px; }
-
-    .menu-toggle.active span:first-child {
-        transform: rotate(45deg) translate(4px, 4px);
-    }
-
-    .menu-toggle.active span:nth-child(2) {
-        opacity: 0;
-    }
-
-    .menu-toggle.active span:last-child {
-        transform: rotate(-45deg) translate(4px, -4px);
     }
 
     .sr-only {
@@ -267,26 +249,27 @@ const links = [
 </style>
 
 <script>
-    const menuToggle = document.querySelector('.menu-toggle') as HTMLButtonElement;
+    const menuButton = document.querySelector('.menu-button') as HTMLButtonElement;
     const navLinks = document.querySelector('.nav-links') as HTMLElement;
-    const links = document.querySelectorAll('.nav-link');
+    const navLinkElements = document.querySelectorAll('.nav-link');
 
-    // Add index for staggered animation
-    links.forEach((link, index) => {
-        (link as HTMLElement).style.setProperty('--index', index.toString());
-    });
-
-    // Toggle menu
-    menuToggle?.addEventListener('click', () => {
-        menuToggle.classList.toggle('active');
+    menuButton?.addEventListener('click', () => {
+        const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+        menuButton.setAttribute('aria-expanded', (!isExpanded).toString());
+        menuButton.classList.toggle('active');
         navLinks?.classList.toggle('active');
         document.body.classList.toggle('menu-open');
     });
 
+    // Add index for staggered animation
+    navLinkElements.forEach((link, index) => {
+        (link as HTMLElement).style.setProperty('--index', index.toString());
+    });
+
     // Close menu when clicking links
-    links.forEach(link => {
+    navLinkElements.forEach(link => {
         link.addEventListener('click', () => {
-            menuToggle.classList.remove('active');
+            menuButton.classList.remove('active');
             navLinks.classList.remove('active');
             document.body.classList.remove('menu-open');
         });
@@ -295,7 +278,7 @@ const links = [
     // Close menu on resize if open
     window.addEventListener('resize', () => {
         if (window.innerWidth > 768 && navLinks?.classList.contains('active')) {
-            menuToggle.classList.remove('active');
+            menuButton.classList.remove('active');
             navLinks.classList.remove('active');
             document.body.classList.remove('menu-open');
         }

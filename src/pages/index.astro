@@ -1,10 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-// Update the blog posts import path
 const posts = await Astro.glob('./writing/*.md');
 
-// Add this to your existing imports
 const projects = [
 {
         title: "UX Research Study",
@@ -33,23 +30,27 @@ const projects = [
 
 <Layout>
     <div class="editorial-container">
-
         <main class="content-area" data-section="intro">
-            <div class="intro-sequence">
+            <div class="hero-sequence">
                 <div class="name-block">
-                    <div class="title-wrapper">
-                        <span class="first-name split-chars">
-                         johanna sneed
-                    </span>
-                    </div>
-                    <div class="accent-bars">
-                        <div class="bar"></div>
-                        <div class="bar"></div>
-                        <div class="bar"></div>
+                    <h1 class="hero-title">
+                        <span class="title-line">
+                            <span class="text">johanna sneed</span>
+                            <div class="floating-shapes">
+                                <div class="shape circle animate-float" style="--delay: 0s"></div>
+                                <div class="shape square animate-float" style="--delay: 0.2s"></div>
+                                <div class="shape triangle animate-float" style="--delay: 0.4s"></div>
+                            </div>
+                        </span>
+                    </h1>
+                    <div class="role-tags">
+                        <span class="role-tag">Usability Research</span>
+                        <span class="divider"></span>
+                        <span class="role-tag">Inclusive Design</span>
+                        <span class="divider"></span>
+                        <span class="role-tag">UX Leadership</span>
                     </div>
                 </div>
-                <div class="meta-text split-text">Usability Research / Inclusive Design / UX Leadership</div>
-
             </div>
         </main>
 
@@ -60,7 +61,7 @@ const projects = [
 
         <section class="portfolio-preview" data-section="work">
             <div class="preview-header">
-                <h2 class="section-title">Selected Work</h2>
+                <h2 class="section-title">Selected work</h2>
                 <div class="preview-nav">
                     <div class="nav-line"></div>
                     <a href="/portfolio" class="view-all">View Portfolio →</a>
@@ -88,7 +89,7 @@ const projects = [
 
         <section class="blog-preview" data-section="blog">
             <div class="preview-header">
-                <h2 class="section-title">Latest Writing</h2>
+                <h2 class="section-title">Latest writing</h2>
                 <div class="preview-nav">
                     <div class="nav-line"></div>
                     <a href="/writing" class="view-all">View Writing →</a>
@@ -119,11 +120,216 @@ const projects = [
         position: relative;
     }
 
-
     .content-area {
         padding: 15vh 4rem;
         max-width: var(--max-width);
         margin: 0 auto;
+    }
+
+    .hero-sequence {
+        position: relative;
+        padding: clamp(4rem, 5vh, 16rem) 0;
+        width: 100%;
+    }
+
+    .name-block {
+        position: relative;
+        margin-left: -0.5rem;
+        max-width: 100%; 
+        padding-right: 1rem; /* Add padding to prevent text touching edge */
+        text-wrap: balance;
+
+    }
+
+    .hero-title {
+        position: relative;
+        font-family: var(--font-special);
+        font-weight: 400;
+        margin: 0;
+        line-height: 0.9;
+    }
+
+    .title-line {
+        display: block;
+        text-wrap: balance;
+
+    }
+
+    .title-line span {
+        display: block;
+        font-size: clamp(2.5rem, 15vw, 11rem); /* Adjust clamp values */
+        letter-spacing: -0.02em; /* Reduce letter spacing on mobile */
+        transform: translateY(100%);
+        animation: slideUp 0.8s var(--ease-out-spring) forwards;
+        color: var(--color-fg); /* Ensure all text is black */
+        text-wrap: balance;
+
+    }
+
+    .floating-shapes {
+        position: absolute;
+        top: -2rem;
+        right: -2rem;
+        width: clamp(100px, 20vw, 200px);
+        height: clamp(100px, 20vw, 200px);
+        pointer-events: none;
+    }
+
+    .shape {
+        position: absolute;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: floatIn 0.8s var(--ease-out-spring) forwards;
+        animation-delay: var(--delay);
+    }
+
+    .circle {
+        width: 12px;
+        height: 12px;
+        background: var(--color-accent);
+        border-radius: 50%;
+        right: 40px;
+        top: 20px;
+        animation-delay: 0.2s;
+    }
+
+    .square {
+        width: 10px;
+        height: 10px;
+        border: 2px solid var(--color-accent);
+        right: 80px;
+        top: 60px;
+        animation-delay: 0.4s;
+    }
+
+    .triangle {
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 14px solid var(--color-accent);
+        right: 20px;
+        top: 40px;
+        animation-delay: 0.6s;
+    }
+
+
+    .role-tags {
+        margin: 0 0 0 3.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        opacity: 0;
+        animation: fadeIn 0.8s var(--ease-out-spring) 0.8s forwards;
+    }
+
+    .role-tag {
+        font-family: var(--font-mono);
+        font-size: clamp(0.875rem, 1.5vw, 1.5rem);
+        color: var(--color-muted); /* Make tags more subtle */
+        font-weight: 400;
+        position: relative;
+    }
+
+    .divider {
+        color: var(--color-accent);
+        font-size: 1.5rem;
+        line-height: 0;
+    }
+
+    .role-tag:not(:last-child)::after {
+        content: '/';
+        margin-left: 1rem;
+        color: var(--color-accent);
+    }
+
+    .role-tag.accent {
+        color: var(--color-accent);
+    }
+
+    .hero-decoration {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 40%;
+        height: 4px;
+        display: flex;
+        align-items: center;
+        opacity: 0;
+        animation: fadeIn 0.8s var(--ease-out-spring) 0.8s forwards;
+    }
+
+    .decoration-line {
+        flex: 1;
+        height: 100%;
+        background: var(--color-accent);
+        transform: scaleX(0);
+        transform-origin: right;
+        animation: scaleIn 1.2s var(--ease-out-spring) 0.8s forwards;
+    }
+
+    .accent-circle {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--color-accent);
+        margin-left: -6px;
+    }
+
+    @keyframes slideUp {
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes scaleIn {
+        to {
+            transform: scaleX(1);
+        }
+    }
+
+    @keyframes floatIn {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (hover: hover) {
+        .hero-title:hover .shape {
+            animation: float 3s var(--ease-out-spring) infinite;
+        }
+
+        .hero-title:hover .square {
+            animation-delay: 0.2s;
+        }
+
+        .hero-title:hover .triangle {
+            animation-delay: 0.4s;
+        }
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(-10px, -10px); }
+    }
+
+    @media (max-width: 768px) {
+        .hero-sequence {
+            padding: 6rem 1rem 4rem;
+        }
+
+
+
+        .hero-decoration {
+            width: 60%;
+        }
     }
 
     .meta-text {
@@ -136,11 +342,6 @@ const projects = [
         padding: 0 2rem;
         background-color: var(--color-accent);
         margin: 0 0 0 2.5rem;
-    }
-
-    .name-block {
-        position: relative;
-        margin-left: -0.5rem;
     }
 
     .first-name {
@@ -285,7 +486,7 @@ const projects = [
     .project-meta {
         display: flex;
         align-items: center;
-        gap: var(--space-md);
+        gap: var (--space-md);
         margin-bottom: var(--space-md);
     }
 
@@ -333,6 +534,26 @@ const projects = [
 
 
     @media (max-width: 768px) {
+        .content-area {
+            padding: 8rem 1rem 4rem; /* Adjust top padding for header */
+        }
+
+        .hero-sequence {
+            padding: 0; /* Remove extra padding on mobile */
+        }
+
+        .name-block {
+            margin-left: 0; /* Remove negative margin on mobile */
+        }
+
+        .floating-shapes {
+            transform: scale(0.7); /* Scale down decorative elements */
+            right: -1rem;
+        }
+
+        .role-tag {
+            font-size: 0.875rem; /* Smaller font size on mobile */
+        }
         .project-item,
         .project-item:nth-child(even) {
             grid-template-columns: 1fr;
@@ -386,7 +607,7 @@ const projects = [
     .post-date {
         font-family: var(--font-mono);
         font-size: 0.875rem;
-        color: var(--color-muted);
+        color: var (--color-muted);
         display: block;
         margin-bottom: var(--space-sm);
     }
@@ -399,7 +620,7 @@ const projects = [
     }
 
     .post-excerpt {
-        color: var(--color-muted);
+        color: var(--color-muted); 
         margin: 0;
         margin-bottom: var(--space-md);
     }
@@ -422,8 +643,6 @@ const projects = [
     .read-more:hover span {
         transform: translateX(4px);
     }
-
-
 
     .first-name {
         display: inline-block;
@@ -584,4 +803,26 @@ const projects = [
             });
         });
     });
+
+    // Add this to your existing script
+    document.addEventListener('mousemove', (e) => {
+        const shapes = document.querySelectorAll('.shape');
+        const mouseX = e.clientX / window.innerWidth - 0.5;
+        const mouseY = e.clientY / window.innerHeight - 0.5;
+
+        shapes.forEach(shape => {
+            const speed = 20;
+            const x = mouseX * speed;
+            const y = mouseY * speed;
+            (shape as HTMLElement).style.transform = 
+                `translate(${x}px, ${y}px)`;
+        });
+    });
+
+    // Conditional mouse effects
+    const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+    
+    if (isFinePointer) {
+        // ...existing magnetic effect code...
+    }
 </script>

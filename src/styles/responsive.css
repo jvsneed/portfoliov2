@@ -27,27 +27,7 @@ Base responsive breakpoints
     }
 }
 
-/* Mobile navigation and header */
-@media (max-width: 768px) {
-    .floating-elements {
-        display: none !important;
-    }
 
-    .nav-links {
-        position: fixed;
-        inset: 0;
-        background: var(--color-bg);
-        flex-direction: column;
-        justify-content: center;
-        gap: var(--space-lg);
-        transform: translateX(100%);
-        transition: transform 0.3s var(--ease-out-spring);
-    }
-
-    .nav-links.active {
-        transform: translateX(0);
-    }
-}
 
 /* Mobile card and grid layouts */
 @media (max-width: 768px) {
