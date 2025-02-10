@@ -30,8 +30,13 @@ Pekin Insurance embarked on a digital transformation to improve customer and age
 
 Pekin Insurance was facing challenges with outdated digital platforms that struggled to meet the evolving expectations of agents and insured customers. These gaps weren’t just technical. They reflected a deeper disconnect between user needs and business priorities. As the Digital Experience Manager, I led the charge to redefine the company’s approach through a digital experience strategy, which incorporated establishing a UX research practice. This effort wasn’t just about modernizing, it was about transforming the company's mindset to embrace user-centered practices as a catalyst for innovation.
 
-
 > How might we establish a user research strategy to identify user pain points, improve product usability, and support a user-centered digital transformation?
+
+### Goals
+- Identify key pain points in the customer and agent experiences.
+- Develop a research-driven roadmap for portal redesigns and new features.
+- Ensure accessibility compliance and improved usability for diverse user groups.
+- Create a DX strategy to foster a user-centered culture within the organization using mixed-methods research.
 
 
 
@@ -76,50 +81,180 @@ Note: These designs were created by the talented UX / visual design members of m
 <section id="process">
 
 ## Research Process
+The transformation was guided by a structured, iterative approach, ensuring that every step was grounded in research and aligned with business outcomes.
 
-The team used a user-centered design approach to answer our research question. I conducted 3 of 8 user interviews and analyzed the results with my team to gather insights. Once clear opportunities for an integrated experience arose, we began the conceptual designs and prototyping. Lastly, we conducted usability evaluations to refine our approach.
-<img src="/images/navigate-the-tate/process.png" style="width: 70%; display:flex; margin: 2rem auto;" alt="The user centered design process is research current experience, define the problem, design the concept and prototype, conduct usability evaluations, and iterate designs" />
-
-### User Interviews
-
-I led 3 of 8 user interviews, and 20-40 key data points were gathered per contextual inquiry. Each key data point was mapped to an affinity diagram to identify themes and insight clusters. ‍Due to the large amounts of data collected and diagrammed, only a portion of the mapped data is shown below. ‍
-<img src="/images/navigate-the-tate/interview-diagram.png" style="width: 70%; display:flex; margin: 2rem auto;" alt="A screen capture of an affinity diagram" />
-
-### Personas and User Journeys
-
-I took primary responsibility for mapping user attributes to a persona spectrum and drafted personas for gallery visitors. The team worked together to create a lightweight journey map. Through the interviews, we identified key scenarios which later informed our usability studies. This included finding an admissions barcode, purchasing an item from the gift shop, and finding specific art pieces. ‍ The study uncovered the goals and pain points of gallery visitors.
-<img src="/images/navigate-the-tate/personas.png" style="max-width:100%; margin-bottom: 0;" alt="Personas called the Tourist named Maude and the Art Enthusiast named Benjamin" />
-
-### Insight Analysis
-
-I collaborated with my team to reflect museum visitors' problem statements into feature opportunities.
-
-<div class="split-content">
-    <div class="image-col">
-        <img src="/images/navigate-the-tate/feature-matrix.png" alt="Feature priority matrix showing key features mapped by effort and impact" />
+<div style="padding: 10px; text-align: center;">
+        <div style="display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;">
+            <!-- Card 1 -->
+            <div style="
+                padding: 20px;
+                border-radius: 10px;
+                background-color: #f6f5f3;
+                border: 1px solid #ddd;
+                text-align: left;
+            ">
+                <h3 style="display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: bold; margin-top: 1rem;">
+                Discover
+                </h3>
+                <p style="font-weight: bold; margin-bottom: 10px;">Conducted in-depth mixed-methods research</p>
+                    Using interviews, workshops, competitive analysis, data analysis, and workflow mapping to uncover the pain points impacting agents and customers. Insights ranged from usability challenges to gaps in technical integration.
+                </p>
+            </div>
+            <!-- Card 2 -->
+            <div style="
+                padding: 20px;
+                border-radius: 10px;
+                background-color: #f6f5f3;
+                border: 1px solid #ddd;
+                text-align: left;">
+                <h3 style="display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: bold; margin-top: 1rem;">
+                Define
+                </h3>
+                <p style="font-weight: bold; margin-bottom: 10px;">Synthesized research findings into actionable opportunities</p>
+                <p style="color: #555;">
+                    Prioritized them based on organizational goals. Created service blueprints and journey maps that highlighted friction points and opportunities to align systems, processes, and tools with user needs.
+                </p>
+            </div>
+            <!-- Card 3 -->
+            <div style="
+                padding: 20px;
+                border-radius: 10px;
+                background-color: #f6f5f3;
+                border: 1px solid #ddd;
+                text-align: left;
+            ">
+                <h3 style="display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: bold; margin-top: 1rem;">
+                Sustain
+                </h3>
+                <p style="font-weight: bold; margin-bottom: 10px;">Established a research framework</p>
+                <p style="color: #555;">
+                    Empowered teams to continue iterating on user insights. Focused on mentoring team members and embedding a culture of research to ensure sustainability beyond my tenure.
+                </p>
+            </div>
+        </div>
     </div>
-    <div class="text-col">
-        <p>
-            <b>Motivations</b><br>
-            An art gallery visit can be an easy unplanned activity for people. If a gallery is nearby, visiting it is an activity people can do with minimal planning.     
-        </p>
-        <p>
-            <b>Facilities</b><br>
-            People's expectations of facilities and actual facilities do not align. Most visitors do not have enough time or energy to tour the full gallery due to it large size, lack of air conditioning, or limited available seating.
-        </p>
-        <p>
-            <b>Art Viewing</b><br>
-            People prefer self-guided tours over staff-led tours. They use maps, videos, and posted information available within the museum to learn about the art or exhibit.
-        </p>
+
+
+### Internal Interviews
+To understand the full landscape of user interactions, I conducted interviews across underwriting, claims, helpdesk, and other business areas. These conversations provided a nuanced understanding of how agents and insured customers interact with the company and highlighted internal perceptions about customer experience.
+
+<div style="padding: 10px; text-align: center;">
+        <div style="display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;">
+            <!-- Card 1 -->
+            <div style="
+                padding: 20px;
+                border-radius: 10px;
+                background-color: #f6f5f3;
+                border: 1px solid #ddd;
+                text-align: left;
+            ">     
+             <p style="color: #555;">
+                Agents were seen as "the real customers" by internal teams due to their role in generating revenue and being supported by IT and business initiatives.
+                </p>
+            </div>
+            <!-- Card 2 -->
+            <div style="
+                padding: 20px;
+                border-radius: 10px;
+                background-color: #f6f5f3;
+                border: 1px solid #ddd;
+                text-align: left;">
+                <p style="color: #555;">
+                    Insured customers, skewing more senior (55+) and residing in rural areas, often faced challenges with unsupported legacy apps and limited digital tools.
+                </p>
+            </div>
+            <!-- Card 3 -->
+            <div style="
+                padding: 20px;
+                border-radius: 10px;
+                background-color: #f6f5f3;
+                border: 1px solid #ddd;
+                text-align: left;
+            ">
+                <p style="color: #555;">
+                    There was hesitancy to engage directly with insured customers, with concerns that it might create tension with agents.
+                </p>
+            </div>
+        </div>
+    </div>
+
+> Impact: These insights highlighted a significant gap in how the organization prioritized user groups, shaping the need for equitable solutions that addressed both agent and insured pain points.
+
+### Service Design
+Collaborating with the claims team, I developed a service blueprint to map the end-to-end claims journey. This exercise identified friction points, such as:
+
+- Delayed communication between agents and claims representatives, leading to longer resolution times.
+- Inconsistent reporting tools that added confusion to the process.
+- Reliance on manual workflows, causing inefficiencies at multiple touchpoints.
+
+<img src="/images/insurance-research-strategy/service-blueprint1.png" style="max-width:80%; display: flex; margin: 0 auto;" alt="A service blueprint showing the user flow for claims along with touchpoints and opportunities for improvement" />
+
+> Outcome: The blueprint provided a clear visualization of the claims process, pinpointing opportunities for automation, streamlined communication, and improved user flows.
+
+### Customer Interviews
+Building trust with agents was critical for uncovering the real challenges they faced. Through interviews conducted by office visits and phone calls, I learned how their frustrations with existing tools impacted their ability to serve insured customers.
+
+<div style="padding: 40px; background-color: #f6f5f3; margin:0; padding: 3rem; border-radius: 10px;">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 2rem;">
+        <img src="/images/insurance-research-strategy/a1.png" alt="User 1" style="border-radius: 50%; width: 70px; height: 70px; padding:0; margin:0;" />
+        <div style="background-color: #004d70; color: white; padding: 10px 15px; border-radius: 15px; max-width: 60%; font-size: 16px;">
+            We have our own agency apps.
+        </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 2rem;">
+        <img src="/images/insurance-research-strategy/a2.png" alt="User 1" style="border-radius: 50%; width: 70px; height: 70px; padding:0; margin:0;" />
+        <div style="background-color: #004d70; color: white; padding: 10px 15px; border-radius: 15px; max-width: 60%; font-size: 16px;">
+            I would be happy if I no longer have to fill out claims!
+        </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 2rem;">
+        <img src="/images/insurance-research-strategy/a4.png" alt="User 1" style="border-radius: 50%; width: 70px; height: 70px; padding:0; margin:0;" />
+        <div style="background-color: #004d70; color: white; padding: 10px 15px; border-radius: 15px; max-width: 60%; font-size: 16px;">
+            I can barely submit a quote some days. I need solutions that won't cause me and my customers more headaches.
+        </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+        <img src="/images/insurance-research-strategy/a3.png" alt="User 1" style="border-radius: 50%; width: 70px; height: 70px; padding:0; margin:0;" />
+        <div style="background-color: #004d70; color: white; padding: 10px 15px; border-radius: 15px; max-width: 60%; font-size: 16px;">
+            Most companies are already doing this. Do whatever they do.
+        </div>
     </div>
 </div>
 
-By diagramming these features on a feature-priority matrix, we were able to prioritize key features to include in our conceptual prototype and create user stories. A report-out of our insights can be found below to showcase research summary deliverables.
-        <img src="/images/navigate-the-tate/user-stories.png" style="width:100%; margin-bottom:0;" alt="A whiteboard displaying mapped user stories" />
+- Agents often relied on their own tools, bypassing our systems.
+- Agents expressed a strong desire for more self-service capabilities for customers, especially for - processes like Claims, where they are the middle person between the customer and the company.
+- Agents voiced skepticism in the company's ability to build reliable digital solutions.
+- Many agents were eager for Pekin to align with modern industry standards.
 
-### Concept Diagram
-Once the features to be included in the prototype were identified, I created a concept map to visualize interactions and relationships between features, users, and gallery staff.
-<img src="/images/navigate-the-tate/concept-diagram.png" style="width:60%; display:flex; margin: 0 auto;" alt="a concept diagram demonstrating the connections between the gallery and users" />
+>Impact: These candid insights reinforced the importance of addressing usability and reliability issues while demonstrating to agents that their feedback was valued.
+
+### Competitive Analysis
+Competitive Analysis To benchmark against industry standards, I conducted a thorough competitive analysis of digital solutions from major players like State Farm, Progressive, Liberty Mutual, and American Modern. This review helped identify best practices and gaps in Pekin Insurance’s offerings.
+<img src="/images/insurance-research-strategy/competitive.png" style="max-width:80%; display: flex; margin: 3rem auto;" alt="A service blueprint showing the user flow for claims along with touchpoints and opportunities for improvement" />
+- Modern insurance apps provided personalized dashboards, self-service capabilities, and integrated tools for policy management and claims tracking.
+- Competitors heavily prioritized mobile accessibility, reflecting the growing importance of on-the-go interactions.
+
+>Impact: These insights established a baseline for user expectations, shaping the vision for an improved digital experience that prioritized seamless, self-service functionality.
+
+### Ticket Analysis
+It was clear that data was hard to come by as analytics tools were used minimally. By analyzing two years’ worth of support tickets, I identified recurring pain points that directly impacted user satisfaction and operational efficiency.
+
+
+#### Heatmapping
+- 29% of tickets were related to login failures, reflecting technical debt and outdated authentication processes.
+- 16% were misdirected, indicating unclear guidance and possible internal process improvement opportunities.
+- The data revealed a persistent lack of intuitive design, leading to reliance on human support for tasks that should be self-service.
+
+<img src="/images/insurance-research-strategy/heatmap.png" style="max-width:30%; display: flex; margin: 3rem auto;" alt="A service blueprint showing the user flow for claims along with touchpoints and opportunities for improvement" />
+
+>Impact: These findings informed immediate priorities for the digital transformation roadmap, including enhanced login experiences and clearer navigation paths.
+
 
 
 ---
@@ -127,26 +262,44 @@ Once the features to be included in the prototype were identified, I created a c
 
 <section id="outcome">
 
-## Research Outcomes
-Once our team agreed on the direction of the solution and prioritized features, we started designing and evaluating those designs. I started by creating low-fidelity wireframes to iterate the design and get early feedback with low effort. I then created mid-fidelity wireframes and a working prototype in Axure for usability testing. The interactive prototype enabled users to click through to fully test the scenarios they were given, and Axure provided the most interactive features at the time.
-<img src="/images/navigate-the-tate/tate-wireframes.png" style="width:100%; display:flex; margin: 0 auto;" alt="Four wireframes are shown, on the left, a low fidelity wireframe, next to it the same design but annotated, and then a mid fidelity and higher fidelity design" />
+## Outcomes
+Using context mapping, I visualized relationships and dependencies between insured customers, agents, and internal business functions like claims, underwriting, and IT. This exercise highlighted systemic issues, including:
+<img src="/images/insurance-research-strategy/context-map.png" style="max-width:50%; display: flex; margin: 3rem auto;" alt="A service blueprint showing the user flow for claims along with touchpoints and opportunities for improvement" />
 
-We conducted tests of the interactive prototype to collect quantitative and qualitative data to assess the usability and user experience of the product. The evaluations were conducted online over Zoom and in person. The evaluation tasks focused on the user's ability to navigate the gallery, find specific exhibitions, and request and purchase a postcard of a chosen art piece.
+>Outcome: The map clarified areas where improved communication and automation could deliver the most value, enabling cross-functional alignment.
 
-I used tables to record the number and type of errors committed, the number of times the user asked for instruction, and the success or failure of each task. Participants were asked to rate the difficulty of each task on a scale of 1-5 and provide reasons for their ratings.
+### Delivery Mapping
+I designed a strategy-to-delivery map to align company goals, department objectives, and measurable outcomes. The map connected opportunities and solutions to strategic initiatives, emphasizing self-service improvements and operational efficiencies.
+<img src="/images/insurance-research-strategy/strategy-map.png" style="max-width:70%; display: flex; margin: 3rem auto;" alt="A service blueprint showing the user flow for claims along with touchpoints and opportunities for improvement" />
 
-‍ After completing the tasks, a debriefing session was conducted to clarify any observed obstacles or confusing situations, gather more details about emotional reactions, and ask participants to rate their agreement with statements about their experience and willingness to use the product. ‍
+**Key Elements**
+- Defined top-level strategies and linked them to actionable objectives.
+- Identified key opportunities, like paperless billing integration and agent onboarding optimization.
+- Outlined measurable outcomes, such as cost savings and improved task success rates.
+
+>Impact: This framework enabled leadership to visualize how strategic goals were directly supported by actionable initiatives, fostering alignment across teams.
 
 
-### Key Learnings
+### Tactical Roadmap
+Based on the findings from research and discovery, I developed a tactical roadmap to prioritize features for the MVP and subsequent releases (R1, R2).
 
-- Data analysis showed that all users completed the Cezanne ticket selection task, but some users had errors or confusion regarding buying tickets or accessing tickets already purchased.
-- Users generally responded positively and expressed satisfaction with the app, but some suggested design changes and clarifications for certain features, such as clickable images.
+**MVP & Iterations**
+- MVP: Integrated modern authentication, created enterprise customer records, and introduced a modern payment solution.
+- R1: Implemented paperless billing, claims status tracking, and digital wallet ID cards.
+- R2: Introduced forms for commercial and life insurance as well as first notice of loss features.
 
-### Improvement Opportunities
+>Impact: This phased approach maximized immediate value while ensuring long-term sustainability and growth.
 
-- One user had an issue sharing her screen, which impacted the evaluation.
-- Some users were uncertain whether they were using the app as a user with an account or as a first-time user, leading to minor errors.
-- Reviewing the protocol, which was created collaboratively, revealed attachments UX team members had to their ideas, resulting in leading questions.
 
+### Impact
+The digital transformation at Pekin Insurance began delivering tangible results, marking significant progress in improving user experiences for both agents and insured customers.
+
+- **Fixed and enabled over 90 new agency user experience features in 6 months.** This effort showed a commitment to addressing user pain points and drastically improved user experience feedback from agents. This enabled the organization to decide to open up a previously closed line of business, generating more business.
+- **On-track to launch the new customer portal by year-end 2024.** This initiative not only enhances the overall user experience but also positions the company to save $5M annually by improving operational efficiency and reducing support costs.
+- **Claims team innovations.** By implementing new processes and technologies, the claims team was better equipped to support customers, reducing friction in critical workflows in their solutions.
+- **Leveraging insights for immediate impact.** Lessons learned from agent interviews were quickly applied to establish goals that improved the agent experience. This effort contributed to notable reduction of defects and improvements in agent satisfaction scores within the first quarter of implementation.
+- **Alignment with organizational strategy.** Every UX effort directly supported business objectives, such as cost savings, operational efficiencies, and enhanced customer satisfaction.
+- **Building UX research foundations**.** Establishing a sustainable UX research framework laid the groundwork for continuous improvement and a user-centered culture.
+
+To showcase these improvements, the portal redesign includes intuitive self-service tools, clear navigation, and modern features that align with customer expectations. The new design prioritizes accessibility, usability, and efficiency, providing a seamless experience across devices.
 </section>

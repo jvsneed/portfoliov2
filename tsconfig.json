@@ -3,13 +3,23 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "allowJs": true,
-    "types": ["astro/client"],
+    "checkJs": true,
+    "strict": true,
+    "jsx": "preserve",
+    "types": ["astro/client", "astro/env"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     },
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "verbatimModuleSyntax": true
   },
-  "include": [".astro/types.d.ts", "src/**/*"],
-  "exclude": ["dist"]
+  "include": [
+    "src/**/*",
+    ".astro/**/*"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }

@@ -219,7 +219,7 @@ const {
     .case-content :global(h3) {
         font-family: var(--font-sans);
         font-size: 1.5rem;
-        margin: 6rem 0 0 0;
+        margin: 3rem 0 0 0;
         color: var(--case-color);
     }
 
@@ -250,11 +250,12 @@ const {
 
     /* Callouts and Quotes */
     .case-content :global(blockquote) {
-        margin: 2rem 0;
-        padding: 1.5rem 2rem;
+        margin: 1rem 0;
+        padding: 0 2rem;
         border-left: 4px solid var(--case-color);
         background: var(--color-surface);
         border-radius: 0 var(--curve-sm) var(--curve-sm) 0;
+        font-style:italic;
     }
 
     .case-content :global(.callout) {
@@ -465,7 +466,7 @@ const {
     .case-content :global(.note) {
         margin: 2rem 0;
         padding: 1.5rem 2rem;
-        background: rgba(255, 236, 179, 0.15);
+        /* background: rgba(255, 236, 179, 0.15); */
         border: 1px solid rgba(242, 212, 121, 0.919);
         border-radius: var(--curve-sm);
         font-size: 0.9375rem;
@@ -554,7 +555,7 @@ const {
 
         .case-content :global(blockquote),
         .case-content :global(.callout) {
-            margin: 2rem -1rem;
+            margin: 1rem -1rem;
             border-radius: 0;
         }
 
