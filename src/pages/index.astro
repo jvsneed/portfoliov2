@@ -3,22 +3,23 @@ import Layout from '../layouts/Layout.astro';
 const posts = await Astro.glob('./writing/*.md');
 
 const projects = [
+{
+        title: "Insurance UX Strategy",
+        category: "UX Strategy ✦ Product Leadership",
+        year: "2024",
+        description: "Leading a user research strategy to guide Pekin Insurance's digital transformation",
+        image: "/pekin-thumbnail.png",
+        slug: "insurance-research-strategy"  
+    },
     {
         title: "Navigate the Tate",
-        category: "Research",
+        category: "User Research ✦ UI Design",
         year: "2024",
-        description: "Building engagement with an integrated art museum experience",
+        description: "Building engagement with an integrated art museum experience for the Tate Modern",
         image: "/tatemodern-thumbnail1.png",
-        slug: "navigate-the-tate"  // Make sure all projects have slugs
+        slug: "navigate-the-tate"
     },
-    {
-        title: "Design System",
-        category: "Design",
-        year: "2024",
-        description: "Mixed-methods research study for digital product",
-        image: "/zocdoc-thumbnail.png",
-        slug: "design-system"  // Add slug for this project
-    },
+
     {
         title: "Product Strategy",
         category: "Strategy",
@@ -66,28 +67,28 @@ const projects = [
                 <h2 class="section-title">Selected work</h2>
                 <div class="preview-nav">
                     <div class="nav-line"></div>
-                    <a href="/portfolio" class="view-all">View Portfolio →</a>
+                    <a href="/portfolio" class="view-all">All portfolio case studies →</a>
                 </div>
             </div>
             
             <div class="featured-projects">
                 {projects.slice(0, 3).map((project, index) => (
-                    <article class="project-item" data-index={index}>
+                    <a href={`/case-study/${project.slug}`} class="project-item" data-index={index}>
                         <div class="project-content">
                             <div class="project-meta">
                                 <span class="project-category">{project.category}</span>
                             </div>
                             <h3 class="project-title">{project.title}</h3>
                             <p class="project-description">{project.description}</p>
-                            <a href={`/case-study/${project.slug}`} class="project-link">
-                                <span>View Case Study</span>
+                            <span class="project-link">
+                                <span>Go to case study</span>
                                 <span class="arrow">→</span>
-                            </a>
+                            </span>
                         </div>
                         <div class="project-image">
                             <img src={project.image} alt={project.title} />
                         </div>
-                    </article>
+                    </a>
                 ))}
             </div>
         </section>
@@ -97,20 +98,20 @@ const projects = [
                 <h2 class="section-title">Latest writing</h2>
                 <div class="preview-nav">
                     <div class="nav-line"></div>
-                    <a href="/writing" class="view-all">View Writing →</a>
+                    <a href="/writing" class="view-all">All writing →</a>
                 </div>
             </div>
             
             <div class="blog-posts">
                 {posts.slice(0, 3).map((post) => (
-                    <article class="blog-card">
+                    <a href={post.url} class="blog-card">
                         <time class="post-date">{post.frontmatter.date}</time>
                         <h3 class="post-title">{post.frontmatter.title}</h3>
                         <p class="post-excerpt">{post.frontmatter.excerpt}</p>
-                        <a href={post.url} class="read-more">
-                            Read More <span>→</span>
-                        </a>
-                    </article>
+                        <span class="read-more">
+                            Read More <span class="arrow">→</span>
+                        </span>
+                    </a>
                 ))}
             </div>
         </section>
@@ -125,8 +126,19 @@ const projects = [
         position: relative;
     }
 
+    .editorial-container::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: url('/noise.png');
+        opacity: 0.3;
+        mix-blend-mode: overlay;
+        pointer-events: none;
+        z-index: 1;
+    }
+
     .content-area {
-        padding: 15vh 4rem;
+        padding: 8vh 4rem;
         max-width: var(--max-width);
         margin: 0 auto;
     }
@@ -135,6 +147,8 @@ const projects = [
         position: relative;
         padding: clamp(4rem, 5vh, 16rem) 0;
         width: 100%;
+        transform-style: preserve-3d;
+        perspective: 1000px;
     }
 
     .name-block {
@@ -186,6 +200,8 @@ const projects = [
         transform: translateY(20px);
         animation: floatIn 0.8s var(--ease-out-spring) forwards;
         animation-delay: var(--delay);
+        transform: translateZ(50px);
+        filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.1));
     }
 
     .circle {
@@ -388,6 +404,8 @@ const projects = [
         to { opacity: 1; }
     }
 
+  
+
     .interaction-layer {
         position: fixed;
         inset: 0;
@@ -395,27 +413,7 @@ const projects = [
         z-index: 10;
     }
 
-    .magnetic-area {
-        position: absolute;
-        width: 100px;
-        height: 100px;
-        border: 1px solid var(--color-accent);
-        border-radius: 50%;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
 
-    .cursor-follower {
-        position: fixed;
-        width: 8px;
-        height: 8px;
-        background: var(--color-accent);
-        border-radius: 50%;
-        mix-blend-mode: difference;
-        pointer-events: none;
-        opacity: 0;
-        transition: transform 0.1s ease, opacity 0.3s ease;
-    }
 
     .first-name:hover {
         transform: perspective(1000px) rotateX(5deg);
@@ -441,7 +439,7 @@ const projects = [
         grid-template-columns: 1fr auto;
         align-items: center;
         gap: var(--space-lg);
-        margin-bottom: var(--space-xl);
+        margin-bottom: var(--space-md);
     }
 
     .preview-nav {
@@ -467,7 +465,7 @@ const projects = [
         grid-template-columns: 1fr 1fr;
         gap: 2rem;
         align-items: center;
-        padding: var(--space-lg);
+        padding: var(--space-md) var(--space-lg);
         position: relative;
         border: 1px solid var(--color-border);
         background: rgba(255, 255, 255, 0.8);
@@ -475,11 +473,16 @@ const projects = [
         transition: all 0.4s var(--ease-out-spring);
         transition: all 0.4s var(--ease-out-spring),
                     border-color 0.3s ease;
+        cursor: none;  /* Add this */
+        text-decoration: none;  /* Add this */
+        color: inherit;  /* Add this */
+        transform-style: preserve-3d;
+        perspective: 1000px;
     }
 
     .project-item:hover {
         border-color: var(--color-accent);
-        transform: translateX(var(--space-sm));
+        transform: translateX(var(--space-sm)) translateZ(20px) rotateX(2deg) rotateY(-2deg);
     }
 
     .project-content,
@@ -492,7 +495,7 @@ const projects = [
         display: flex;
         align-items: center;
         gap: var (--space-md);
-        margin-bottom: var(--space-md);
+        margin-bottom:0);
     }
 
     .project-number {
@@ -626,6 +629,9 @@ const projects = [
     }
 
     .blog-card {
+        cursor: none;  /* Add this */
+        text-decoration: none;  /* Add this */
+        color: inherit;  /* Add this */
         padding: var(--space-lg);
         border: 1px solid var(--color-border);
         border-radius: var(--curve-sm);
@@ -659,14 +665,13 @@ const projects = [
     }
 
     .read-more {
-        font-family: var(--font-mono);
-        font-size: 0.875rem;
-        color: var (--color-accent);
-        text-decoration: none;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        width: fit-content;
+        gap: 0.75rem;
+        margin-top: var(--space-md);
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
     }
 
     .read-more span {
@@ -777,6 +782,49 @@ const projects = [
                 ease: "power3.out"
             });
         });
+
+        // Add parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            
+            const shapes = document.querySelectorAll('.shape');
+            shapes.forEach(shape => {
+                const moveX = (clientX - centerX) * 0.02;
+                const moveY = (clientY - centerY) * 0.02;
+                (shape as HTMLElement).style.transform = 
+                    `translateX(${moveX}px) translateY(${moveY}px) translateZ(50px)`;
+            });
+        });
+
+        // Fix event listener typing with proper event handler functions
+        function handleMouseMove(this: HTMLElement, e: MouseEvent) {
+            const rect = this.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const moveX = (mouseX - centerX) * 0.05;
+            const moveY = (mouseY - centerY) * 0.05;
+            
+            this.style.transform = 
+                `translateX(${moveX}px) translateY(${moveY}px) 
+                 translateZ(20px) rotateX(${moveY * 0.05}deg) 
+                 rotateY(${-moveX * 0.05}deg)`;
+        }
+
+        function handleMouseLeave(this: HTMLElement) {
+            this.style.transform = '';
+        }
+
+        // Add event listeners with proper types
+        const cards = document.querySelectorAll('.project-item');
+        cards.forEach(card => {
+            (card as HTMLElement).addEventListener('mousemove', handleMouseMove);
+            (card as HTMLElement).addEventListener('mouseleave', handleMouseLeave);
+        });
+
     });
 
     // Add scroll progress indicator
@@ -786,56 +834,6 @@ const projects = [
         progressBar?.style.setProperty('--scroll', `${scrollPercent}%`);
     });
 
-    // Magnetic effect and cursor follower
-    document.addEventListener('DOMContentLoaded', () => {
-        const cursor = document.querySelector('.cursor-follower') as HTMLElement;
-        const magnetic = document.querySelector('.magnetic-area') as HTMLElement;
-        const nameBlock = document.querySelector('.name-block') as HTMLElement;
-
-        if (!cursor || !magnetic || !nameBlock) return;
-
-        document.addEventListener('mousemove', (e) => {
-            // Update cursor position
-            cursor.style.opacity = '1';
-            cursor.style.transform = `translate(${e.clientX - 4}px, ${e.clientY - 4}px)`;
-
-            // Check if mouse is near the name
-            const rect = nameBlock.getBoundingClientRect();
-            const distance = Math.hypot(
-                e.clientX - (rect.left + rect.width / 2),
-                e.clientY - (rect.top + rect.height / 2)
-            );
-
-            if (distance < 200) {
-                magnetic.style.opacity = '0.2';
-                magnetic.style.transform = `translate(${e.clientX - 50}px, ${e.clientY - 50}px)`;
-                
-                // Subtle movement of name based on mouse position
-                const moveX = (e.clientX - (rect.left + rect.width / 2)) * 0.1;
-                const moveY = (e.clientY - (rect.top + rect.height / 2)) * 0.1;
-                nameBlock.style.transform = `translate(${moveX}px, ${moveY}px)`;
-            } else {
-                magnetic.style.opacity = '0';
-                nameBlock.style.transform = 'translate(0, 0)';
-            }
-        });
-
-        document.addEventListener('mouseleave', () => {
-            cursor.style.opacity = '0';
-            magnetic.style.opacity = '0';
-            nameBlock.style.transform = 'translate(0, 0)';
-        });
-
-        // Add hover effect for preview cards
-        document.querySelectorAll('.preview-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                if (cursor) cursor.classList.add('hover');
-            });
-            card.addEventListener('mouseleave', () => {
-                if (cursor) cursor.classList.remove('hover');
-            });
-        });
-    });
 
     // Add this to your existing script
     document.addEventListener('mousemove', (e) => {
@@ -858,4 +856,45 @@ const projects = [
     if (isFinePointer) {
         // ...existing magnetic effect code...
     }
+
+    // Add cursor effect for project cards and blog cards
+    const projectCards = document.querySelectorAll('.project-item');
+    const blogCards = document.querySelectorAll('.blog-card');
+    const cursorText = document.querySelector('.cursor-text') as HTMLDivElement;
+
+    // Project card cursor effect
+    projectCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            if (cursorText) {
+                cursorText.textContent = 'Go to Case Study';
+                cursorText.style.opacity = '1';
+                cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
+            }
+        });
+
+        card.addEventListener('mouseleave', () => {
+            if (cursorText) {
+                cursorText.style.opacity = '0';
+                cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
+            }
+        });
+    });
+
+    // Blog card cursor effect
+    blogCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            if (cursorText) {
+                cursorText.textContent = 'Read the Article';
+                cursorText.style.opacity = '1';
+                cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
+            }
+        });
+
+        card.addEventListener('mouseleave', () => {
+            if (cursorText) {
+                cursorText.style.opacity = '0';
+                cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
+            }
+        });
+    });
 </script>

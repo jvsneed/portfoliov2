@@ -1,6 +1,5 @@
 ---
 import Layout from './Layout.astro';
-
 const { frontmatter } = Astro.props;
 const {
     title,
@@ -144,10 +143,9 @@ const {
 
     .hero-image {
         position: relative;
-        /* overflow: hidden; */
         max-width: 30vw;
         object-fit: cover;
-        margin:0;
+        margin:0 0 -1rem 0;
         padding:0;
     }
 
@@ -181,7 +179,7 @@ const {
     }
 
     .case-nav a:hover{
-        color: var(--case-color);
+        color: var (--case-color);
     }
 
     .progress-indicator {
@@ -221,7 +219,7 @@ const {
     .case-content :global(h3) {
         font-family: var(--font-sans);
         font-size: 1.5rem;
-        margin: 1rem 0 0;
+        margin: 6rem 0 0 0;
         color: var(--case-color);
     }
 
@@ -247,7 +245,7 @@ const {
         width: 100%;
         border-radius: var(--curve-md);
         margin: 3rem 0;
-        box-shadow: var(--shadow-soft);
+        /* box-shadow: var(--shadow-soft); */
     }
 
     /* Callouts and Quotes */
@@ -384,8 +382,8 @@ const {
         display: grid;
         grid-template-columns: 1.5fr 1fr;
         gap: var(--space-xl);
-        margin: 4rem 0;
-        padding: 2rem;
+        margin: 0 0;
+        padding: 0;
         background: var(--color-surface);
         border-radius: var(--curve-md);
     }
@@ -401,12 +399,12 @@ const {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: var(--space-lg);
-        margin: 3rem 0;
+        margin: 0 0;
     }
 
     .case-content :global(.metric) {
         text-align: center;
-        padding: 2rem;
+        padding: 0;
         background: var(--color-surface);
         border-radius: var (--curve-sm);
         border: 1px solid var(--color-border);
@@ -415,7 +413,7 @@ const {
     .case-content :global(.metric-value) {
         display: block;
         font-family: var(--font-special);
-        font-size: 3rem;
+        font-size: 0;
         color: var(--case-color);
         line-height: 1;
         margin-bottom: 0.5rem;
@@ -434,6 +432,54 @@ const {
         padding: 2rem 0;
     }
 
+    .sm-flex-col{
+            display: flex;
+        }
+
+    /* Add these new styles for flex layouts */
+    .case-content :global(.split-content) {
+        display: flex;
+        gap: 3rem;
+        margin: 0;
+    }
+
+    .case-content :global(.split-content .image-col) {
+        flex: 1;
+        min-width: 50%;
+    }
+
+    .case-content :global(.split-content .text-col) {
+        flex: 1;
+    }
+
+    .case-content :global(.split-content img) {
+        width: 100%;
+        margin: 0;
+    }
+
+    .case-content :global(.split-content p) {
+        margin-bottom: var(--space-md);
+    }
+
+    /* Add these styles for notes */
+    .case-content :global(.note) {
+        margin: 2rem 0;
+        padding: 1.5rem 2rem;
+        background: rgba(255, 236, 179, 0.15);
+        border: 1px solid rgba(242, 212, 121, 0.919);
+        border-radius: var(--curve-sm);
+        font-size: 0.9375rem;
+        color: var(--color-muted);
+        line-height: 1.6;
+    }
+
+    .case-content :global(.note p) {
+        margin: 0;
+        font-size: inherit;
+        line-height: inherit;
+        opacity: 1;
+    }
+
     @media (max-width: 768px) {
         .case-hero {
             grid-template-columns: 1fr;
@@ -448,7 +494,6 @@ const {
         }
 
         .hero-image {
-            max-width: 100%;
             width: 100vw;
             margin-left: calc(var(--space-md) * -1);
             margin-right: calc(var(--space-md) * -1);
@@ -528,7 +573,6 @@ const {
 
         .case-content :global(.feature-highlight) {
             grid-template-columns: 1fr;
-            padding: var(--space-md);
         }
 
         .case-content :global(.process-step) {
@@ -572,6 +616,29 @@ const {
         .case-content :global(.process-timeline::before) {
             display: none;  /* Hide connecting line on mobile */
         }
+        .sm-flex-col{
+            display: flex;
+            flex-direction: column!important;
+        }
+
+        .sm-flex-col > *{
+            width: 100%!important;
+        }
+
+        .case-content :global(.split-content) {
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+
+        .case-content :global(.split-content .image-col),
+        .case-content :global(.split-content .text-col) {
+            width: 100%;
+        }
+
+        .case-content :global(.note) {
+            margin: 2rem -1rem;
+            border-radius: 0;
+        }
     }
 
     @media (max-width: 480px) {
@@ -587,6 +654,14 @@ const {
             margin: 2rem -1rem;
             width: calc(100% + 2rem);
             border-radius: 0;
+        }
+        .sm-flex-col{
+            display: flex;
+            flex-direction: column!important;
+        }
+
+        .sm-flex-col > *{
+            width: 100%!important;
         }
     }
 </style>

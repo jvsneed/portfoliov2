@@ -1,12 +1,12 @@
 ---
 layout: ../../layouts/CaseStudy.astro
-title: "Navigate the Tate"
-role: "User researcher, primary visual designer and prototyper"
-timeline: "2 months"
-team: "3 UX Generalists"
-tools: ["Figma", "AxureRP", "Zoom", "Mural"]
-heroImage: "/tatemodern-thumbnail1.png"
-overview: "Navigate the Tate is a conceptual project for the Tate Modern gallery in London, England. ‍This integrated experience enables gallery visitors to make the most of their visit by efficiently navigating the gallery and creating long-lasting memories."
+title: "Insurance Research Strategy"
+role: "Digital Experience Manager, UX Researcher"
+timeline: "6 months"
+team: "I managed the team comprised of UX and engineering"
+tools: ["Visio", "PowerPoint", "Figjam", "Figma"]
+heroImage: "/pekin-thumbnail.png"
+overview: "My role as Digital Experience Manager involved establishing a user research strategy to inform decisions, enhance products, and ensure alignment with user needs."
 color: "#FF4444"
 ---
 
@@ -14,9 +14,11 @@ color: "#FF4444"
 
 ## Overview
 
-This integrated experience enables gallery visitors to make the most of their visit by efficiently navigating the gallery and creating long-lasting memories. Visitors will feel satisfied knowing that they’ve seen all the art they want to see and connected with the exhibits they love through physical and digital keepsakes.
 
-_Note: Some information in this case study may be changed to protect confidential or private information. All information and views presented in this case study are my own and do not reflect the views of the Tate Modern._
+
+Pekin Insurance embarked on a digital transformation to improve customer and agent experiences. The focus was on creating a foundation for research-driven design, improving accessibility, and fostering innovation across digital products like customer portals and agent tools. The strategy I implemented laid the foundation for a digital transformation that improved usability, accessibility, and operational efficiency, while fostering a collaborative culture where user insights drove meaningful change.
+
+*Some information in this case study may be changed to protect confidential or private information. All information and views presented in this case study are my own and do not reflect the views of Pekin Insurance.*
 
 ---
 
@@ -26,9 +28,12 @@ _Note: Some information in this case study may be changed to protect confidentia
 
 ## The Challenge
 
-Visitors to large art galleries like the Tate Modern often face challenges navigating exhibits, finding information, and enhancing their experience through digital tools. The Navigate the Tate app was designed to improve this experience by offering digital ticket access, gallery maps, and a feature to request printed postcards of artworks. However, the app’s usability had not been fully tested, and there was uncertainty about how intuitive and user-friendly it would be for a broad range of users, from tourists to art enthusiasts.
+Pekin Insurance was facing challenges with outdated digital platforms that struggled to meet the evolving expectations of agents and insured customers. These gaps weren’t just technical. They reflected a deeper disconnect between user needs and business priorities. As the Digital Experience Manager, I led the charge to redefine the company’s approach through a digital experience strategy, which incorporated establishing a UX research practice. This effort wasn’t just about modernizing, it was about transforming the company's mindset to embrace user-centered practices as a catalyst for innovation.
 
-> How might an integrated solution improve the Tate Modern gallery visit experience?
+
+> How might we establish a user research strategy to identify user pain points, improve product usability, and support a user-centered digital transformation?
+
+
 
 ---
 
@@ -37,9 +42,32 @@ Visitors to large art galleries like the Tate Modern often face challenges navig
 
 ## Solution
 
-Our team created a Tate Modern app which enables visitors to easily find art and exhibits, navigate the museum and see exhibit wait times using an interactive map, and purchase souvenirs. I took primary responsibility for creating low and mid-fidelity wireframes for the full app usability testing, and created a high fidelity prototype to showcase one user flow.
+The digital transformation at Pekin Insurance began delivering tangible results, marking significant progress in improving user experiences for both agents and insured customers. To ensure continued improvement, I established a UX research frameworkthat focused on usability evaluations, accessibility testing, and standardized processes for collecting and analyzing data.
 
-<div style="padding-bottom: 56.25%; position: relative;"><iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/ri6RVDNVuI0?autoplay=1&controls=0&loop=1&modestbranding=1&mute=1&playlist=ri6RVDNVuI0&playsinline=1&rel=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"  style="position: absolute; top: 0px; left: 0px; width: 100%; height: 88%;"><small>Powered by <a href="https://embed.tube/embed-code-generator/youtube/">youtube embed video</a> generator</small></iframe></div>
+<div class="split-content">
+    <div class="image-col">
+        <img src="/images/insurance-research-strategy/evaluate-ux.png" style=" display:flex; margin: 2rem 0 0 0;" alt="Screen captures of tablet and mobile applications for pekin insurance" />
+    </div>
+    <div class="text-col">
+        <b>Core Framework Elements</b>
+        <ul>
+            <li>Set a clear vision goals.</li>
+            <li>Ensure stakeholders are updated frequently and involved in decision making.</li>
+            <li>Establish and guide research methods and processes.</li>
+            <li>Standardized test scripts and logs to ensure consistent data collection through resources and templates.</li>
+            <li>Regular coaching, mentoring, and feedback to upskill team members in research methods.</li>
+        </ul>
+    </div>
+</div>
+
+*Impact: This framework ensured that data-driven insights continued to improve usability and accessibility across digital products.* 
+<img src="/images/insurance-research-strategy/pi-apps.png" style="width: 100%; display:flex; margin: 2rem 0 0 0;" alt="Screen captures of tablet and mobile applications for pekin insurance" />
+
+
+<div class="note">
+Note: These designs were created by the talented UX / visual design members of my team.
+</div>
+
 
 ---
 

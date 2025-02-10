@@ -190,36 +190,16 @@ const links = [
 
     /* Custom cursor styles */
     body {
-        cursor: none;
+        cursor: auto; /* Reset to default cursor */
         background: var(--color-cream);
         color: var(--color-ink);
         background: var(--color-bg);
         color: var(--color-fg);
     }
 
-    .cursor {
-        width: var(--cursor-size);
-        height: var(--cursor-size);
-        background: var(--cursor-color);
-        border-radius: 50%;
-        position: fixed;
-        pointer-events: none;
-        z-index: 9999;
-        opacity: 0.5;
-        mix-blend-mode: difference;
-        transition: transform 0.2s ease;
-    }
+ 
 
-    .cursor.hover {
-        transform: scale(2);
-        mix-blend-mode: difference;
-    }
-
-    /* Add hover interaction class */
-    .hover-target {
-        cursor: none;
-    }
-
+    /* Remove hover states related to cursor */
     @media (prefers-color-scheme: dark) {
         :root {
             --text-primary: #FFFFFF;
@@ -375,23 +355,6 @@ const links = [
         }
     }
 
-    .cursor {
-        pointer-events: none;
-        position: fixed;
-        width: var(--cursor-size);
-        height: var(--cursor-size);
-        border-radius: 50%;
-        background: var(--color-accent);
-        mix-blend-mode: difference;
-        opacity: 0.5;
-        z-index: 9999;
-        transition: transform 0.3s var(--ease-out-spring);
-    }
-
-    .cursor.hover {
-        transform: scale(2);
-    }
-
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(10px); }
         to { opacity: 1; transform: translateY(0); }
@@ -412,7 +375,7 @@ const links = [
         background: currentColor;
         transform: scaleX(0);
         transform-origin: right;
-        transition: transform 0.3s var(--ease-out-spring);
+        transition: transform 0.3s var (--ease-out-spring);
     }
 
     .link-hover:hover::after {
@@ -449,6 +412,23 @@ const links = [
     .content-area {
         padding: clamp(4rem, 8vw, 10rem) clamp(1rem, 5vw, 4rem);
     }
+
+    /* Custom cursor text styles */
+    .cursor-text {
+        width: 120px;  /* Increased from 100px */
+        height: 120px; /* Increased from 100px */
+        padding: 1.5rem; /* Added padding */
+        text-align: center; /* Ensure text is centered */
+        line-height: 1.2; /* Improve text wrapping */
+    }
+
+    /* Larger cursor for project cards */
+    .project-item .cursor-text {
+        width: 120px;
+        height: 120px;
+        padding: 1.5rem;
+        font-size: 0.875rem;
+    }
 </style>
 
 <script>
@@ -473,32 +453,6 @@ const links = [
             inView(section, ({ target }) => {
                 target.classList.add('reveal');
             });
-        });
-
-        // Add cursor element to body
-        const cursor = document.createElement('div');
-        cursor.classList.add('cursor');
-        document.body.appendChild(cursor);
-
-        // Mouse movement handler
-        document.addEventListener('mousemove', (e) => {
-            requestAnimationFrame(() => {
-                cursor.style.left = e.clientX - cursor.offsetWidth / 2 + 'px';
-                cursor.style.top = e.clientY - cursor.offsetHeight / 2 + 'px';
-            });
-        });
-
-        // Hover effect handler
-        document.querySelectorAll('.hover-target').forEach(target => {
-            target.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            target.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-        });
-
-        // Add hover effects
-        const hoverTargets = document.querySelectorAll('a, button, .hover-target');
-        hoverTargets.forEach(target => {
-            target.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            target.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
         });
     });
 </script>

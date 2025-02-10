@@ -33,7 +33,6 @@
 }
 
 body {
-    cursor: none;
     background: var(--color-bg);
     color: var(--color-fg);
     font-family: var(--font-body);
@@ -91,10 +90,6 @@ h1, h2, h3, h4 {
     transform: translate(-8px, -8px);
 }
 
-/* Interactive Elements */
-a, button, .interactive {
-    cursor: none;
-}
 
 /* Common Utilities */
 .container {
