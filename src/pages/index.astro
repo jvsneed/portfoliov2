@@ -3,27 +3,29 @@ import Layout from '../layouts/Layout.astro';
 const posts = await Astro.glob('./writing/*.md');
 
 const projects = [
-{
-        title: "UX Research Study",
+    {
+        title: "Navigate the Tate",
         category: "Research",
         year: "2024",
-        description: "Mixed-methods research study for digital product",
-        image: "/tatemodern-thumbnail2.png"
+        description: "Building engagement with an integrated art museum experience",
+        image: "/tatemodern-thumbnail1.png",
+        slug: "navigate-the-tate"  // Make sure all projects have slugs
     },
     {
         title: "Design System",
         category: "Design",
         year: "2024",
         description: "Mixed-methods research study for digital product",
-
-        image: "/zocdoc-thumbnail.png"
+        image: "/zocdoc-thumbnail.png",
+        slug: "design-system"  // Add slug for this project
     },
     {
         title: "Product Strategy",
         category: "Strategy",
         year: "2024",
         description: "Mixed-methods research study for digital product",
-        image: "/tatemodern-thumbnail2.png"
+        image: "/tatemodern-thumbnail2.png",
+        slug: "product-strategy"  // Add slug for this project
     }
 ];
 ---
@@ -73,11 +75,14 @@ const projects = [
                     <article class="project-item" data-index={index}>
                         <div class="project-content">
                             <div class="project-meta">
-                                <span class="project-number">0{index + 1}</span>
                                 <span class="project-category">{project.category}</span>
                             </div>
                             <h3 class="project-title">{project.title}</h3>
                             <p class="project-description">{project.description}</p>
+                            <a href={`/case-study/${project.slug}`} class="project-link">
+                                <span>View Case Study</span>
+                                <span class="arrow">→</span>
+                            </a>
                         </div>
                         <div class="project-image">
                             <img src={project.image} alt={project.title} />
@@ -465,7 +470,7 @@ const projects = [
         padding: var(--space-lg);
         position: relative;
         border: 1px solid var(--color-border);
-        background: transparent;
+        background: rgba(255, 255, 255, 0.8);
         border-radius: var(--curve-sm);
         transition: all 0.4s var(--ease-out-spring);
         transition: all 0.4s var(--ease-out-spring),
@@ -499,7 +504,7 @@ const projects = [
     .project-category {
         font-family: var(--font-mono);
         font-size: 0.875rem;
-        color: var(--color-muted);
+        color: var(--color-accent);
     }
 
     .project-title {
@@ -532,6 +537,32 @@ const projects = [
         transform: scale(1.05);
     }
 
+    .project-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: var(--space-md);
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
+        text-decoration: none;
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.3s var(--ease-out-spring);
+    }
+
+    .project-item:hover .project-link {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .project-link .arrow {
+        transition: transform 0.3s var(--ease-out-spring);
+    }
+
+    .project-link:hover .arrow {
+        transform: translateX(6px);
+    }
 
     @media (max-width: 768px) {
         .content-area {
@@ -590,6 +621,8 @@ const projects = [
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: var(--space-lg);
+        background: rgba(255, 255, 255, 0.8);
+
     }
 
     .blog-card {

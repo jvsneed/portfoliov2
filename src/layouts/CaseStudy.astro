@@ -1,0 +1,641 @@
+---
+import Layout from './Layout.astro';
+
+const { frontmatter } = Astro.props;
+const {
+    title,
+    role,
+    timeline,
+    team,
+    tools,
+    heroImage,
+    overview,
+    color = '#FF4444'
+} = frontmatter;
+---
+
+<Layout>
+    <div class="progress-indicator">
+        <div class="progress-bar" style={`--case-color: ${color}`}></div>
+    </div>
+    <article class="case-study" style={`--case-color: ${color}`}>
+        <header class="case-hero">
+            <div class="hero-content">
+                <h1>{title}</h1>
+                <div class="project-meta">
+                    <div class="meta-group">
+                        <h3>Role</h3>
+                        <p>{role}</p>
+                    </div>
+                    <div class="meta-group">
+                        <h3>Timeline</h3>
+                        <p>{timeline}</p>
+                    </div>
+                    <div class="meta-group">
+                        <h3>Team</h3>
+                        <p>{team}</p>
+                    </div>
+                    <div class="meta-group">
+                        <h3>Tools</h3>
+                        <ul class="tools-list">
+                            {tools.map((tool: string) => <li>{tool}</li>)}
+                        </ul>
+                    </div>
+                </div>
+                <p class="overview">{overview}</p>
+            </div>
+            <div class="hero-image">
+                <img src={heroImage} alt={`${title} project overview`} />
+            </div>
+        </header>
+
+        <nav class="case-nav">
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#challenge">Challenge</a></li>
+                <li><a href="#solution">Solution</a></li>
+                <li><a href="#process">Process</a></li>
+                <li><a href="#outcome">Outcome</a></li>
+            </ul>
+        </nav>
+
+        <div class="case-content">
+            <slot />
+        </div>
+    </article>
+</Layout>
+
+<style>
+    .case-study {
+        --content-width: 65rem;
+        --content-padding: var(--space-lg);
+        font-family: var(--font-sans);
+        background-color: white;
+    }
+
+    .case-hero {
+        min-height: 90vh;
+        padding: 3rem 0 0 var(--space-xl);
+        background: ;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+        margin: 0 auto;
+        max-width: var(--max-width);
+
+    }
+
+    .hero-content {
+        max-width: 40rem;
+
+
+    }
+
+    h1 {
+        font-family: 'Karrik', sans-serif;
+        font-size: clamp(3rem, 7vw, 5rem);
+        line-height: 0.9;
+        margin-bottom: var(--space-xl);
+        letter-spacing: -0.02em;
+    }
+
+    .project-meta {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: var(--space-sm) var(--space-lg);
+        margin-bottom: var(--space-xl);
+    }
+
+    .meta-group h3 {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--case-color);
+        margin: 1rem 0 0 0;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    .meta-group p{
+        margin: 0;
+    }
+
+    .tools-list {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+    }
+
+    .tools-list li {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        padding: 0.25em 0.75em;
+        border: 1px solid var(--color-border);
+        border-radius: 2px;
+    }
+
+    .overview {
+        font-size: clamp(1rem, 1vw, 1rem);
+        line-height: 1.5;
+        color: var(--color-muted);
+        margin-bottom: var(--space-xl);
+    }
+
+    .hero-image {
+        position: relative;
+        /* overflow: hidden; */
+        max-width: 30vw;
+        object-fit: cover;
+        margin:0;
+        padding:0;
+    }
+
+
+    .case-nav {
+        position: sticky;
+        top: 3rem;
+        background: var(--color-bg);
+        border-bottom: 1px solid var(--color-border);
+        z-index: 10;
+        margin:0 auto;
+    }
+
+    .case-nav ul {
+        max-width: var(--content-width);
+        margin: 0 auto;
+        padding: 0 var(--content-padding);
+        list-style: none;
+        display: flex;
+        gap: var(--space-lg);
+        max-width: var(--max-width);
+
+    }
+
+    .case-nav a {
+        display: block;
+        padding: 1rem 0;
+        color: var(--color-muted);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .case-nav a:hover{
+        color: var(--case-color);
+    }
+
+    .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--color-border);
+        z-index: 101;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: var(--case-color);
+        transform-origin: left;
+        transform: scaleX(0);
+        transition: transform 0.1s ease;
+    }
+
+    .case-content {
+        max-width: 55rem;
+        margin: 0 auto;
+        max-width: var(--max-width);
+        padding: var(--space-xl) var(--space-xl);
+    }
+
+    /* Style the markdown content */
+    .case-content :global(h2) {
+        font-family: 'Karrik', sans-serif;
+        font-size: clamp(2rem, 4vw, 2.5rem);
+        line-height: 1.1;
+        margin: 4rem 0 1.5rem;
+        letter-spacing: -0.01em;
+    }
+
+    .case-content :global(h3) {
+        font-family: var(--font-sans);
+        font-size: 1.5rem;
+        margin: 1rem 0 0;
+        color: var(--case-color);
+    }
+
+    .case-content :global(p) {
+        font-size: 1.125rem;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+        color: var (--color-muted);
+    }
+
+    .case-content :global(ul) {
+        margin: 1.5rem 0;
+        padding-left: 1.5rem;
+        color: var (--color-muted);
+    }
+
+    .case-content :global(li) {
+        margin-bottom: 0.75rem;
+        line-height: 1.6;
+    }
+
+    .case-content :global(img) {
+        width: 100%;
+        border-radius: var(--curve-md);
+        margin: 3rem 0;
+        box-shadow: var(--shadow-soft);
+    }
+
+    /* Callouts and Quotes */
+    .case-content :global(blockquote) {
+        margin: 2rem 0;
+        padding: 1.5rem 2rem;
+        border-left: 4px solid var(--case-color);
+        background: var(--color-surface);
+        border-radius: 0 var(--curve-sm) var(--curve-sm) 0;
+    }
+
+    .case-content :global(.callout) {
+        margin: 2rem 0;
+        padding: 2rem;
+        background: var(--color-surface);
+        border-radius: var (--curve-sm);
+        border: 1px solid var(--color-border);
+    }
+
+    .case-content :global(.callout-title) {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+        color: var(--case-color);
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .case-content :global(.insight) {
+        background: linear-gradient(
+            to right,
+            color-mix(in srgb, var(--case-color) 8%, transparent),
+            var(--color-surface)
+        );
+    }
+
+    .case-content :global(.outcome) {
+        background: linear-gradient(
+            to right,
+            color-mix(in srgb, var(--color-accent) 8%, transparent),
+            var (--color-surface)
+        );
+    }
+
+    .case-content :global(.process-step) {
+        position: relative;
+        margin: 3rem 0;
+        padding-left: 3rem;
+    }
+
+    .case-content :global(.process-step::before) {
+        content: attr(data-step);
+        position: absolute;
+        left: 0;
+        top: 0.5rem;
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--case-color);
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--color-border);
+        border-radius: 50%;
+    }
+
+    .back-to-portfolio {
+        position: absolute;
+        left: var(--content-padding);
+        top: 50%;
+        transform: translateY(-50%);
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: color 0.3s ease;
+    }
+
+    .back-to-portfolio:hover {
+        color: var(--case-color);
+    }
+
+    /* Image Galleries */
+    .case-content :global(.image-grid) {
+        display: grid;
+        gap: var(--space-md);
+        margin: 3rem 0;
+    }
+
+    .case-content :global(.image-grid.cols-2) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .case-content :global(.image-grid.cols-3) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .case-content :global(.image-grid img) {
+        width: 100%;
+        height: auto;
+        margin: 0;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+    }
+
+    /* Image Comparison */
+    .case-content :global(.compare-wrapper) {
+        position: relative;
+        margin: 3rem 0;
+    }
+
+    .case-content :global(.compare-images) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-md);
+    }
+
+    .case-content :global(.compare-label) {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
+        margin-top: 0.5rem;
+    }
+
+    /* Feature Highlight */
+    .case-content :global(.feature-highlight) {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: var(--space-xl);
+        margin: 4rem 0;
+        padding: 2rem;
+        background: var(--color-surface);
+        border-radius: var(--curve-md);
+    }
+
+    .case-content :global(.feature-content) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /* Metrics Display */
+    .case-content :global(.metrics-grid) {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--space-lg);
+        margin: 3rem 0;
+    }
+
+    .case-content :global(.metric) {
+        text-align: center;
+        padding: 2rem;
+        background: var(--color-surface);
+        border-radius: var (--curve-sm);
+        border: 1px solid var(--color-border);
+    }
+
+    .case-content :global(.metric-value) {
+        display: block;
+        font-family: var(--font-special);
+        font-size: 3rem;
+        color: var(--case-color);
+        line-height: 1;
+        margin-bottom: 0.5rem;
+    }
+
+    .case-content :global(.metric-label) {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
+    }
+
+    /* Research Process Component */
+    .case-content :global(.research-process) {
+        margin: 4rem 0;
+        position: relative;
+        padding: 2rem 0;
+    }
+
+    @media (max-width: 768px) {
+        .case-hero {
+            grid-template-columns: 1fr;
+            min-height: auto;
+            padding: 0 var(--space-md) 3rem;
+            gap: 2rem;
+        }
+
+        .hero-content {
+            max-width: 100%;
+            order: 2; /* Move content below image on mobile */
+        }
+
+        .hero-image {
+            max-width: 100%;
+            width: 100vw;
+            margin-left: calc(var(--space-md) * -1);
+            margin-right: calc(var(--space-md) * -1);
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
+            margin-bottom: var(--space-md);
+        }
+
+        .project-meta {
+            grid-template-columns: 1fr;
+            gap: var(--space-sm);
+        }
+
+        .case-nav {
+            background: var(--color-bg);
+            border-bottom: 1px solid var(--color-border);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .case-nav ul {
+            padding: 0 var(--space-md);
+            width: max-content;
+            margin: 0 auto;
+        }
+
+        .case-nav a {
+            padding: 0.75rem 0;
+            white-space: nowrap;
+        }
+
+        .case-content {
+            padding: var(--space-lg) var(--space-md);
+        }
+
+        .case-content :global(h2) {
+            font-size: 2rem;
+            margin: 3rem 0 1rem;
+        }
+
+        .case-content :global(h3) {
+            font-size: 1.25rem;
+        }
+
+        .tools-list {
+            margin: -0.25rem;
+        }
+
+        .tools-list li {
+            margin: 0.25rem;
+        }
+
+        .overview {
+            font-size: 1.125rem;
+        }
+
+        .case-content :global(blockquote),
+        .case-content :global(.callout) {
+            margin: 2rem -1rem;
+            border-radius: 0;
+        }
+
+        .case-content :global(.process-step) {
+            padding-left: 2.5rem;
+        }
+
+        .case-content :global(.image-grid.cols-2),
+        .case-content :global(.image-grid.cols-3) {
+            grid-template-columns: 1fr;
+        }
+
+        .case-content :global(.compare-images) {
+            grid-template-columns: 1fr;
+        }
+
+        .case-content :global(.feature-highlight) {
+            grid-template-columns: 1fr;
+            padding: var(--space-md);
+        }
+
+        .case-content :global(.process-step) {
+            grid-template-columns: 3rem 1fr;
+            gap: var(--space-md);
+        }
+
+        .case-content :global(.process-timeline) {
+            left: 1.5rem;
+        }
+
+        .case-content :global(.step-content) {
+            padding: var(--space-md);
+        }
+
+        .case-content :global(.process-timeline) {
+            padding-left: 2rem;
+        }
+
+        .case-content :global(.step) {
+            padding-left: 1rem;
+        }
+
+        .case-content :global(.step::before) {
+            left: -2rem;
+            width: 0.875rem;
+            height: 0.875rem;
+        }
+
+        .case-content :global(.process-timeline) {
+            flex-direction: column;  /* Stack vertically on mobile */
+            gap: 1rem;
+        }
+
+        .case-content :global(.step) {
+            width: 100%;
+            text-align: left;
+            padding: 1rem 1.5rem;
+        }
+
+        .case-content :global(.process-timeline::before) {
+            display: none;  /* Hide connecting line on mobile */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .case-hero {
+            padding-top: 0;
+        }
+
+        .project-meta {
+            margin-bottom: var(--space-sm);
+        }
+
+        .case-content :global(img) {
+            margin: 2rem -1rem;
+            width: calc(100% + 2rem);
+            border-radius: 0;
+        }
+    }
+</style>
+
+<script>
+    // Update progress bar based on scroll position
+    window.addEventListener('scroll', () => {
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (window.scrollY / totalHeight) * 100;
+        
+        const progressBar = document.querySelector('.progress-bar') as HTMLElement;
+        if (progressBar) {
+            progressBar.style.transform = `scaleX(${progress / 100})`;
+        }
+    });
+
+    // Highlight current section in nav
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.case-nav a');
+
+    window.addEventListener('scroll', () => {
+        const scrollPos = window.scrollY + 100; // Offset for nav height
+
+        sections.forEach(section => {
+            if (!section.id) return;
+            
+            const sectionTop = (section as HTMLElement).offsetTop;
+            const sectionHeight = (section as HTMLElement).offsetHeight;
+
+            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${section.id}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    });
+
+    // Add horizontal scroll snapping for nav on touch devices
+    const nav = document.querySelector('.case-nav') as HTMLElement;
+    if (nav && 'scrollBehavior' in document.documentElement.style) {
+        nav.style.scrollBehavior = 'smooth';
+        nav.style.scrollSnapType = 'x proximity';
+        
+        const links = nav.querySelectorAll('a');
+        links.forEach(link => {
+            link.style.scrollSnapAlign = 'center';
+        });
+    }
+</script>

@@ -1,0 +1,159 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const allCaseStudies = await Astro.glob('../case-study/*.md');
+const categories = ['All', 'Research', 'Design', 'Strategy'];
+---
+
+<Layout>
+    <div class="portfolio-container">
+        <header class="portfolio-header">
+            <h1 class="section-title">Portfolio</h1>
+            <div class="category-filter">
+                {categories.map(category => (
+                    <button 
+                        class:list={['filter-btn', { active: category === 'All' }]}
+                        data-category={category}
+                    >
+                        {category}
+                    </button>
+                ))}
+            </div>
+        </header>
+
+        <div class="case-studies-grid">
+            {allCaseStudies.map(study => (
+                <a href={study.url} class="case-study-card" data-category={study.frontmatter.category}>
+                    <div class="card-image">
+                        <img src={study.frontmatter.heroImage} alt={study.frontmatter.title} />
+                    </div>
+                    <div class="card-content">
+                        <span class="category">{study.frontmatter.category}</span>
+                        <h2>{study.frontmatter.title}</h2>
+                        <p>{study.frontmatter.overview}</p>
+                    </div>
+                </a>
+            ))}
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .portfolio-container {
+        padding: 8rem var(--space-lg) var(--space-xl);
+        max-width: var(--max-width);
+        margin: 0 auto;
+    }
+
+    .portfolio-header {
+        margin-bottom: var(--space-xl);
+    }
+
+    .category-filter {
+        display: flex;
+        gap: var(--space-sm);
+        margin-top: var(--space-lg);
+    }
+
+    .filter-btn {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        padding: 0.5em 1em;
+        border: 1px solid var(--color-border);
+        border-radius: 2px;
+        background: none;
+        color: var(--color-muted);
+        cursor: pointer;
+        transition: all 0.3s var(--ease-out-spring);
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+        border-color: var(--color-accent);
+        color: var(--color-accent);
+    }
+
+    .case-studies-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: var(--space-lg);
+    }
+
+    .case-study-card {
+        text-decoration: none;
+        color: inherit;
+        border: 1px solid var(--color-border);
+        border-radius: var(--curve-sm);
+        overflow: hidden;
+        transition: all 0.3s var(--ease-out-spring);
+    }
+
+    .case-study-card:hover {
+        transform: translateY(-4px);
+        border-color: var (--color-accent);
+    }
+
+    .card-image {
+        aspect-ratio: 16/9;
+        overflow: hidden;
+    }
+
+    .card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s var(--ease-out-spring);
+    }
+
+    .case-study-card:hover .card-image img {
+        transform: scale(1.05);
+    }
+
+    .card-content {
+        padding: var(--space-lg);
+    }
+
+    .category {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
+    }
+
+    h2 {
+        font-family: var(--font-special);
+        font-size: 1.5rem;
+        margin: var(--space-sm) 0;
+    }
+
+    p {
+        color: var(--color-muted);
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>
+
+<script>
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const caseStudies = document.querySelectorAll('.case-study-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const category = (btn as HTMLElement).dataset.category;
+            
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            caseStudies.forEach(study => {
+                const studyElement = study as HTMLElement;
+                if (category === 'All' || studyElement.dataset.category === category) {
+                    studyElement.style.display = 'block';
+                } else {
+                    studyElement.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
