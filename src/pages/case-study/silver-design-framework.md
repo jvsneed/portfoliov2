@@ -6,8 +6,12 @@ timeline: "2 months"
 team: "4 UX Researchers"
 tools: ["Figma", "Zoom", "React"]
 heroImage: "/silverdesign-hero.png"
-overview: "With the lack of a design framework specifically tailored for senior users, UX designers and engineers often lack the tools needed to create accessible designs for this age group. Our team aimed to develop a comprehensive framework that includes design guidelines, an evaluation checklist, and UI components to enhance accessibility and inclusivity for elderly users."
+overview: "With the lack of a design framework specifically tailored for senior users, UX designers and engineers often lack the tools needed to create accessible designs for this age group. Our team aimed to develop a comprehensive framework that includes design guidelines, an evaluation checklist, and UI components to enhance accessibility and inclusivity for senior users."
 color: "#FF4444"
+portfolioImage: "/pekin-thumbnail.png"
+category: "UX Research Strategy ✦ Product Leadership"
+description: "Leading a user research strategy to guide Pekin Insurance's digital transformation."
+
 ---
 
 <section id="overview">

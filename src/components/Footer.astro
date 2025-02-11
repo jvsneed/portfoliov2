@@ -9,10 +9,10 @@ const currentYear = new Date().getFullYear();
                 <span class="copyright">Design and development &copy; {currentYear} by Johanna Sneed</span>
             </div>
             <nav class="footer-nav">
-                <a href="mailto:contact@johannasneed.com" class="footer-link">Email</a>
-                <a href="https://linkedin.com/in/johannasneed" target="_blank" class="footer-link">LinkedIn</a>
-                <a href="https://medium.com/@johannasneed" target="_blank" class="footer-link">Medium</a>
-                <a href="https://bsky.app/profile/johannasneed.com" target="_blank" class="footer-link">Bluesky</a>
+                <a href="mailto:contact@johannasneed.com" class="footer-link" data-color="#FF4444">Email</a>
+                <a href="https://linkedin.com/in/johannasneed" target="_blank" class="footer-link" data-color="#0077B5">LinkedIn</a>
+                <a href="https://medium.com/@johannasneed" target="_blank" class="footer-link" data-color="#00AB6C">Medium</a>
+                <a href="https://bsky.app/profile/johannasneed.com" target="_blank" class="footer-link" data-color="#0096F5">Bluesky</a>
             </nav>
         </div>
     </div>
@@ -23,12 +23,24 @@ const currentYear = new Date().getFullYear();
         margin-top: auto;
         padding: var(--space-lg) 0;
         border-top: 1px solid var(--color-border);
+        position: relative;
+        overflow: hidden;
+        transition: background-color 0.5s var(--ease-out-spring);
+    }
+
+    .footer-bg {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: all 0.5s var(--ease-out-spring);
     }
 
     .footer-container {
         max-width: var(--max-width);
         margin: 0 auto;
         padding: 0 var(--space-xl);
+        position: relative;
+        z-index: 1;
     }
 
     .footer-content {
@@ -42,6 +54,8 @@ const currentYear = new Date().getFullYear();
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
+        position: relative;
+        z-index: 2;
     }
 
     .copyright {
@@ -61,10 +75,12 @@ const currentYear = new Date().getFullYear();
         color: var(--color-muted);
         text-decoration: none;
         transition: color 0.3s ease;
+        position: relative;
+        z-index: 2;
     }
 
     .footer-link:hover {
-        color: var(--color-accent);
+        color: var(--color-fg);
     }
 
     .email-link {
@@ -91,3 +107,24 @@ const currentYear = new Date().getFullYear();
         }
     }
 </style>
+
+<script>
+    const footer = document.querySelector('footer');
+    const footerBg = document.querySelector('.footer-bg');
+    const links = document.querySelectorAll('.footer-link');
+
+    links.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            const color = link.getAttribute('data-color');
+            if (footer instanceof HTMLElement && color) {
+                footer.style.backgroundColor = `${color}10`; // 10 is hex for 0.06 opacity
+            }
+        });
+
+        link.addEventListener('mouseleave', () => {
+            if (footer instanceof HTMLElement) {
+                footer.style.backgroundColor = '';
+            }
+        });
+    });
+</script>

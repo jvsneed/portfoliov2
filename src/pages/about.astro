@@ -1,20 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-const skills = [
-    { category: "Research", items: ["User Research", "Usability Testing", "Data Analysis", "Journey Mapping"] },
-    { category: "Design", items: ["UI Design", "Design Systems", "Prototyping", "Accessibility"] },
-    { category: "Strategy", items: ["Product Strategy", "Design Thinking", "Workshop Facilitation", "Stakeholder Management"] }
-];
-
-const experience = [
-    {
-        role: "Senior Product Designer",
-        company: "Company Name",
-        period: "2022 - Present",
-        description: "Leading design initiatives and mentoring team members."
-    },
-];
 ---
 
 <Layout>
@@ -22,87 +7,108 @@ const experience = [
         <header class="portfolio-header">
             <div class="header-content">
                 <h1 class="section-title">About Me</h1>
-                <div class="category-tags">
-                    <span class="tag active">Background</span>
-                    <span class="tag">Experience</span>
-                    <span class="tag">Skills</span>
-                </div>
             </div>
         </header>
 
         <div class="content-grid">
             <section class="intro-section">
-                <div class="profile-area">
-                    <img src="/profile.jpg" alt="Johanna Sneed" class="profile-image" />
-                    <div class="social-links">
-                        <a href="#" class="social-link">LinkedIn</a>
-                        <a href="#" class="social-link">Twitter</a>
-                        <a href="#" class="social-link">Email</a>
-                    </div>
-                </div>
                 <div class="bio-content">
                     <h2>Hi, I'm Johanna</h2>
                     <p class="bio-text">
-                        A product designer focused on creating intuitive and impactful digital experiences. 
-                        With over 8 years of experience in UX design and research, I help companies build 
-                        products that users love.
+                        I research and design with inclusivity at the core, drawing on years of experience leading teams and managing large-scale implementations. My work bridges research, design, and technology strategy to deliver solutions that work for everyone.
                     </p>
-
-                    <div class="header__inner">
-                        <p> <span id="song">&#8987;</span></p>
-                    </div>
-                    <div class="header__inner">
-                        <p><small>latest played song on <a href="http://last.fm" target="_blank">last.fm</a></small> | <small>powered by <a
-                                    href="https://github.com/biancarosa/lastfm-last-played"
-                                    target="_blank">@biancarosa/lastfm-last-played</a></small></p>
-                    </div>
-                    <script type="text/javascript">
-// @ts-nocheck
-
-                        let user = 'sjalssokande';
-                        let url = 'https://lastfm-last-played.biancarosa.com.br/' + user + '/latest-song';
-                        let song = document.querySelector('#song');
-                        fetch(url)
-                            .then(function (response) {
-                                return response.json()
-                            }).then(function (json) {
-                                song.innerHTML = json['track']['name'] + ' - ' + json['track']['artist']['#text'];
-                            });
-                    </script>
-                </div>
-            </section>
-
-            <section class="skills-section">
-                <h2>Skills & Expertise</h2>
-                <div class="skills-grid">
-                    {skills.map(({ category, items }) => (
-                        <div class="skill-category">
-                            <h3>{category}</h3>
-                            <ul>
-                                {items.map(item => <li>{item}</li>)}
-                            </ul>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            <section class="experience-section">
-                <h2>Experience</h2>
-                <div class="timeline">
-                    {experience.map(({ role, company, period, description }) => (
-                        <div class="timeline-item">
-                            <div class="timeline-meta">
-                                <span class="period">{period}</span>
+                    <p>
+                        I've been working professionally building sites and products since 2012, but I have been designing and developing things for as long as I can remember. I love the process of creating, whether it's a website, a product, or a piece of art. My goal is to make the world a more beautiful and functional place.
+                    </p>
+                    
+                    <div class="philosophy-section">
+                        <h2 class="section-title">My Approach</h2>
+                        <div class="philosophy-list">
+                            <div class="approach-item">
+                                <span class="number">01</span>
+                                <div class="approach-content">
+                                    <h3>Inclusion as a standard</h3>
+                                    <p>Whether I'm working with someone or designing product, I take a human-centered approach, valuing diversity and eliminating barriers. I'm still learning daily how to do this better.</p>
+                                </div>
                             </div>
-                            <div class="timeline-content">
-                                <h3>{role}</h3>
-                                <h4>{company}</h4>
-                                <p>{description}</p>
+                            
+                            <div class="approach-item">
+                                <span class="number">02</span>
+                                <div class="approach-content">
+                                    <h3>Purpose driven work</h3>
+                                    <p>Create work that aligns with my values: benefits people and makes meaningful positive impact.</p>
+                                </div>
+                            </div>
+                            <div class="approach-item">
+                                <span class="number">03</span>
+                                <div class="approach-content">
+                                    <h3>Adaptive problem-solving</h3>
+                                    <p>Embrace challenges with curiosity, using research and iteration to drive growth and innovation.</p>
+                                </div>
+                            </div>
+                            <div class="approach-item">
+                                <span class="number">04</span>
+                                <div class="approach-content">
+                                    <h3>Simplify and iterate</h3>
+                                    <p>Begin with straightforward solutions and refining through research and feedback to meet evolving needs .</p>
+                                </div>
                             </div>
                         </div>
-                    ))}
+                    </div>
                 </div>
+
+                <aside class="contact-area">
+                    <div class="contact-links">
+                        <h3>Contact</h3>
+                        <a href="mailto:contact@johannasneed.com" class="contact-link">
+                            <span class="link-label">Email</span>
+                            <span class="link-text">contact@johannasneed.com</span>
+                        </a>
+                        <a href="https://linkedin.com/in/johannasneed" class="contact-link">
+                            <span class="link-label">LinkedIn</span>
+                            <span class="link-text">@johannasneed</span>
+                        </a>
+
+                    </div>
+                    <div class="media">
+                        <h3>Media</h3>
+                        <div class="vinyl-player">
+
+                            <div class="vinyl-disc">
+                                <div class="vinyl-grooves"></div>
+                                <div class="vinyl-label">
+                                    <h4>Now Playing</h4>
+                                    <div class="song-info">
+                                        <span id="song">Listening to...</span>
+                                    </div>
+                                    <small class="powered-by">via last.fm</small>
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                                // @ts-nocheck
+                                let user = 'sjalssokande';
+                                let url = 'https://lastfm-last-played.biancarosa.com.br/' + user + '/latest-song';
+                                let song = document.querySelector('#song');
+                                fetch(url)
+                                    .then(function (response) {
+                                        return response.json()
+                                    }).then(function (json) {
+                                        const songText = json['track']['name'] + ' by ' + json['track']['artist']['#text'];
+                                        song.innerHTML = songText;
+                                        song.setAttribute('data-content', songText);
+                                    });
+                            </script>
+                        </div>
+
+
+
+                    </div>
+                    
+                </aside>
+                
             </section>
+
+           
         </div>
     </div>
 </Layout>
@@ -115,24 +121,6 @@ const experience = [
         padding-inline: var(--space-md);
     }
 
-    .portfolio-header {
-        margin-bottom: var(--space-xl);
-    }
-
-    .header-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        padding-bottom: var(--space-lg);
-        border-bottom: 1px solid var(--color-border);
-    }
-
-    .section-title {
-        font-family: var(--font-special);
-        font-size: clamp(2.5rem, 5vw, 3.5rem);
-        line-height: 1;
-        margin: 0;
-    }
 
     .content-grid {
         display: grid;
@@ -141,9 +129,70 @@ const experience = [
 
     .intro-section {
         display: grid;
-        grid-template-columns: 300px 1fr;
-        gap: var(--space-xl);
+        grid-template-columns: 1.5fr 1fr;
+        gap: var(--space-sm);
         align-items: start;
+        margin: var(--space-md) 0;
+    }
+
+    .bio-content {
+        padding-right: var(--space-xl);
+        max-width: 65ch;
+    }
+
+    .contact-area {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--curve-sm);
+        padding: var(--space-lg);
+    }
+    .media h3,
+    .contact-links h3 {
+        font-family: var(--font-mono);
+        font-size: 1rem;
+        color: var(--color-accent);
+        margin-bottom: 0;
+    }
+
+    .media h3{
+        margin-top: var(--space-lg);
+        margin:bottom: 0;
+    }
+
+    .contact-link {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: var(--space-xs) 0;
+        text-decoration: none;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+
+    .link-label {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
+    }
+
+    .link-text {
+        color: var(--color-fg);
+        transition: color 0.3s var(--ease-out-spring);
+    }
+
+    .contact-link:hover .link-text {
+        color: var(--color-accent);
+    }
+
+    .music-section {
+        margin-top: var(--space-xl);
+        padding-top: var(--space-lg);
+        border-top: 1px solid var(--color-border);
+    }
+
+    .music-credit {
+        color: var(--color-muted);
+        margin-top: var(--space-xs);
     }
 
     .profile-image {
@@ -163,6 +212,51 @@ const experience = [
         font-family: var(--font-mono);
         font-size: 0.875rem;
         color: var(--color-accent);
+    }
+
+    .philosophy-section {
+        margin-top: var(--space-sm);
+        padding-top: var(--space-sm);
+        border-top: 1px solid var(--color-border);
+        width: 100%;
+    }
+
+    .philosophy-list {
+        display: grid;
+        gap: var(--space-sm);
+        margin-top: var(--space-md);
+    }
+
+    .approach-item {
+        position: relative;
+        padding-left: 4rem;
+        transition: transform 0.3s var(--ease-out-spring);
+    }
+
+    .number {
+        position: absolute;
+        left: 0;
+        top: 0.25rem;
+        font-family: var(--font-mono);
+        font-size: 1rem;
+        color: var(--color-accent);
+    }
+
+    .approach-content h3 {
+        font-size: 1.5rem;
+        line-height: 1.1;
+        margin: .5rem 0;
+        font-family: var(--font-special);
+        font-weight: normal;
+    }
+    .section-title {
+        font-size: 1.5rem;
+        font-family: var(--font-special);
+        font-weight: bold;
+    }
+
+    .approach-content p {
+        max-width: 65ch;
     }
 
     .skills-grid {
@@ -202,13 +296,191 @@ const experience = [
     .period {
         font-family: var(--font-mono);
         font-size: 0.875rem;
-        color: var(--color-accent);
+        color: var (--color-accent);
     }
 
     @media (max-width: 768px) {
+        .philosophy-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .philosophy-card {
+            padding: var(--space-md);
+        }
+
+        .intro-section {
+            grid-template-columns: 1fr;
+        }
+
+        .bio-content {
+            padding-right: 0;
+            order: 1;
+        }
+
+        .contact-area {
+            order: 2;
+        }
+
         .intro-section,
         .timeline-item {
             grid-template-columns: 1fr;
         }
     }
+
+    .now-playing {
+        margin: var(--space-xl) 0;
+    }
+
+    .vinyl-player {
+        margin: var(--space-sm) 0;
+        display: flex;
+        justify-content: flex-start;
+        perspective: 1000px;
+    }
+
+    .vinyl-disc {
+        width: 220px;
+        height: 220px;
+        background: #111;
+        border-radius: 50%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: rotate 20s linear infinite;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .vinyl-grooves {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: repeating-radial-gradient(
+            circle at center,
+            #222 0,
+            #222 1px,
+            #111 1px,
+            #111 3px
+        );
+    }
+
+    .vinyl-grooves::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: conic-gradient(
+            from 0deg,
+            transparent,
+            rgba(255, 255, 255, 0.1) 20%,
+            transparent 40%,
+            rgba(255, 255, 255, 0.1) 60%,
+            transparent 80%
+        );
+        animation: shine 4s linear infinite;
+    }
+
+    .vinyl-label {
+        width: 140px;  // Increased from 100px
+        height: 140px; // Increased from 100px
+        background: var(--color-accent);
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        /* padding: var(--space-md); */
+        color: white;
+        animation: counter-rotate 20s linear infinite;
+    }
+
+    .vinyl-label h4 {
+        font-size: 0.9rem;  // Slightly larger
+        margin: 0;
+        font-family: var(--font-mono);
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        line-height: .5;
+    }
+
+    .song-info {
+        width: 120px;  // Fixed width
+        font-size: 0.85rem;  // Slightly larger
+        text-align: center;
+        position: relative;
+        margin: 0.5rem 0;
+        overflow: hidden;
+    }
+
+    .song-info span {
+        display: inline-block;
+        padding-right: 2rem; /* Add space between repetitions */
+        animation: scroll-loop 30s linear infinite; /* Increased from 15s to 30s */
+        white-space: nowrap;
+    }
+
+    .song-info span::after {
+        content: attr(data-content);
+        padding-left: 2rem; /* Match padding-right above */
+    }
+
+    @keyframes scroll-loop {
+        0% {
+            transform: translateX(0);
+        }
+        10% { /* Added pause at start */
+            transform: translateX(0);
+        }
+        90% { /* Added pause at end */
+            transform: translateX(-100%);
+        }
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+
+    .powered-by {
+        font-size: 0.6rem;
+        opacity: 0.7;
+        margin-top: 0.25rem;
+    }
+
+    .music-icon {
+        color: white;
+        opacity: 0.9;
+        margin-bottom: 0.25rem;
+    }
+
+    @keyframes rotate {
+        from { transform: rotateZ(0); }
+        to { transform: rotateZ(360deg); }
+    }
+
+    @keyframes counter-rotate {
+        from { transform: rotateZ(360deg); }
+        to { transform: rotateZ(0); }
+    }
+
+    @keyframes shine {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .vinyl-disc, .vinyl-label {
+            animation: none;
+        }
+    }
 </style>
+
+<script>
+    const cards = document.querySelectorAll('.philosophy-card');
+
+    cards.forEach((card) => {
+        const handleMouseMove = (event: Event) => {            if (!(event instanceof MouseEvent)) return;            if (!(event.currentTarget instanceof HTMLElement)) return;                        const element = event.currentTarget;            const rect = element.getBoundingClientRect();            const x = ((event.clientX - rect.left) / rect.width) * 100;            const y = ((event.clientY - rect.top) / rect.height) * 100;                        element.style.setProperty('--mouse-x', `${x}%`);            element.style.setProperty('--mouse-y', `${y}%`);
+        };
+
+        card.addEventListener('mousemove', handleMouseMove);
+    });
+</script>

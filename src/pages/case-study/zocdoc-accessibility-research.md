@@ -8,6 +8,10 @@ tools: ["WAVE", "JAWS", "NVDA", "Zoom"]
 heroImage: "/zocdoc-hero.png"
 overview: "his study aimed to identify the obstacles bling and low vision (BLV) users encounter when navigating ZocDoc.com and provide actionable insights for improving the site’s accessibility, specifically focusing on enhancing usability through compliance with Web Content Accessibility Guidelines (WCAG)."
 color: "#FF4444"
+portfolioImage: "/pekin-thumbnail.png"
+category: "UX Research Strategy ✦ Product Leadership"
+description: "Leading a user research strategy to guide Pekin Insurance's digital transformation."
+
 ---
 
 <section id="overview">

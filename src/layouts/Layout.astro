@@ -85,14 +85,10 @@ const links = [
     }
 
     :root {
-  
-
-    
         /* Shadows and effects */
         --shadow-soft: 0 8px 40px rgba(0, 0, 0, 0.08);
         --shadow-pop: 0 12px 32px rgba(255, 107, 78, 0.2);
         --blur-light: blur(12px);
-       
         
         /* Spacing and layout */
         --curve-sm: 4px;
@@ -115,7 +111,6 @@ const links = [
             color-mix(in srgb, var(--color-teal) 70%, white) 100%
         );
         
-      
         /* New Animations */
         --ease-out-soft: cubic-bezier(0.33, 1, 0.68, 1);
         --ease-out-spring: cubic-bezier(0.33, 1.4, 0.68, 1);
@@ -123,7 +118,6 @@ const links = [
         --duration-medium: 0.4s;
         --duration-long: 0.8s;
 
-        
         /* Spacing */
         --space-unit: 0.5rem;
         --space-xs: calc(var(--space-unit) * 2);
@@ -136,13 +130,10 @@ const links = [
         --border-radius: 12px;
         --max-width: 72rem;
 
-    
-
         /* Mouse interaction variables */
         --cursor-size: 20px;
         --cursor-hover-size: 40px;
         --cursor-color: var(--color-accent);
-
 
         /* Updated sophisticated color palette */
         --color-bg: #f6f5f3;  /* Warm off-white */
@@ -152,13 +143,6 @@ const links = [
         --color-surface: #FFFFFF;
         --color-surface-hover: #E9E6E0; /* Slightly darker than bg */
         --color-border: rgba(0,0,0,0.08);
-        
-        /* Remove dark mode overrides since we want consistent colors */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                /* Keep the same colors as light mode */
-            }
-        }
     }
 
     /* Menu open state */
@@ -174,6 +158,15 @@ const links = [
         width: 100%;
         transition: transform 0.3s var(--ease-out-spring);
         flex: 1;
+    }
+    .header-content {
+        display: flex;
+        flex-direction: column ;
+        gap: var(--space-md);
+        justify-content: space-between;
+        align-items: flex-start;
+        padding-bottom: var(--space-md);
+        border-bottom: 1px solid var(--color-border);
     }
 
     /* Update menu open state to not hide content on desktop */
@@ -194,8 +187,6 @@ const links = [
     /* Custom cursor styles */
     body {
         cursor: auto; /* Reset to default cursor */
-        background: var(--color-cream);
-        color: var(--color-ink);
         background: var(--color-bg);
         color: var(--color-fg);
         display: flex;
@@ -203,36 +194,10 @@ const links = [
         min-height: 100vh;
     }
 
- 
-
-    /* Remove hover states related to cursor */
-    @media (prefers-color-scheme: dark) {
-        :root {
-            --text-primary: #FFFFFF;
-            --text-secondary: #AAAAAA;
-            --bg-light: #0A0A0A;
-            --bg-dark: #111111;
-
-            --color-paper: #121212;
-            --color-ink: #FFFCF8;
-            --gradient-subtle: linear-gradient(to right,
-                var(--color-paper),
-                #1A1818,
-                var(--color-paper));
-
-            --color-bg: #161618;
-            --color-fg: #FAFAFA;
-            --color-accent: #60A5FA;
-            --color-muted: #A1A1AA;
-            --color-surface: #1E1E20;
-            --color-surface-alt: #27272A;
-        }
-    }
-
     html {
         font-family: 'Inter', sans-serif;
-        background: var(--bg-light);
-        color: var(--text-primary);
+        background: var(--color-bg);
+        color: var(--color-fg);
         scroll-behavior: smooth;
     }
 
@@ -243,7 +208,7 @@ const links = [
     }
 
     ::selection {
-        background: var(--accent);
+        background: var(--color-accent);
         color: white;
     }
 
@@ -253,14 +218,12 @@ const links = [
         margin: 0;
         min-height: 100vh;
         line-height: 1.65;
-        background: var(--color-canvas);
-        color: var(--color-paper);
+        background: var(--color-bg);
+        color: var(--color-fg);
         font-family: var(--font-body);
         -webkit-font-smoothing: antialiased;
         overflow-x: hidden;
         position: relative;
-        background: var(--color-bg);
-        color: var(--color-fg);
     }
 
     body::before {
@@ -271,13 +234,10 @@ const links = [
         width: 100%;
         height: 100%;
         background: 
-            radial-gradient(circle at 0% 0%, rgba(255, 61, 0, 0.05) 0%, transparent 50%),
-            radial-gradient(circle at 100% 100%, rgba(0, 102, 255, 0.05) 0%, transparent 50%);
-        opacity: 0.03;
-        z-index: -1;
-        background: 
             radial-gradient(circle at 0% 0%, rgba(255, 77, 0, 0.05) 0%, transparent 50%),
             radial-gradient(circle at 100% 100%, rgba(255, 149, 0, 0.05) 0%, transparent 50%);
+        opacity: 0.03;
+        z-index: -1;
     }
 
     main {
@@ -294,7 +254,6 @@ const links = [
             --grid-max: 100%;
         }
         body {
-            padding-top: 4rem; /* Match header height */
             width: 100%;
             overflow-x: hidden;
         }
@@ -320,18 +279,16 @@ const links = [
         background: transparent;
     }
 
-
     /* Smooth scrolling and transitions */
     * {
-        transition: background-color 0.3s ease, 
-                    color 0.3s ease,
-                    transform 0.3s ease;
+        transition: transform 0.3s ease,
+                   opacity 0.3s ease;
     }
 
     /* Selection styling */
     ::selection {
-        background: var(--color-pop);
-        color: var(--color-paper);
+        background: var(--color-accent);
+        color: white;
     }
 
     .split-text {

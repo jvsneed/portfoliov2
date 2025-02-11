@@ -8,6 +8,10 @@ tools: ["Figma", "AxureRP", "Zoom", "Mural"]
 heroImage: "/tatemodern-thumbnail1.png"
 overview: "Navigate the Tate is a conceptual project for the Tate Modern gallery in London, England. ‍This integrated experience enables gallery visitors to make the most of their visit by efficiently navigating the gallery and creating long-lasting memories."
 color: "#FF4444"
+portfolioImage: "/pekin-thumbnail.png"
+category: "UX Research Strategy ✦ Product Leadership"
+description: "Leading a user research strategy to guide Pekin Insurance's digital transformation."
+
 ---
 
 <section id="overview">

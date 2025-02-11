@@ -2,12 +2,27 @@
 import Layout from '../layouts/Layout.astro';
 const posts = await Astro.glob('./writing/*.md');
 
+// Function to format date
+function formatDate(dateStr: string) {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
+
+// Sort posts by date and get only the latest 2
+const latestPosts = posts
+    .sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime())
+    .slice(0, 2);
+
 const projects = [
 {
         title: "Pekin Insurance User Experience Strategy",
         category: "UX Research Strategy ✦ Product Leadership",
         year: "2024",
-        description: "Leading a user research strategy to guide Pekin Insurance's digital transformation",
+        description: "Leading a user research strategy to guide Pekin Insurance's digital transformation.",
         image: "/pekin-thumbnail.png",
         slug: "insurance-research-strategy"  
     },
@@ -15,7 +30,7 @@ const projects = [
         title: "Creating the Silver Design System and Framework",
         category: "UX Research ✦ Accessibility",
         year: "2024",
-        description: "A design system and framework to support senior user needs",
+        description: "A design system and framework to support senior user needs.",
         image: "/silverdesign-thumb.png",
         slug: "silver-design-framework"  
     },
@@ -36,17 +51,10 @@ const projects = [
             <div class="hero-sequence">
                 <div class="name-block">
                     <h1 class="hero-title">
-                        <span class="title-line">
                             <span class="text" style="transform: none; opacity: 1;">johanna sneed</span>
-                            <div class="floating-shapes">
-                                <div class="shape circle animate-float" style="--delay: 0s"></div>
-                                <div class="shape square animate-float" style="--delay: 0.2s"></div>
-                                <div class="shape triangle animate-float" style="--delay: 0.4s"></div>
-                            </div>
-                        </span>
                     </h1>
                     <div class="role-tags" style="opacity: 1;">
-                        <span class="role-tag">User Experience Researcher</span>
+                        <span class="role-tag">Senior Researcher</span>
                         <span class="divider"></span>
                         <span class="role-tag">Inclusive Design Advocate</span>
                     </div>
@@ -63,7 +71,6 @@ const projects = [
             <div class="preview-header">
                 <h2 class="section-title">Selected work</h2>
                 <div class="preview-nav">
-                    <div class="nav-line"></div>
                     <a href="/portfolio" class="view-all">All portfolio case studies →</a>
                 </div>
             </div>
@@ -94,19 +101,23 @@ const projects = [
             <div class="preview-header">
                 <h2 class="section-title">Latest writing</h2>
                 <div class="preview-nav">
-                    <div class="nav-line"></div>
                     <a href="/writing" class="view-all">All writing →</a>
                 </div>
             </div>
             
             <div class="blog-posts">
-                {posts.slice(0, 3).map((post) => (
+                {latestPosts.map((post) => (
                     <a href={post.url} class="blog-card">
-                        <time class="post-date">{post.frontmatter.date}</time>
+                        <time class="post-date">{formatDate(post.frontmatter.date)}</time>
+                        <div class="post-meta">
+                            {post.frontmatter.tags.map((tag: string) => (
+                                <span class="post-category">{tag}</span>
+                            ))}
+                        </div>
                         <h3 class="post-title">{post.frontmatter.title}</h3>
                         <p class="post-excerpt">{post.frontmatter.excerpt}</p>
                         <span class="read-more">
-                            Read More <span class="arrow">→</span>
+                            Read more <span class="arrow">→</span>
                         </span>
                     </a>
                 ))}
@@ -116,130 +127,59 @@ const projects = [
 </Layout>
 
 <style>
-    .editorial-container {
-        min-height: 100vh;
-        display: block;  
-        background: var(--color-bg);
-        position: relative;
-    }
-
-    .editorial-container::before {
-        content: '';
-        position: fixed;
-        inset: 0;
-        background: url('/noise.png');
-        opacity: 0.3;
-        mix-blend-mode: overlay;
-        pointer-events: none;
-        z-index: 1;
+    main {
+        background-color: white;
+        max-width: 100%;
+        min-width: 100%;
     }
 
     .content-area {
-        padding: 8vh 4rem;
+        padding: 20vh 0rem;
         max-width: var(--max-width);
         margin: 0 auto;
     }
 
     .hero-sequence {
         position: relative;
-        padding: clamp(4rem, 5vh, 16rem) 0;
-        width: 100%;
-        transform-style: preserve-3d;
-        perspective: 1000px;
+        padding: 0 var(--space-xl);
+        max-width: 100%;
+        display: flex;
     }
 
     .name-block {
-        position: relative;
-        margin-left: -0.5rem;
+        margin: 0 auto;
         max-width: 100%; 
-        padding-right: 1rem; /* Add padding to prevent text touching edge */
+        padding:0;
         text-wrap: balance;
 
     }
 
     .hero-title {
-        position: relative;
+        /* position: relative; */
         font-family: var(--font-special);
         font-weight: 400;
         margin: 0;
         line-height: 0.9;
     }
 
-    .title-line {
+    .hero-title span {
         display: block;
-        text-wrap: balance;
-
+        font-size: clamp(2.5rem, 25vw, 12rem); 
+        letter-spacing: -0.02em; 
+        color: var(--color-fg); 
     }
-
-    .title-line span {
-        display: block;
-        font-size: clamp(2.5rem, 15vw, 11rem); /* Adjust clamp values */
-        letter-spacing: -0.02em; /* Reduce letter spacing on mobile */
-        color: var(--color-fg); /* Ensure all text is black */
-    }
-
-    .floating-shapes {
-        position: absolute;
-        top: -2rem;
-        right: -2rem;
-        width: clamp(100px, 20vw, 200px);
-        height: clamp(100px, 20vw, 200px);
-        pointer-events: none;
-    }
-
-    .shape {
-        position: absolute;
-        opacity: 0;
-        transform: translateY(20px);
-        animation: floatIn 0.8s var(--ease-out-spring) forwards;
-        animation-delay: var(--delay);
-        transform: translateZ(50px);
-        filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.1));
-    }
-
-    .circle {
-        width: 12px;
-        height: 12px;
-        background: var(--color-accent);
-        border-radius: 50%;
-        right: 40px;
-        top: 20px;
-        animation-delay: 0.2s;
-    }
-
-    .square {
-        width: 10px;
-        height: 10px;
-        border: 2px solid var(--color-accent);
-        right: 80px;
-        top: 60px;
-        animation-delay: 0.4s;
-    }
-
-    .triangle {
-        width: 0;
-        height: 0;
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
-        border-bottom: 14px solid var(--color-accent);
-        right: 20px;
-        top: 40px;
-        animation-delay: 0.6s;
-    }
-
 
     .role-tags {
         margin: 0 0 0 3.5rem;
         display: flex;
-        align-items: center;
+        justify-content: flex-end;
         gap: 1rem;
         opacity: 1;
     }
 
     .role-tag {
-        font-family: var(--font-mono);
-        font-size: clamp(0.875rem, 1.5vw, 1.5rem);
-        color: var(--color-muted); /* Make tags more subtle */
+        font-family: var(--font-special);
+        font-size: clamp(0.875rem, 1.8vw, 1.8rem);
         font-weight: 400;
         position: relative;
     }
@@ -254,171 +194,7 @@ const projects = [
         content: '/';
         margin-left: 1rem;
         color: var(--color-accent);
-    }
-
-    .role-tag.accent {
-        color: var(--color-accent);
-    }
-
-    .hero-decoration {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: 40%;
-        height: 4px;
-        display: flex;
-        align-items: center;
-        opacity: 0;
-        animation: fadeIn 0.8s var(--ease-out-spring) 0.8s forwards;
-    }
-
-    .decoration-line {
-        flex: 1;
-        height: 100%;
-        background: var(--color-accent);
-        transform: scaleX(0);
-        transform-origin: right;
-        animation: scaleIn 1.2s var(--ease-out-spring) 0.8s forwards;
-    }
-
-    .accent-circle {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: var(--color-accent);
-        margin-left: -6px;
-    }
-
-    @keyframes slideUp {
-        to {
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes fadeIn {
-        to {
-            opacity: 1;
-        }
-    }
-
-    @keyframes scaleIn {
-        to {
-            transform: scaleX(1);
-        }
-    }
-
-    @keyframes floatIn {
-        to {
-            opacity: 1;
-            transform: none;
-        }
-    }
-
-    @media (hover: hover) {
-        .hero-title:hover .shape {
-            animation: float 3s var(--ease-out-spring) infinite;
-        }
-
-        .hero-title:hover .square {
-            animation-delay: 0.2s;
-        }
-
-        .hero-title:hover .triangle {
-            animation-delay: 0.4s;
-        }
-    }
-
-    @keyframes float {
-        0%, 100% { transform: translate(0, 0); }
-        50% { transform: translate(-10px, -10px); }
-    }
-
-    @media (max-width: 768px) {
-        .hero-sequence {
-            padding: 6rem 1rem 4rem;
-        }
-
-
-
-        .hero-decoration {
-            width: 60%;
-        }
-    }
-
-    .meta-text {
-        box-sizing: border-box;
-        font-family: var(--font-mono);
-        font-size: 1rem;
-        letter-spacing: 0.2em;
-        color: white;
-        max-width: 92.5%;
-        padding: 0 2rem;
-        background-color: var(--color-accent);
-        margin: 0 0 0 2.5rem;
-    }
-
-    .first-name {
-        font-family: var(--font-special);
-        font-size: clamp(4rem, 12vw, 11rem);
-        margin-bottom:-1rem;
-
-    }
-
-    .accent-bars {
-        position: absolute;
-        left: 0;
-        bottom: -2rem;
-        display: flex;
-        gap: 0.5rem;
-    }
-
-    .bar {
-        height: 4px;
-        background: var(--color-accent);
-    }
-
-    .bar:nth-child(1) { width: 40%; }
-    .bar:nth-child(2) { width: 20%; }
-    .bar:nth-child(3) { width: 10%; }
-
-    @keyframes fadeUp {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes growBar {
-        to { transform: scaleX(1); }
-    }
-
-    @keyframes fadeIn {
-        to { opacity: 1; }
-    }
-
-  
-
-    .interaction-layer {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        z-index: 10;
-    }
-
-
-
-    .first-name:hover {
-        transform: perspective(1000px) rotateX(5deg);
-        color: var(--color-accent);
-    }
-
-    .accent-bars {
-        transition: transform 0.3s var(--ease-out-spring);
-    }
-
-    .name-block:hover .accent-bars {
-        transform: translateX(20px);
-    }
+    } 
 
     .portfolio-preview {
         padding: var(--space-xl) var(--space-lg);
@@ -455,7 +231,7 @@ const projects = [
     .project-item {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 2rem;
+        gap: 5rem;
         align-items: center;
         padding: var(--space-md) var(--space-lg);
         position: relative;
@@ -464,12 +240,13 @@ const projects = [
         border-radius: var(--curve-sm);
         transition: all 0.4s var(--ease-out-spring);
         transition: all 0.4s var(--ease-out-spring),
-                    border-color 0.3s ease;
-        cursor: none;  /* Add this */
-        text-decoration: none;  /* Add this */
-        color: inherit;  /* Add this */
-        transform-style: preserve-3d;
+        border-color 0.3s ease;
+        cursor: none;  
+        text-decoration: none; 
+        color: inherit; 
         perspective: 1000px;
+        max-width:var(--max-width);
+        margin: 0 auto;
     }
 
     .project-item:hover {
@@ -501,18 +278,23 @@ const projects = [
         font-size: .9rem;
         color: var(--color-accent);
     }
-
+    .post-title,
     .project-title {
         font-family: var(--font-special);
         line-height:1;
         font-size: clamp(1.5rem, 3vw, 2.5rem);
         margin: 1rem 0;
+        font-weight: 400;
     }
-
+    .post-excerpt,
     .project-description {
-        color: var(--color-muted);
         margin: 0;
+        font-size:1rem;
+        line-height: 1.2;
+    }
+    .project-description{
         max-width: 40ch;
+
     }
 
     .project-image {
@@ -526,10 +308,6 @@ const projects = [
         height: 100%;
         object-fit: cover;
         transition: transform 0.6s var(--ease-out-spring);
-    }
-
-    .project-item:hover .project-image img {
-        transform: scale(1.05);
     }
 
     .project-link {
@@ -558,52 +336,23 @@ const projects = [
     .project-link:hover .arrow {
         transform: translateX(6px);
     }
-
-    @media (max-width: 768px) {
-        .content-area {
-            padding: 8rem 1rem 4rem; /* Adjust top padding for header */
-        }
-
-        .hero-sequence {
-            padding: 0; /* Remove extra padding on mobile */
-        }
-
-        .name-block {
-            margin-left: 0; /* Remove negative margin on mobile */
-        }
-
-        .floating-shapes {
-            transform: scale(0.7); /* Scale down decorative elements */
-            right: -1rem;
-        }
-
-        .role-tag {
-            font-size: 0.875rem; /* Smaller font size on mobile */
-        }
-        .project-item,
-        .project-item:nth-child(even) {
-            grid-template-columns: 1fr;
-            padding: var(--space-md);
-        }
-
-        .project-item:nth-child(even) .project-content {
-            order: 1;
-        }
-    }
-
     .view-all {
         font-family: var(--font-mono);
-        font-size: 0.875rem;
+        font-size: 1rem;
         color: var(--color-accent);
         text-decoration: none;
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        transition: gap 0.3s var(--ease-out-spring);
+        transition: gap 0.3s var (--ease-out-spring);
+        padding: 0 var(--space-sm);
+        border-radius: var(--curve-sm) ;
     }
 
     .view-all:hover {
-        gap: 1rem;
+        background-color: var(--color-accent);
+        color: white;
+
     }
 
     .blog-preview {
@@ -614,25 +363,26 @@ const projects = [
 
     .blog-posts {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: var(--space-lg);
-        background: rgba(255, 255, 255, 0.8);
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-sm);
 
     }
 
     .blog-card {
-        cursor: none;  /* Add this */
-        text-decoration: none;  /* Add this */
-        color: inherit;  /* Add this */
+        cursor: none;  
+        text-decoration: none;  
+        color: inherit;  
         padding: var(--space-lg);
         border: 1px solid var(--color-border);
         border-radius: var(--curve-sm);
         transition: all 0.3s var(--ease-out-spring);
+        background: rgba(255, 255, 255, 0.8);
+
     }
 
     .blog-card:hover {
-        transform: translateY(-4px);
         border-color: var(--color-accent);
+        transform: translateX(1rem) translateZ(20px) rotateX(2deg) rotateY(-2deg);
     }
 
     .post-date {
@@ -643,25 +393,37 @@ const projects = [
         margin-bottom: var(--space-sm);
     }
 
-    .post-title {
-        font-family: var(--font-special);
-        font-size: 1.5rem;
-        margin: 0;
+    .post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
         margin-bottom: var(--space-sm);
     }
 
+    .post-category {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
+    }
+
+    .post-category:not(:last-child)::after {
+        content: '✦';
+        margin-left: var(--space-xs);
+        color: var(--color-accent);
+    }
+
     .post-excerpt {
-        color: var(--color-muted); 
         margin: 0;
         margin-bottom: var(--space-md);
+        font-size:1rem;
     }
 
     .read-more {
         display: flex;
         align-items: center;
         gap: 0.75rem;
-        margin-top: var(--space-md);
-        font-family: var(--font-mono);
+        margin-top: var (--space-md);
+        font-family: var (--font-mono);
         font-size: 0.875rem;
         color: var(--color-accent);
     }
@@ -685,21 +447,49 @@ const projects = [
         }
     }
 
-    /* Remove potentially conflicting animations */
-    .split-text,
-    .split-chars {
-        opacity: 1;
-        transform: none;
-    }
+    @media (max-width: 768px) {
+        .content-area {
+            max-width: var(--max-width) ;
+            padding: var(--space-xl) var(--space-sm);
+        }
 
-    @media (prefers-reduced-motion: reduce) {
-        .split-text,
-        .split-chars,
-        .project-item,
-        .blog-card {
-            opacity: 1 !important;
-            transform: none !important;
-            transition: none !important;
+        .hero-sequence {
+            padding: 0 var(--space-sm);
+        }
+
+        .hero-decoration {
+            width: 60%;
+        }
+
+        .hero-sequence{
+            display:block;
+        }
+
+        .hero-title span{
+        display:block;
+        font-size: min(3rem, 15vw);
+        justify-content: center;
+        max-width: var(--max-width);
+        text-wrap:wrap;
+        }
+        .role-tags{
+            display:block;
+            padding:0 var(--space-sm);
+            margin: 0 auto;
+            max-width: var(--max-width);
+            line-height: 1;
+        }
+        .role-tag {
+            font-size: 1.25rem;
+        }
+        .blog-card,
+        .project-item{
+            padding: var(--space-sm) var(--space-md);
+        }
+
+        .portfolio-preview,
+        .blog-preview{
+            padding: var(--space-sm) var(--space-sm);   
         }
     }
 </style>
@@ -707,26 +497,8 @@ const projects = [
 <script>
     import gsap from 'gsap';
     import { ScrollTrigger } from 'gsap/ScrollTrigger';
-    import SplitType from 'split-type';
-
+    
     gsap.registerPlugin(ScrollTrigger);
-
-    document.addEventListener('DOMContentLoaded', () => {
-        // Remove all initial animations
-        // Keep only the mouse movement effects
-        const shapes = document.querySelectorAll('.shape');
-        document.addEventListener('mousemove', (e) => {
-            const mouseX = e.clientX / window.innerWidth - 0.5;
-            const mouseY = e.clientY / window.innerHeight - 0.5;
-            shapes.forEach(shape => {
-                const speed = 20;
-                const x = mouseX * speed;
-                const y = mouseY * speed;
-                (shape as HTMLElement).style.transform = 
-                    `translate(${x}px, ${y}px)`;
-            });
-        });
-    });
 
     // Add scroll progress indicator
     window.addEventListener('scroll', () => {
@@ -734,29 +506,6 @@ const projects = [
         const progressBar = document.querySelector('.scroll-progress') as HTMLElement;
         progressBar?.style.setProperty('--scroll', `${scrollPercent}%`);
     });
-
-
-    // Add this to your existing script
-    document.addEventListener('mousemove', (e) => {
-        const shapes = document.querySelectorAll('.shape');
-        const mouseX = e.clientX / window.innerWidth - 0.5;
-        const mouseY = e.clientY / window.innerHeight - 0.5;
-
-        shapes.forEach(shape => {
-            const speed = 20;
-            const x = mouseX * speed;
-            const y = mouseY * speed;
-            (shape as HTMLElement).style.transform = 
-                `translate(${x}px, ${y}px)`;
-        });
-    });
-
-    // Conditional mouse effects
-    const isFinePointer = window.matchMedia('(pointer: fine)').matches;
-    
-    if (isFinePointer) {
-        // ...existing magnetic effect code...
-    }
 
     // Add cursor effect for project cards and blog cards
     const projectCards = document.querySelectorAll('.project-item');

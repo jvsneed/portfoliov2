@@ -13,10 +13,9 @@
     },
     "allowSyntheticDefaultImports": true,
     "verbatimModuleSyntax": true,
-    "skipLibCheck": true  // Add this line to be more lenient with missing files
+    "skipLibCheck": true  
   },
   "include": [
-    "src/**/*.astro",  // Be more specific about what to include
     "src/**/*.ts",
     "src/**/*.tsx",
     ".astro/**/*"

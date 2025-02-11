@@ -8,6 +8,10 @@ tools: ["Visio", "PowerPoint", "Figjam", "Figma"]
 heroImage: "/pekin-hero.png"
 overview: "My role as Digital Experience Manager involved establishing a user research strategy to inform decisions, enhance products, and ensure alignment with user needs."
 color: "#FF4444"
+portfolioImage: "/pekin-thumbnail.png"
+category: "UX Research Strategy ✦ Product Leadership"
+description: "Leading a user research strategy to guide Pekin Insurance's digital transformation."
+
 ---
 
 <section id="overview">

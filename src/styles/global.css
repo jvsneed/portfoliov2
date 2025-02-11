@@ -16,7 +16,14 @@
 }
 
 :root {
-
+    /* Same color variables as in Layout.astro */
+    --color-bg: #f6f5f3;
+    --color-fg: #2C2C2C;
+    --color-accent: #FF4444;
+    --color-muted: #666666;
+    --color-surface: #FFFFFF;
+    --color-surface-hover: #E9E6E0;
+    --color-border: rgba(0,0,0,0.08);
 
     /* Animation */
     --ease-out-soft: cubic-bezier(0.33, 1, 0.68, 1);
@@ -60,9 +67,10 @@ h1, h2, h3, h4 {
 /* Common Components */
 .section-title {
     font-family: var(--font-special);
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-size: clamp(2rem, 5vw, 3.5rem);
     line-height: 1;
     margin: 0;
+    font-weight: 400;
 }
 
 /* Cursor Styles */
@@ -102,13 +110,7 @@ h1, h2, h3, h4 {
     margin-bottom: var(--space-xl);
 }
 
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding-bottom: var(--space-lg);
-    border-bottom: 1px solid var(--color-border);
-}
+
 
 /* Common Card Styles */
 .card {
@@ -191,3 +193,8 @@ h1, h2, h3, h4 {
     background: transparent;
 }
 
+@media (max-width: 768px) {
+    h2{
+        font-size: 3rem;
+    }
+}

@@ -1,9 +1,8 @@
-
 ---
-title: "Design Systems in Practice"
-date: "2024-01-15"
-excerpt: "Exploring how design systems bridge the gap between design and development, creating more efficient and consistent product experiences."
-tags: ["Design Systems", "UX Design", "Development"]
+title: "How to incorporate accessibility into every step of the software development lifecycle"
+date: "November 11, 2024"
+excerpt: "By embedding accessibility into every phase of the software development lifecycle, we create products that work for everyone."
+tags: ["Web Development"]
 layout: "../../layouts/BlogPost.astro"
 ---
 

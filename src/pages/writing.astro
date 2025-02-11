@@ -1,0 +1,310 @@
+---
+import Layout from '../layouts/Layout.astro';
+const posts = await Astro.glob('./writing/*.md');
+
+// Function to format date
+function formatDate(dateStr: string) {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
+
+// Sort posts by date in descending order (newest first)
+const sortedPosts = posts.sort((a, b) => {
+    return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
+});
+
+const allTags = [...new Set(posts.flatMap(post => post.frontmatter.tags))];
+---
+
+<Layout>
+    <div class="blog-container">
+        <header class="portfolio-header">
+            <div class="header-content">
+                <h1 class="section-title">Writing</h1>
+                <div class="category-tags">
+                    <span class="tag active">All</span>
+                    {allTags.map(tag => (
+                        <span class="tag">{tag}</span>
+                    ))}
+                </div>
+            </div>
+        </header>
+
+        <div class="posts-grid">
+            {sortedPosts.map((post) => (
+                <a href={post.url} class="post-card">
+                    <time class="post-date">{formatDate(post.frontmatter.date)}</time>
+                    <div class="post-meta">
+                        {post.frontmatter.tags.map((tag: string) => (
+                            <span class="post-category">{tag}</span>
+                        ))}
+                    </div>
+                    <h2 class="post-title">{post.frontmatter.title}</h2>
+                    <p class="post-excerpt">{post.frontmatter.excerpt}</p>
+                    <span class="read-more">
+                        Read article <span class="arrow">→</span>
+                    </span>
+                </a>
+            ))}
+        </div>
+    </div>
+    <div class="cursor-text"></div>
+</Layout>
+
+<style>
+    .blog-container {
+        padding: var(--space-xl) 0;
+        max-width: var(--max-width);
+        margin: 0 auto;
+    }
+
+
+    .category-tags {
+        display: flex;
+        gap: var(--space-sm);
+        padding-bottom: 0.5rem;
+    }
+
+    .tag {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
+        padding: 0.5rem 1rem;
+        border-radius: 2px;
+        cursor: pointer;
+        transition: all 0.3s var(--ease-out-spring);
+        border: 1px solid var(--color-border);
+        background: var(--color-surface);
+    }
+
+    .tag:hover {
+        background: var(--color-accent);
+        color: white;
+        border-color: var(--color-accent);
+    }
+
+    .tag.active {
+        background: var(--color-accent);
+        color: white;
+        border-color: var(--color-accent);
+    }
+
+    .posts-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-sm);
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: var(--space-md) 0;
+    }
+
+    .post-card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        padding: var(--space-lg);
+        border: 1px solid var(--color-border);
+        border-radius: var(--curve-sm);
+        background: rgba(255, 255, 255, 0.8);
+        transition: all 0.3s var(--ease-out-spring);
+        cursor: none;
+        transform-style: preserve-3d;
+        perspective: 1000px;
+    }
+
+    .post-card:hover {
+        border-color: var(--color-accent);
+        transform: translateX(1rem) translateZ(20px) rotateX(2deg) rotateY(-2deg);
+    }
+
+    .post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+        margin-bottom: var(--space-sm);
+    }
+
+    .post-category {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
+    }
+
+    .post-category:not(:last-child)::after {
+        content: '✦';
+        margin-left: var(--space-xs);
+        color: var (--color-accent);
+    }
+
+    .post-date {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
+        margin-bottom: var(--space-xs);
+    }
+
+    .post-title {
+        font-family: var(--font-special);
+        line-height: 1;
+        font-size: clamp(1.5rem, 3vw, 2.5rem);
+        margin: 1rem 0;
+        font-weight: 400;
+    }
+
+    .post-excerpt {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.2;
+        margin-bottom: var(--space-md);
+    }
+
+    .read-more {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: var(--space-md);
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.3s var(--ease-out-spring);
+    }
+
+    .post-card:hover .read-more {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .read-more .arrow {
+        transition: transform 0.3s var(--ease-out-spring);
+    }
+
+    .read-more:hover .arrow {
+        transform: translateX(6px);
+    }
+
+    .read-more:hover {
+        color: var(--color-fg);
+    }
+
+    @media (max-width: 768px) {
+        .blog-container {
+            padding-top: 6rem;
+        }
+
+        .category-tags {
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: var(--space-sm);
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .posts-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .post-card {
+            padding: var(--space-md);
+            margin: 0;
+            border-radius: var(--curve-sm);
+            border-left: 1px solid var(--color-border);
+            border-right: 1px solid var(--color-border);
+        }
+    }
+
+    /* Add cursor text styles */
+    .cursor-text {
+        position: fixed;
+        pointer-events: none;
+        width: 120px;
+        height: 120px;
+        background: var(--color-accent);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        text-align: center;
+        padding: 1.5rem;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+        transition: opacity 0.3s, transform 0.3s var(--ease-out-spring);
+        z-index: 1000;
+    }
+</style>
+
+<script>
+    // Simplified script - only filter functionality remains
+    const tagButtons = document.querySelectorAll('.category-tags .tag');
+    const posts = document.querySelectorAll('.post-card');
+
+    tagButtons.forEach(tag => {
+        tag.addEventListener('click', () => {
+            tagButtons.forEach(t => t.classList.remove('active'));
+            tag.classList.add('active');
+
+            const filter = tag.textContent;
+            posts.forEach(post => {
+                if (filter === 'All') {
+                    (post as HTMLElement).style.display = 'block';
+                    return;
+                }
+                
+                const postTags = Array.from(post.querySelectorAll('.post-category'))
+                    .map(t => t.textContent);
+                (post as HTMLElement).style.display = postTags.includes(filter) ? 'block' : 'none';
+            });
+        });
+    });
+
+    // Add cursor tracking
+    const cursorText = document.querySelector('.cursor-text') as HTMLDivElement;
+
+    document.addEventListener('mousemove', (e) => {
+        if (cursorText) {
+            cursorText.style.left = e.clientX + 'px';
+            cursorText.style.top = e.clientY + 'px';
+        }
+    });
+
+    posts.forEach(post => {
+        post.addEventListener('mouseenter', () => {
+            if (cursorText) {
+                cursorText.textContent = 'Read Article';
+                cursorText.style.opacity = '1';
+                cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
+            }
+        });
+
+        post.addEventListener('mouseleave', () => {
+            if (cursorText) {
+                cursorText.style.opacity = '0';
+                cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
+            }
+        });
+    });
+
+    // Add this to the existing script
+    document.addEventListener('DOMContentLoaded', () => {
+        const selectedTag = sessionStorage.getItem('selectedTag');
+        if (selectedTag) {
+            const decodedTag = decodeURIComponent(selectedTag);
+            const tagToClick = Array.from(document.querySelectorAll('.tag'))
+                .find(tag => tag.textContent === decodedTag);
+            
+            if (tagToClick) {
+                (tagToClick as HTMLElement).click();
+            }
+            
+            sessionStorage.removeItem('selectedTag');
+        }
+    });
+</script>

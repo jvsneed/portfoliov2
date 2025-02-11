@@ -14,13 +14,6 @@ Base responsive breakpoints
         --space-md: calc(var(--space-unit) * 4);
     }
 
-    .content-area {
-        padding: 6rem var(--space-md) !important;
-    }
-
-    .section-title {
-        font-size: var(--font-size-2xl) !important;
-    }
 
     .first-name {
         font-size: clamp(3rem, 10vw, 6rem) !important;
