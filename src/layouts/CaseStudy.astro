@@ -228,6 +228,8 @@ const {
         line-height: 1.7;
         margin-bottom: 1.5rem;
         color: var (--color-muted);
+        padding:0;
+        margin:0;
     }
 
     .case-content :global(ul) {
@@ -398,32 +400,41 @@ const {
     /* Metrics Display */
     .case-content :global(.metrics-grid) {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: var(--space-lg);
-        margin: 0 0;
+        margin: 2rem 0;
     }
 
     .case-content :global(.metric) {
         text-align: center;
-        padding: 0;
+        padding: 2rem;
         background: var(--color-surface);
-        border-radius: var (--curve-sm);
+        border-radius: var(--curve-sm);
         border: 1px solid var(--color-border);
+        transition: transform 0.3s var(--ease-out-spring);
+    }
+
+    .case-content :global(.metric:hover) {
+        transform: translateY(-4px);
     }
 
     .case-content :global(.metric-value) {
         display: block;
         font-family: var(--font-special);
-        font-size: 0;
+        font-size: clamp(2rem, 4vw, 3rem);
         color: var(--case-color);
         line-height: 1;
-        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        font-weight: bold;
     }
 
     .case-content :global(.metric-label) {
-        font-family: var(--font-mono);
-        font-size: 0.875rem;
+        font-family: var(--font-sans);
+        font-size: 1rem;
         color: var(--color-muted);
+        line-height: 1.4;
+        max-width: 20ch;
+        margin: 0 auto;
     }
 
     /* Research Process Component */

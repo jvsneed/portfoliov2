@@ -4,30 +4,29 @@ const posts = await Astro.glob('./writing/*.md');
 
 const projects = [
 {
-        title: "Insurance UX Strategy",
-        category: "UX Strategy ✦ Product Leadership",
+        title: "Pekin Insurance User Experience Strategy",
+        category: "UX Research Strategy ✦ Product Leadership",
         year: "2024",
         description: "Leading a user research strategy to guide Pekin Insurance's digital transformation",
         image: "/pekin-thumbnail.png",
         slug: "insurance-research-strategy"  
     },
     {
-        title: "Navigate the Tate",
-        category: "User Research ✦ UI Design",
+        title: "Creating the Silver Design System and Framework",
+        category: "UX Research ✦ Accessibility",
         year: "2024",
-        description: "Building engagement with an integrated art museum experience for the Tate Modern",
-        image: "/tatemodern-thumbnail1.png",
-        slug: "navigate-the-tate"
+        description: "A design system and framework to support senior user needs",
+        image: "/silverdesign-thumb.png",
+        slug: "silver-design-framework"  
     },
-
     {
-        title: "Product Strategy",
-        category: "Strategy",
+        title: "Improving healthcare access for blind and low vision users",
+        category: "UX Research ✦ Accessibility",
         year: "2024",
-        description: "Mixed-methods research study for digital product",
-        image: "/tatemodern-thumbnail2.png",
-        slug: "product-strategy"  // Add slug for this project
-    }
+        description: "Evaluating the accessibility of ZocDoc with users experiencing blindness and low vision (BLV).",
+        image: "/zocdoc-thumbnail.png",
+        slug: "zocdoc-accessibility-research"
+    },
 ];
 ---
 
@@ -38,7 +37,7 @@ const projects = [
                 <div class="name-block">
                     <h1 class="hero-title">
                         <span class="title-line">
-                            <span class="text">johanna sneed</span>
+                            <span class="text" style="transform: none; opacity: 1;">johanna sneed</span>
                             <div class="floating-shapes">
                                 <div class="shape circle animate-float" style="--delay: 0s"></div>
                                 <div class="shape square animate-float" style="--delay: 0.2s"></div>
@@ -46,8 +45,8 @@ const projects = [
                             </div>
                         </span>
                     </h1>
-                    <div class="role-tags">
-                        <span class="role-tag">User Experience Research Manager</span>
+                    <div class="role-tags" style="opacity: 1;">
+                        <span class="role-tag">User Experience Researcher</span>
                         <span class="divider"></span>
                         <span class="role-tag">Inclusive Design Advocate</span>
                     </div>
@@ -176,11 +175,7 @@ const projects = [
         display: block;
         font-size: clamp(2.5rem, 15vw, 11rem); /* Adjust clamp values */
         letter-spacing: -0.02em; /* Reduce letter spacing on mobile */
-        transform: translateY(100%);
-        animation: slideUp 0.8s var(--ease-out-spring) forwards;
         color: var(--color-fg); /* Ensure all text is black */
-        text-wrap: balance;
-
     }
 
     .floating-shapes {
@@ -238,8 +233,7 @@ const projects = [
         display: flex;
         align-items: center;
         gap: 1rem;
-        opacity: 0;
-        animation: fadeIn 0.8s var(--ease-out-spring) 0.8s forwards;
+        opacity: 1;
     }
 
     .role-tag {
@@ -316,7 +310,7 @@ const projects = [
     @keyframes floatIn {
         to {
             opacity: 1;
-            transform: translateY(0);
+            transform: none;
         }
     }
 
@@ -455,7 +449,7 @@ const projects = [
     .featured-projects {
         display: flex;
         flex-direction: column;
-        gap: var(--space-lg);
+        gap: var(--space-sm);
     }
 
     .project-item {
@@ -504,15 +498,15 @@ const projects = [
 
     .project-category {
         font-family: var(--font-mono);
-        font-size: 0.875rem;
+        font-size: .9rem;
         color: var(--color-accent);
     }
 
     .project-title {
         font-family: var(--font-special);
+        line-height:1;
         font-size: clamp(1.5rem, 3vw, 2.5rem);
-        margin: 0;
-        margin-bottom: var(--space-sm);
+        margin: 1rem 0;
     }
 
     .project-description {
@@ -718,111 +712,20 @@ const projects = [
     gsap.registerPlugin(ScrollTrigger);
 
     document.addEventListener('DOMContentLoaded', () => {
-        // Initial hero animation - simpler version first
-        const nameBlock = document.querySelector('.first-name');
-        const metaText = document.querySelector('.meta-text');
-        const bars = document.querySelectorAll('.bar');
-
-        gsap.from(metaText, {
-            y: 30,
-            opacity: 0,
-            duration: 1,
-            ease: "power3.out"
-        });
-
-        gsap.from(nameBlock, {
-            y: 50,
-            opacity: 0,
-            duration: 1.2,
-            delay: 0.3,
-            ease: "power3.out"
-        });
-
-        gsap.from(bars, {
-            scaleX: 0,
-            duration: 1,
-            delay: 0.8,
-            stagger: 0.1,
-            ease: "power3.out",
-            transformOrigin: "left"
-        });
-
-        // Project cards
-        const projectItems = document.querySelectorAll('.project-item');
-        projectItems.forEach((item, index) => {
-            gsap.from(item, {
-                scrollTrigger: {
-                    trigger: item,
-                    start: "top bottom-=100",
-                    toggleActions: "play none none reverse"
-                },
-                y: 100,
-                opacity: 0,
-                duration: 1,
-                delay: index * 0.2,
-                ease: "power3.out"
-            });
-        });
-
-        // Blog cards
-        const blogCards = document.querySelectorAll('.blog-card');
-        blogCards.forEach((card, index) => {
-            gsap.from(card, {
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top bottom-=100",
-                    toggleActions: "play none none reverse"
-                },
-                y: 50,
-                opacity: 0,
-                duration: 0.8,
-                delay: index * 0.1,
-                ease: "power3.out"
-            });
-        });
-
-        // Add parallax effect
+        // Remove all initial animations
+        // Keep only the mouse movement effects
+        const shapes = document.querySelectorAll('.shape');
         document.addEventListener('mousemove', (e) => {
-            const { clientX, clientY } = e;
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-            
-            const shapes = document.querySelectorAll('.shape');
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
             shapes.forEach(shape => {
-                const moveX = (clientX - centerX) * 0.02;
-                const moveY = (clientY - centerY) * 0.02;
+                const speed = 20;
+                const x = mouseX * speed;
+                const y = mouseY * speed;
                 (shape as HTMLElement).style.transform = 
-                    `translateX(${moveX}px) translateY(${moveY}px) translateZ(50px)`;
+                    `translate(${x}px, ${y}px)`;
             });
         });
-
-        // Fix event listener typing with proper event handler functions
-        function handleMouseMove(this: HTMLElement, e: MouseEvent) {
-            const rect = this.getBoundingClientRect();
-            const mouseX = e.clientX - rect.left;
-            const mouseY = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const moveX = (mouseX - centerX) * 0.05;
-            const moveY = (mouseY - centerY) * 0.05;
-            
-            this.style.transform = 
-                `translateX(${moveX}px) translateY(${moveY}px) 
-                 translateZ(20px) rotateX(${moveY * 0.05}deg) 
-                 rotateY(${-moveX * 0.05}deg)`;
-        }
-
-        function handleMouseLeave(this: HTMLElement) {
-            this.style.transform = '';
-        }
-
-        // Add event listeners with proper types
-        const cards = document.querySelectorAll('.project-item');
-        cards.forEach(card => {
-            (card as HTMLElement).addEventListener('mousemove', handleMouseMove);
-            (card as HTMLElement).addEventListener('mouseleave', handleMouseLeave);
-        });
-
     });
 
     // Add scroll progress indicator
@@ -864,7 +767,7 @@ const projects = [
     projectCards.forEach(card => {
         card.addEventListener('mouseenter', () => {
             if (cursorText) {
-                cursorText.textContent = 'Go to Case Study';
+                cursorText.textContent = 'Go to case study';
                 cursorText.style.opacity = '1';
                 cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
             }

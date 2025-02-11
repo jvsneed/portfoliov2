@@ -47,6 +47,28 @@ const experience = [
                         With over 8 years of experience in UX design and research, I help companies build 
                         products that users love.
                     </p>
+
+                    <div class="header__inner">
+                        <p> <span id="song">&#8987;</span></p>
+                    </div>
+                    <div class="header__inner">
+                        <p><small>latest played song on <a href="http://last.fm" target="_blank">last.fm</a></small> | <small>powered by <a
+                                    href="https://github.com/biancarosa/lastfm-last-played"
+                                    target="_blank">@biancarosa/lastfm-last-played</a></small></p>
+                    </div>
+                    <script type="text/javascript">
+// @ts-nocheck
+
+                        let user = 'sjalssokande';
+                        let url = 'https://lastfm-last-played.biancarosa.com.br/' + user + '/latest-song';
+                        let song = document.querySelector('#song');
+                        fetch(url)
+                            .then(function (response) {
+                                return response.json()
+                            }).then(function (json) {
+                                song.innerHTML = json['track']['name'] + ' - ' + json['track']['artist']['#text'];
+                            });
+                    </script>
                 </div>
             </section>
 

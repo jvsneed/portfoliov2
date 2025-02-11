@@ -37,6 +37,15 @@ I'll expand the markdown reference with more components specifically designed fo
 
 </changeDescription>
 
+## Links
+[Link text](https://www.example.com)
+[Internal link to case study](/case-study/project-name)
+[Link with title](https://www.example.com "Hover text goes here")
+
+Example usage in a sentence: Check out my [portfolio](/portfolio) or read more about this [on my blog](/blog/post-name).
+
+<a href="/portfolio" class="custom-link">Custom styled link</a>
+
 ## Case Study Components
 
 ### Image Gallery

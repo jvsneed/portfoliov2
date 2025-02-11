@@ -5,7 +5,7 @@ role: "Digital Experience Manager, UX Researcher"
 timeline: "6 months"
 team: "I managed the team comprised of UX and engineering"
 tools: ["Visio", "PowerPoint", "Figjam", "Figma"]
-heroImage: "/pekin-thumbnail.png"
+heroImage: "/pekin-hero.png"
 overview: "My role as Digital Experience Manager involved establishing a user research strategy to inform decisions, enhance products, and ensure alignment with user needs."
 color: "#FF4444"
 ---
@@ -297,9 +297,7 @@ The digital transformation at Pekin Insurance began delivering tangible results,
 - **Fixed and enabled over 90 new agency user experience features in 6 months.** This effort showed a commitment to addressing user pain points and drastically improved user experience feedback from agents. This enabled the organization to decide to open up a previously closed line of business, generating more business.
 - **On-track to launch the new customer portal by year-end 2024.** This initiative not only enhances the overall user experience but also positions the company to save $5M annually by improving operational efficiency and reducing support costs.
 - **Claims team innovations.** By implementing new processes and technologies, the claims team was better equipped to support customers, reducing friction in critical workflows in their solutions.
-- **Leveraging insights for immediate impact.** Lessons learned from agent interviews were quickly applied to establish goals that improved the agent experience. This effort contributed to notable reduction of defects and improvements in agent satisfaction scores within the first quarter of implementation.
 - **Alignment with organizational strategy.** Every UX effort directly supported business objectives, such as cost savings, operational efficiencies, and enhanced customer satisfaction.
-- **Building UX research foundations**.** Establishing a sustainable UX research framework laid the groundwork for continuous improvement and a user-centered culture.
 
 To showcase these improvements, the portal redesign includes intuitive self-service tools, clear navigation, and modern features that align with customer expectations. The new design prioritizes accessibility, usability, and efficiency, providing a seamless experience across devices.
 </section>

@@ -1,0 +1,93 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-content">
+            <div class="footer-left">
+                <span class="copyright">Design and development &copy; {currentYear} by Johanna Sneed</span>
+            </div>
+            <nav class="footer-nav">
+                <a href="mailto:contact@johannasneed.com" class="footer-link">Email</a>
+                <a href="https://linkedin.com/in/johannasneed" target="_blank" class="footer-link">LinkedIn</a>
+                <a href="https://medium.com/@johannasneed" target="_blank" class="footer-link">Medium</a>
+                <a href="https://bsky.app/profile/johannasneed.com" target="_blank" class="footer-link">Bluesky</a>
+            </nav>
+        </div>
+    </div>
+</footer>
+
+<style>
+    footer {
+        margin-top: auto;
+        padding: var(--space-lg) 0;
+        border-top: 1px solid var(--color-border);
+    }
+
+    .footer-container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 var(--space-xl);
+    }
+
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--space-lg);
+    }
+
+    .footer-left {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .copyright {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
+    }
+
+    .footer-nav {
+        display: flex;
+        gap: var(--space-md);
+    }
+
+    .footer-link {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+        color: var(--color-accent);
+    }
+
+    .email-link {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .email-link:hover {
+        color: var(--color-muted);
+    }
+
+    @media (max-width: 768px) {
+        .footer-container {
+            padding: 0 var(--space-md);
+        }
+
+        .footer-content {
+            flex-direction: column;
+            gap: var(--space-md);
+            text-align: center;
+        }
+    }
+</style>
