@@ -117,7 +117,7 @@ const projects = [
                         <h3 class="post-title">{post.frontmatter.title}</h3>
                         <p class="post-excerpt">{post.frontmatter.excerpt}</p>
                         <span class="read-more">
-                            Read more <span class="arrow">→</span>
+                            Read article <span class="arrow">→</span>
                         </span>
                     </a>
                 ))}
@@ -157,7 +157,7 @@ const projects = [
     .hero-title {
         /* position: relative; */
         font-family: var(--font-special);
-        font-weight: 400;
+        font-weight: 800;
         margin: 0;
         line-height: 0.9;
     }
@@ -166,11 +166,12 @@ const projects = [
     .hero-title span {
         display: block;
         font-size: calc(12vw + .5rem); 
-        letter-spacing: -0.02em; 
+        letter-spacing: -0.06em; 
         color: var(--color-fg); 
     }
+    
 
-    @media (min-width:782px) and (max-width:960px) {
+    @media (min-width:782px) and (max-width:1121px) {
         .hero-title span{
             font-size: calc(11vw + .5rem);
         }
@@ -356,14 +357,7 @@ const projects = [
         font-size: .9rem;
         color: var(--color-accent);
     }
-    .post-title,
-    .project-title {
-        font-family: var(--font-special);
-        line-height:1;
-        font-size: clamp(1.5rem, 3vw, 2.5rem);
-        margin: 1rem 0;
-        font-weight: 400;
-    }
+
     .post-excerpt,
     .project-description {
         margin: 0;
@@ -455,7 +449,8 @@ const projects = [
         border-radius: var(--curve-sm);
         transition: all 0.3s var(--ease-out-spring);
         background: rgba(255, 255, 255, 0.8);
-
+        transform-style: preserve-3d;
+        perspective: 1000px;
     }
 
     .blog-card:hover {
@@ -500,18 +495,26 @@ const projects = [
         display: flex;
         align-items: center;
         gap: 0.75rem;
-        margin-top: var (--space-md);
-        font-family: var (--font-mono);
+        margin-top: var(--space-md);
+        font-family: var(--font-mono);
         font-size: 0.875rem;
         color: var(--color-accent);
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.3s var(--ease-out-spring);
     }
 
-    .read-more span {
-        transition: transform 0.3s var (--ease-out-spring);
+    .blog-card:hover .read-more {
+        opacity: 1;
+        transform: translateX(0);
     }
 
-    .read-more:hover span {
-        transform: translateX(4px);
+    .read-more .arrow {
+        transition: transform 0.3s var(--ease-out-spring);
+    }
+
+    .read-more:hover .arrow {
+        transform: translateX(6px);
     }
 
     .first-name {

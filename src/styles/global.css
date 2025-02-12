@@ -15,6 +15,14 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Switzer';
+    src: url('/fonts/Switzer-Variable.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
     /* Same color variables as in Layout.astro */
     --color-bg: #f6f5f3;
@@ -36,7 +44,7 @@
     --font-serif: 'Fraunces', serif;
     --font-sans: 'Plus Jakarta Sans', sans-serif;
     --font-mono: 'Space Mono', monospace;
-    --font-special: 'Karrik', sans-serif;
+    --font-special: 'Switzer', sans-serif;
 }
 
 body {
@@ -63,6 +71,56 @@ h1, h2, h3, h4 {
     font-weight: normal;
     letter-spacing: -0.02em;
 }
+
+h1 {
+    font-family: var(--font-special);
+    font-size: clamp(2rem, 3.815rem, 4rem);
+    line-height: 1;
+    margin: 0;
+    font-weight: 600;
+}
+
+h2 {
+        font-family: var(--font-special);
+        font-size: clamp(2rem, 3.052rem, 3.5rem);
+        line-height: 1;
+        margin: 0;
+        font-weight: 600;
+}
+
+h3 {
+    font-family: var(--font-special);
+    font-size: clamp(2rem, 2.441rem, 3rem);
+    line-height: 1;
+    margin: 0;
+    font-weight: 600;
+}
+
+h4 {
+    font-family: var(--font-special);
+    font-size: clamp(2rem, 1.953rem, 3rem);
+    line-height: 1;
+    margin: 0;
+    font-weight: 600;
+}
+
+h5 {
+    font-family: var(--font-special);
+    font-size: clamp(2rem, 1.563rem, 3rem);
+    line-height: 1;
+    margin: 0;
+    font-weight: 600;
+}
+
+h6 {
+    font-family: var(--font-special);
+    font-size: clamp(2rem, 1.25rem, 3rem);
+    line-height: 1;
+    margin: 0;
+    font-weight: 600;
+}
+
+
 p{
     font-family: var(--font-sans);
     font-weight: 400;
@@ -70,13 +128,13 @@ p{
 }
 
 /* Common Components */
-.section-title {
+/* .section-title {
     font-family: var(--font-special);
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-size: clamp(2rem, 3.052rem, 3.5rem);
     line-height: 1;
     margin: 0;
-    font-weight: 400;
-}
+    font-weight: 600;
+} */
 
 /* Cursor Styles */
 .cursor-follower {
@@ -174,6 +232,7 @@ p{
 .link-arrow:hover {
     gap: 1rem;
 }
+
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {

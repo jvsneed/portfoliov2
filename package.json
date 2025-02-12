@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@motionone/dom": "^10.18.0",
+    "@types/d3": "^7.4.3",
     "astro": "^5.2.5",
+    "d3": "^7.9.0",
     "gsap": "^3.12.7",
     "motion": "^12.4.1",
     "split-type": "^0.3.4"

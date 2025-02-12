@@ -1,0 +1,179 @@
+---
+import Layout from './Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const { frontmatter, url } = Astro.props;
+const growthStages = {
+    'seedling': { icon: '🌱', label: 'Just planted, growing ideas' },
+    'budding': { icon: '🌿', label: 'Active growth, work in progress' },
+    'evergreen': { icon: '🌳', label: 'Well maintained, regularly updated' }
+};
+---
+
+<Layout>
+    <article class="garden-note">
+        <header class="note-header">
+            <Breadcrumbs path={url} />
+            <div class="note-meta">
+                <div class="growth-status">
+                    <span class="icon">{growthStages[frontmatter.growth].icon}</span>
+                    <span class="label">{frontmatter.growth}</span>
+                    <span class="description">{growthStages[frontmatter.growth].label}</span>
+                </div>
+                <time>Last tended {new Date(frontmatter.lastModified).toLocaleDateString()}</time>
+            </div>
+            <h1>{frontmatter.title}</h1>
+            <p class="note-description">{frontmatter.description}</p>
+            <div class="note-topics">
+                {frontmatter.topics.map(topic => (
+                    <span class="topic-tag">{topic}</span>
+                ))}
+            </div>
+        </header>
+
+        <div class="note-content">
+            <slot />
+        </div>
+
+        {frontmatter.connections && frontmatter.connections.length > 0 && (
+            <footer class="note-footer">
+                <h2>Connected Notes</h2>
+                <div class="connections">
+                    {frontmatter.connections.map(connection => (
+                        <a href={connection.url} class="connection-card">
+                            <span class="title">{connection.title}</span>
+                            <span class="arrow">→</span>
+                        </a>
+                    ))}
+                </div>
+            </footer>
+        )}
+    </article>
+</Layout>
+
+<style>
+    .garden-note {
+        max-width: 65ch;
+        margin: 8rem auto 4rem;
+        padding: 0 var(--space-lg);
+    }
+
+    .note-header {
+        margin-bottom: var(--space-xl);
+    }
+
+    .note-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--space-md);
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
+    }
+
+    .growth-status {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+    }
+
+    .growth-status .icon {
+        font-size: 1.2rem;
+    }
+
+    .growth-status .label {
+        color: var(--color-accent);
+    }
+
+    h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        line-height: 1.1;
+        margin: 0 0 var(--space-sm);
+    }
+
+    .note-description {
+        font-size: 1.1rem;
+        color: var(--color-muted);
+        line-height: 1.6;
+        margin: var(--space-md) 0;
+    }
+
+    .note-topics {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+        margin: var(--space-md) 0;
+    }
+
+    .topic-tag {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        padding: 0.25em 0.75em;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: 2px;
+        color: var(--color-muted);
+    }
+
+    .note-content {
+        font-family: var(--font-sans);
+        line-height: 1.7;
+    }
+
+    .note-content :global(h2) {
+        font-size: 1.5rem;
+        margin: 2rem 0 1rem;
+    }
+
+    .note-content :global(h3) {
+        font-size: 1.25rem;
+        margin: 1.5rem 0 0.75rem;
+    }
+
+    .note-content :global(p) {
+        margin: 1rem 0;
+    }
+
+    .note-footer {
+        margin-top: var(--space-xl);
+        padding-top: var(--space-lg);
+        border-top: 1px solid var(--color-border);
+    }
+
+    .connections {
+        display: grid;
+        gap: var(--space-sm);
+        margin-top: var(--space-md);
+    }
+
+    .connection-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-md);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--curve-sm);
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.3s var(--ease-out-spring);
+    }
+
+    .connection-card:hover {
+        border-color: var(--color-accent);
+        transform: translateX(var(--space-xs));
+    }
+
+    @media (max-width: 768px) {
+        .garden-note {
+            padding: 0 var(--space-md);
+        }
+
+        .note-meta {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--space-xs);
+        }
+    }
+</style>

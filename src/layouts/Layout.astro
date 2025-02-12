@@ -162,7 +162,7 @@ const links = [
     .header-content {
         display: flex;
         flex-direction: column ;
-        gap: var(--space-md);
+        gap: var(--space-xs);
         justify-content: space-between;
         align-items: flex-start;
         padding-bottom: var(--space-md);
@@ -193,6 +193,10 @@ const links = [
         }
     }
 
+    .intro {
+        margin: 0;
+
+    }
     /* Custom cursor styles */
     body {
         cursor: auto; /* Reset to default cursor */
@@ -211,32 +215,17 @@ const links = [
         
     }
 
-
-    h1, h2, h3, h4 {
-        font-family: 'Karrik', sans-serif;
-        font-weight: 600;
-        letter-spacing: -0.02em;
-    }
-
     ::selection {
         background: var(--color-accent);
         color: white;
     }
 
-    /* Add smooth transitions for dark mode */
-    body {
-        transition: background-color 0.3s ease, color 0.3s ease;
-        margin: 0;
-        min-height: 100vh;
-        line-height: 1.65;
-        background: var(--color-bg);
-        color: var(--color-fg);
-        font-family: var(--font-body);
-        -webkit-font-smoothing: antialiased;
-        overflow-x: hidden;
-        position: relative;
+    .page-container {
+        padding: var(--space-xl);
+        max-width: var(--max-width);
+        margin: 0 auto;
     }
-
+   
     body::before {
         content: '';
         position: fixed;
@@ -256,10 +245,18 @@ const links = [
         width: 100%;
         max-width: 100%;
         margin: 0;
-        overflow-x: hidden;
+        /* overflow-x: hidden; */
         animation: fadeIn 0.6s var(--ease-out-spring);
     }
 
+    .post-title,
+    .project-title {
+        font-family: var(--font-special);
+        line-height: 1.2;
+        font-size: 1.5rem;
+        margin: 1rem 0;
+        font-weight: 600;
+    }
     @media (max-width: 768px) {
         :root {
             --grid-max: 100%;

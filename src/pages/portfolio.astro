@@ -4,7 +4,7 @@ const allCaseStudies = await Astro.glob('./case-study/*.md');
 ---
 
 <Layout>
-    <div class="editorial-container">
+    <div class="page-container">
         <section class="portfolio-preview" data-section="work">
             <div class="header-content">
                 <h1 class="section-title">Research Portfolio</h1>
@@ -38,27 +38,7 @@ const allCaseStudies = await Astro.glob('./case-study/*.md');
 </Layout>
 
 <style>
-    /* Copy exact styles from index.astro */
-    .editorial-container {
-        min-height: 100vh;
-        display: block;  
-        background: var(--color-bg);
-        position: relative;
-    }
-
-    .editorial-container::before {
-        content: '';
-        position: fixed;
-        inset: 0;
-        background: url('/noise.png');
-        opacity: 0.3;
-        mix-blend-mode: overlay;
-        pointer-events: none;
-        z-index: 1;
-    }
-
     .portfolio-preview {
-        padding: var(--space-xl) var(--space-lg);
         margin: 0 auto;
         max-width: var(--max-width);
     }
@@ -129,13 +109,7 @@ const allCaseStudies = await Astro.glob('./case-study/*.md');
         color: var(--color-accent);
     }
 
-    .project-title {
-        font-family: var(--font-special);
-        line-height: 1;
-        font-size: clamp(1.5rem, 3vw, 2.5rem);
-        margin: 1rem 0;
-        font-weight: 400;
-    }
+
 
     .project-description {
         color: var(--color-muted);

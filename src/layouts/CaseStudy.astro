@@ -91,14 +91,6 @@ const {
 
     }
 
-    h1 {
-        font-family: 'Karrik', sans-serif;
-        font-size: clamp(3rem, 7vw, 5rem);
-        line-height: 0.9;
-        margin-bottom: var(--space-xl);
-        letter-spacing: -0.02em;
-    }
-
     .project-meta {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -209,7 +201,6 @@ const {
 
     /* Style the markdown content */
     .case-content :global(h2) {
-        font-family: 'Karrik', sans-serif;
         font-size: clamp(2rem, 4vw, 2.5rem);
         line-height: 1.1;
         margin: 4rem 0 1.5rem;
@@ -639,7 +630,7 @@ const {
 
         .case-content :global(.split-content) {
             flex-direction: column;
-            gap: var(--space-lg);
+            gap: var (--space-lg);
         }
 
         .case-content :global(.split-content .image-col),
@@ -684,8 +675,8 @@ const {
         const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
         const progress = (window.scrollY / totalHeight) * 100;
         
-        const progressBar = document.querySelector('.progress-bar') as HTMLElement;
-        if (progressBar) {
+        const progressBar = document.querySelector('.progress-bar');
+        if (progressBar && progressBar instanceof HTMLElement) {
             progressBar.style.transform = `scaleX(${progress / 100})`;
         }
     });
@@ -695,19 +686,22 @@ const {
     const navLinks = document.querySelectorAll('.case-nav a');
 
     window.addEventListener('scroll', () => {
-        const scrollPos = window.scrollY + 100; // Offset for nav height
+        const scrollPos = window.scrollY + 100;
 
         sections.forEach(section => {
-            if (!section.id) return;
+            const id = section.getAttribute('id');
+            if (!id) return;
             
             const sectionTop = (section as HTMLElement).offsetTop;
             const sectionHeight = (section as HTMLElement).offsetHeight;
 
             if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
                 navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${section.id}`) {
-                        link.classList.add('active');
+                    if (link instanceof HTMLElement) {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
                     }
                 });
             }
@@ -715,14 +709,16 @@ const {
     });
 
     // Add horizontal scroll snapping for nav on touch devices
-    const nav = document.querySelector('.case-nav') as HTMLElement;
-    if (nav && 'scrollBehavior' in document.documentElement.style) {
+    const nav = document.querySelector('.case-nav');
+    if (nav && nav instanceof HTMLElement && 'scrollBehavior' in document.documentElement.style) {
         nav.style.scrollBehavior = 'smooth';
         nav.style.scrollSnapType = 'x proximity';
         
         const links = nav.querySelectorAll('a');
         links.forEach(link => {
-            link.style.scrollSnapAlign = 'center';
+            if (link instanceof HTMLElement) {
+                link.style.scrollSnapAlign = 'center';
+            }
         });
     }
 </script>

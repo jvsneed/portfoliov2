@@ -2,49 +2,66 @@
 import Layout from '../layouts/Layout.astro';
 const posts = await Astro.glob('./writing/*.md');
 
-// Function to format date
+// Get all unique tags and count their occurrences
+const tagCounts = posts.reduce((acc, post) => {
+    post.frontmatter.tags?.forEach(tag => {
+        acc[tag] = (acc[tag] || 0) + 1;
+    });
+    return acc;
+}, {} as Record<string, number>);
+
+const allTags = Object.keys(tagCounts).sort();
+
+// Sort posts by date
+const sortedPosts = posts.sort((a, b) => {
+    return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
+});
+
 function formatDate(dateStr: string) {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', {
+    return new Date(dateStr).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
     });
 }
-
-// Sort posts by date in descending order (newest first)
-const sortedPosts = posts.sort((a, b) => {
-    return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
-});
-
-const allTags = [...new Set(posts.flatMap(post => post.frontmatter.tags))];
 ---
 
 <Layout>
-    <div class="blog-container">
+    <div class="page-container">
         <header class="portfolio-header">
             <div class="header-content">
                 <h1 class="section-title">Writing</h1>
-                <div class="category-tags">
-                    <span class="tag active">All</span>
-                    {allTags.map(tag => (
-                        <span class="tag">{tag}</span>
-                    ))}
+                <div class="filter-section">
+                    <h2>Filter by tag</h2>
+                    <div class="category-tags" id="category-filters">
+                        <button class="tag active" data-category="all">
+                            All
+                            <span class="count">{posts.length}</span>
+                        </button>
+                        {allTags.map(tag => (
+                            <button class="tag" data-category={tag}>
+                                {tag}
+                                <span class="count">{tagCounts[tag]}</span>
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </div>
         </header>
 
         <div class="posts-grid">
             {sortedPosts.map((post) => (
-                <a href={post.url} class="post-card">
+                <a href={post.url} 
+                   class="post-card"
+                   data-categories={post.frontmatter.tags?.map(t => t.toLowerCase().replace(/\s+/g, '-')).join(' ')}>
                     <time class="post-date">{formatDate(post.frontmatter.date)}</time>
+                    <h2 class="post-title">{post.frontmatter.title}</h2>
+                    <p class="post-excerpt">{post.frontmatter.excerpt}</p>
                     {/* <div class="post-meta">
-                        {post.frontmatter.tags.map((tag: string) => (
+                        {post.frontmatter.tags?.map((tag: string) => (
                             <span class="post-category">{tag}</span>
                         ))}
                     </div> */}
-                    <h2 class="post-title">{post.frontmatter.title}</h2>
-                    <p class="post-excerpt">{post.frontmatter.excerpt}</p>
                     <span class="read-more">
                         Read article <span class="arrow">→</span>
                     </span>
@@ -56,11 +73,7 @@ const allTags = [...new Set(posts.flatMap(post => post.frontmatter.tags))];
 </Layout>
 
 <style>
-    .blog-container {
-        padding: var(--space-xl);
-        max-width: var(--max-width);
-        margin: 0 auto;
-    }
+
     @media screen and (max-width: 768px) {
         .blog-container {
             padding: var(--space-sm);
@@ -77,7 +90,7 @@ const allTags = [...new Set(posts.flatMap(post => post.frontmatter.tags))];
 
     .tag {
         font-family: var(--font-mono);
-        font-size: 0.875rem;
+        font-size: 1rem;
         color: var(--color-muted);
         padding: 0.5rem 1rem;
         border-radius: 2px;
@@ -147,25 +160,19 @@ const allTags = [...new Set(posts.flatMap(post => post.frontmatter.tags))];
     }
 
     .post-date {
-        font-family: var(--font-mono);
+        font-family: var (--font-mono);
         font-size: 0.875rem;
         color: var(--color-muted);
-        margin-bottom: var(--space-xs);
+        margin-bottom: var (--space-xs);
     }
 
-    .post-title {
-        font-family: var(--font-special);
-        line-height: 1;
-        font-size: clamp(1.5rem, 3vw, 2.5rem);
-        margin: 1rem 0;
-        font-weight: 400;
-    }
 
     .post-excerpt {
         margin: 0;
         font-size: 1rem;
-        line-height: 1.2;
-        margin-bottom: var(--space-md);
+        line-height: 1.5;
+        color: var(--color-muted)
+        margin-bottom: var (--space-md);
     }
 
     .read-more {
@@ -178,7 +185,7 @@ const allTags = [...new Set(posts.flatMap(post => post.frontmatter.tags))];
         color: var(--color-accent);
         opacity: 0;
         transform: translateX(-10px);
-        transition: all 0.3s var(--ease-out-spring);
+        transition: all 0.3s var (--ease-out-spring);
     }
 
     .post-card:hover .read-more {
@@ -196,6 +203,13 @@ const allTags = [...new Set(posts.flatMap(post => post.frontmatter.tags))];
 
     .read-more:hover {
         color: var(--color-fg);
+    }
+
+    .filter-section h2 {
+        font-size: 0.875rem;
+        font-family: var(--font-mono);
+        color: var(--color-muted);
+        margin-bottom: var(--space-sm);
     }
 
     @media (max-width: 768px) {
@@ -245,72 +259,103 @@ const allTags = [...new Set(posts.flatMap(post => post.frontmatter.tags))];
         transition: opacity 0.3s, transform 0.3s var(--ease-out-spring);
         z-index: 1000;
     }
+
+    .filter-section {
+        margin-bottom: var(--space-lg);
+    }
+
+    .tag {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+    }
+
+    .count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 1.5rem;
+        height: 1.5rem;
+        padding: 0 0.5rem;
+        border-radius: 12px;
+        background: var(--color-border);
+        color: var(--color-muted);
+        font-size: 0.75rem;
+        transition: all 0.3s var(--ease-out-spring);
+    }
+
+    .tag:hover .count,
+    .tag.active .count {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+    }
 </style>
 
 <script>
-    // Simplified script - only filter functionality remains
-    const tagButtons = document.querySelectorAll('.category-tags .tag');
-    const posts = document.querySelectorAll('.post-card');
+    interface PostElement extends HTMLElement {
+        style: CSSStyleDeclaration;
+    }
 
-    tagButtons.forEach(tag => {
-        tag.addEventListener('click', () => {
-            tagButtons.forEach(t => t.classList.remove('active'));
-            tag.classList.add('active');
+    const filterButtons = document.querySelectorAll<HTMLButtonElement>('.tag');
+    const postCards = document.querySelectorAll<PostElement>('.post-card');
+    const cursorText = document.querySelector<HTMLDivElement>('.cursor-text');
 
-            const filter = tag.textContent;
-            posts.forEach(post => {
-                if (filter === 'All') {
-                    (post as HTMLElement).style.display = 'block';
-                    return;
-                }
-                
-                const postTags = Array.from(post.querySelectorAll('.post-category'))
-                    .map(t => t.textContent);
-                (post as HTMLElement).style.display = postTags.includes(filter) ? 'block' : 'none';
-            });
-        });
-    });
-
-    // Add cursor tracking
-    const cursorText = document.querySelector('.cursor-text') as HTMLDivElement;
-
-    document.addEventListener('mousemove', (e) => {
-        if (cursorText) {
-            cursorText.style.left = e.clientX + 'px';
-            cursorText.style.top = e.clientY + 'px';
-        }
-    });
-
-    posts.forEach(post => {
-        post.addEventListener('mouseenter', () => {
-            if (cursorText) {
-                cursorText.textContent = 'Read article';
-                cursorText.style.opacity = '1';
-                cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
+    function filterPosts(category: string) {
+        const normalizedCategory = category.toLowerCase().replace(/\s+/g, '-');
+        
+        // Update button states
+        filterButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.category === category) {
+                btn.classList.add('active');
             }
         });
 
-        post.addEventListener('mouseleave', () => {
-            if (cursorText) {
-                cursorText.style.opacity = '0';
-                cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
-            }
+        // Filter posts
+        postCards.forEach(card => {
+            const categories = card.dataset.categories?.split(' ') || [];
+            card.style.display = (category === 'all' || categories.includes(normalizedCategory)) 
+                ? '' 
+                : 'none';
+        });
+    }
+
+    // Set up event listeners
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const category = button.dataset.category || 'all';
+            filterPosts(category);
         });
     });
 
-    // Add this to the existing script
+    // Handle tag selection from session storage
     document.addEventListener('DOMContentLoaded', () => {
         const selectedTag = sessionStorage.getItem('selectedTag');
         if (selectedTag) {
-            const decodedTag = decodeURIComponent(selectedTag);
-            const tagToClick = Array.from(document.querySelectorAll('.tag'))
-                .find(tag => tag.textContent === decodedTag);
-            
-            if (tagToClick) {
-                (tagToClick as HTMLElement).click();
-            }
-            
+            filterPosts(selectedTag);
             sessionStorage.removeItem('selectedTag');
         }
     });
+
+    // Handle cursor effects
+    if (cursorText) {
+        document.addEventListener('mousemove', (e) => {
+            cursorText.style.left = `${e.clientX}px`;
+            cursorText.style.top = `${e.clientY}px`;
+        });
+
+        postCards.forEach(post => {
+            post.addEventListener('mouseenter', () => {
+                cursorText.textContent = 'Read article';
+                cursorText.style.opacity = '1';
+                cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
+            });
+
+            post.addEventListener('mouseleave', () => {
+                cursorText.style.opacity = '0';
+                cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
+            });
+        });
+    }
 </script>
