@@ -38,11 +38,11 @@ const allTags = [...new Set(posts.flatMap(post => post.frontmatter.tags))];
             {sortedPosts.map((post) => (
                 <a href={post.url} class="post-card">
                     <time class="post-date">{formatDate(post.frontmatter.date)}</time>
-                    <div class="post-meta">
+                    {/* <div class="post-meta">
                         {post.frontmatter.tags.map((tag: string) => (
                             <span class="post-category">{tag}</span>
                         ))}
-                    </div>
+                    </div> */}
                     <h2 class="post-title">{post.frontmatter.title}</h2>
                     <p class="post-excerpt">{post.frontmatter.excerpt}</p>
                     <span class="read-more">
@@ -57,11 +57,17 @@ const allTags = [...new Set(posts.flatMap(post => post.frontmatter.tags))];
 
 <style>
     .blog-container {
-        padding: var(--space-xl) 0;
+        padding: var(--space-xl);
         max-width: var(--max-width);
         margin: 0 auto;
     }
+    @media screen and (max-width: 768px) {
+        .blog-container {
+            padding: var(--space-sm);
+        }
 
+        
+    }
 
     .category-tags {
         display: flex;
@@ -278,7 +284,7 @@ const allTags = [...new Set(posts.flatMap(post => post.frontmatter.tags))];
     posts.forEach(post => {
         post.addEventListener('mouseenter', () => {
             if (cursorText) {
-                cursorText.textContent = 'Read Article';
+                cursorText.textContent = 'Read article';
                 cursorText.style.opacity = '1';
                 cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
             }

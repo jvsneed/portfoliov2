@@ -109,11 +109,11 @@ const projects = [
                 {latestPosts.map((post) => (
                     <a href={post.url} class="blog-card">
                         <time class="post-date">{formatDate(post.frontmatter.date)}</time>
-                        <div class="post-meta">
+                        {/* <div class="post-meta">
                             {post.frontmatter.tags.map((tag: string) => (
                                 <span class="post-category">{tag}</span>
                             ))}
-                        </div>
+                        </div> */}
                         <h3 class="post-title">{post.frontmatter.title}</h3>
                         <p class="post-excerpt">{post.frontmatter.excerpt}</p>
                         <span class="read-more">
@@ -162,11 +162,23 @@ const projects = [
         line-height: 0.9;
     }
 
+
     .hero-title span {
         display: block;
-        font-size: clamp(2.5rem, 25vw, 12rem); 
+        font-size: calc(12vw + .5rem); 
         letter-spacing: -0.02em; 
         color: var(--color-fg); 
+    }
+
+    @media (min-width:782px) and (max-width:960px) {
+        .hero-title span{
+            font-size: calc(11vw + .5rem);
+        }
+    }
+    @media (min-width:360px) and (max-width:781px) {
+        .hero-title span{
+            font-size: calc(10vw + .5rem);
+        }
     }
 
     .role-tags {
@@ -179,11 +191,10 @@ const projects = [
 
     .role-tag {
         font-family: var(--font-special);
-        font-size: clamp(0.875rem, 1.8vw, 1.8rem);
+        font-size: calc(1.5vw + .5rem);
         font-weight: 400;
         position: relative;
     }
-
     .divider {
         color: var(--color-accent);
         font-size: 1.5rem;
@@ -192,9 +203,60 @@ const projects = [
 
     .role-tag:not(:last-child)::after {
         content: '/';
-        margin-left: 1rem;
+        margin-left: 2rem;
         color: var(--color-accent);
     } 
+
+    @media (min-width:634px) and (max-width:768px) {
+        .role-tags{
+            display:block;
+            padding:0 var(--space-sm);
+            margin: 0 auto;
+            max-width: var(--max-width);
+            line-height: 1;
+        }
+        .role-tag {
+            font-size: 1.25rem;
+        }
+        .role-tag:not(:last-child)::after {
+        content: '/';
+        margin-left: .5rem;
+    } 
+    }
+    @media (min-width:509px) and (max-width:633px) {
+        .role-tags{
+            display:block;
+            padding:0 var(--space-sm);
+            margin: 0 auto;
+            max-width: var(--max-width);
+            line-height: 1;
+        }
+        .role-tag {
+            font-size: 1rem;
+        }
+        .role-tag:not(:last-child)::after {
+        content: '/';
+        margin-left: .5rem;
+    } 
+    }
+    @media (max-width:508px) {
+        .role-tags{
+            display:block;
+            padding:0 var(--space-sm);
+            margin: 0 auto;
+            max-width: var(--max-width);
+            line-height: 1;
+        }
+        .role-tag {
+            font-size: .7rem;
+        }
+        .role-tag:not(:last-child)::after {
+        content: '/';
+        margin-left: .5rem;
+    } 
+    }
+
+
 
     .portfolio-preview {
         padding: var(--space-xl) var(--space-lg);
@@ -209,6 +271,22 @@ const projects = [
         gap: var(--space-lg);
         margin-bottom: var(--space-md);
     }
+
+    @media (max-width:633px) {
+        .preview-header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--space-sm);
+        }
+
+        .view-all{
+            padding: 0!important;
+        }
+        .preview-nav{
+            padding:0;
+        }
+    } 
 
     .preview-nav {
         display: flex;
@@ -447,10 +525,13 @@ const projects = [
         }
     }
 
+
     @media (max-width: 768px) {
         .content-area {
             max-width: var(--max-width) ;
             padding: var(--space-xl) var(--space-sm);
+            display:flex;
+            justify-content: center;
         }
 
         .hero-sequence {
@@ -465,23 +546,7 @@ const projects = [
             display:block;
         }
 
-        .hero-title span{
-        display:block;
-        font-size: min(3rem, 15vw);
-        justify-content: center;
-        max-width: var(--max-width);
-        text-wrap:wrap;
-        }
-        .role-tags{
-            display:block;
-            padding:0 var(--space-sm);
-            margin: 0 auto;
-            max-width: var(--max-width);
-            line-height: 1;
-        }
-        .role-tag {
-            font-size: 1.25rem;
-        }
+
         .blog-card,
         .project-item{
             padding: var(--space-sm) var(--space-md);
@@ -534,7 +599,7 @@ const projects = [
     blogCards.forEach(card => {
         card.addEventListener('mouseenter', () => {
             if (cursorText) {
-                cursorText.textContent = 'Read the Article';
+                cursorText.textContent = 'Read article';
                 cursorText.style.opacity = '1';
                 cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
             }

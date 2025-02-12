@@ -168,6 +168,15 @@ const links = [
         padding-bottom: var(--space-md);
         border-bottom: 1px solid var(--color-border);
     }
+    @media (max-width: 768px) {
+        .header-content {
+            padding-bottom: 0px!important;
+  
+        }
+        .featured-projects {
+            padding-top: var(--space-sm)!important;
+        }
+    }
 
     /* Update menu open state to not hide content on desktop */
     @media (min-width: 769px) {
@@ -199,7 +208,9 @@ const links = [
         background: var(--color-bg);
         color: var(--color-fg);
         scroll-behavior: smooth;
+        
     }
+
 
     h1, h2, h3, h4 {
         font-family: 'Karrik', sans-serif;
