@@ -10,7 +10,7 @@ connections:
   - { title: "Color Contrast Guide", url: "/garden/design/color-contrast" }
 ---
 
-# Design System Components
+## Design System Components
 
 Just starting to document my approach to building design system components.
 

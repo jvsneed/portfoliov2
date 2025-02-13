@@ -4,7 +4,7 @@ const links = [
     { path: '/', label: 'Home' },
     { path: '/portfolio', label: 'Portfolio' },
     { path: '/writing', label: 'Writing' },
-    // { path: '/garden', label: 'Garden' },
+    { path: '/garden', label: 'Garden' },
     { path: '/about', label: 'About' }  
 ];
 ---
@@ -300,6 +300,7 @@ const links = [
     const navLinkElements = document.querySelectorAll('.nav-link');
     const cursorText = document.querySelector('.cursor-text') as HTMLElement;
     const links = document.querySelectorAll('.nav-link');
+    const navMenu = document.querySelector('#nav-menu');
 
     menuButton?.addEventListener('click', () => {
         const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
@@ -307,6 +308,7 @@ const links = [
         menuButton.classList.toggle('active');
         navLinks?.classList.toggle('active');
         document.body.classList.toggle('menu-open');
+        navMenu?.classList.toggle('active');
     });
 
     // Add index for staggered animation

@@ -1,9 +1,32 @@
 ---
 import Layout from '../layouts/Layout.astro';
-const posts = await Astro.glob('./articles/*.md');
 
-// Get all unique tags and count their occurrences
-const tagCounts = posts.reduce((acc, post) => {
+interface Frontmatter {
+    title: string;
+    date: string;
+    excerpt: string;
+    tags: string[];
+}
+
+interface Post {
+    frontmatter: Frontmatter;
+    url: string;
+}
+
+// Helper function for date formatting
+function formatDate(dateStr: string) {
+    return new Date(dateStr).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
+
+const posts = await import.meta.glob<Post>('./articles/*.md', { eager: true });
+const postsArray = Object.values(posts);
+
+// Rest of the code with proper typing
+const tagCounts = postsArray.reduce((acc, post) => {
     post.frontmatter.tags?.forEach(tag => {
         acc[tag] = (acc[tag] || 0) + 1;
     });
@@ -13,17 +36,10 @@ const tagCounts = posts.reduce((acc, post) => {
 const allTags = Object.keys(tagCounts).sort();
 
 // Sort posts by date
-const sortedPosts = posts.sort((a, b) => {
+const sortedPosts = postsArray.sort((a, b) => {
     return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
 });
 
-function formatDate(dateStr: string) {
-    return new Date(dateStr).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
-}
 ---
 
 <Layout>
@@ -36,7 +52,7 @@ function formatDate(dateStr: string) {
                     <div class="category-tags" id="category-filters">
                         <button class="tag active" data-category="all">
                             All
-                            <span class="count">{posts.length}</span>
+                            <span class="count">{postsArray.length}</span>
                         </button>
                         {allTags.map(tag => (
                             <button class="tag" data-category={tag}>
