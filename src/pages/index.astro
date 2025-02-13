@@ -160,8 +160,9 @@ const projects = [
     }
 
     .name-block {
-        width: 100%;
-        margin: 0;
+        width: fit-content%;
+        justify-content:center;
+        margin: 0 auto;
         padding: 0;
     }
 
@@ -176,17 +177,27 @@ const projects = [
     .hero-title span {
         display: inline-block;
         width: 100%;
-        font-size: clamp(2rem, 15vw, 25rem);
+        font-size: clamp(2rem, 15vw, 15rem);
         letter-spacing: -0.06em;
         color: var(--color-fg);
         white-space: nowrap;
-        text-align: left;
+        text-align:right;
+    }
+
+    .hero-title .char {
+        display: inline-block;
+        transition: all 0.3s var(--ease-out-spring);
+        will-change: transform, font-variation-settings;
+    }
+
+    .featured-projects{
+        gap: var(--space-sm);
     }
     
     /* Custom breakpoint for extra large screens */
     @media (min-width: 1800px) {
         .hero-title span {
-            font-size: clamp(5rem, 18vw, 30rem);
+            font-size: clamp(5rem, 18vw, 15rem);
         }
     }
 
@@ -252,6 +263,8 @@ const projects = [
         justify-content: flex-end;
         gap: 0.25rem;
         opacity: 1;
+        animation: mainFloat 8s var(--ease-out-spring) infinite;
+        animation-delay: 0s; // Remove delay for synchronization
     }
 
     .role-tag {
@@ -310,12 +323,15 @@ const projects = [
         .preview-nav{
             padding:0;
         }
-        .blog-posts,
         .featured-projects,
         .portfolio-preview {
             padding: var(--space-xs);
             max-width: 100%;
 
+    }
+
+    .blog-posts {
+        padding: var(--space-xs);
     }
     } 
 
@@ -334,7 +350,7 @@ const projects = [
     .featured-projects {
         display: flex;
         flex-direction: column;
-        gap: var(--space-sm);
+        gap: var (--space-sm);
     }
 
     .project-item {
@@ -551,6 +567,45 @@ const projects = [
         display: inline-block;
     }
 
+    @keyframes mainFloat {
+        0% { 
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        50% { 
+            transform: translateY(-10px) scale(0.98);
+            opacity: 0.9;
+        }
+        100% { 
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes pulseAndFloat {
+        0% { transform: translateY(0) scale(1); }
+        25% { transform: translateY(-5px) scale(0.98); }
+        50% { transform: translateY(0) scale(1.02); }
+        75% { transform: translateY(5px) scale(0.98); }
+        100% { transform: translateY(0) scale(1); }
+    }
+
+    @keyframes titleFloat {
+        0% { transform: translateY(0) scale(1); }
+        25% { transform: translateY(-8px) scale(0.98); }
+        50% { transform: translateY(0) scale(1.02); }
+        75% { transform: translateY(8px) scale(0.98); }
+        100% { transform: translateY(0) scale(1); }
+    }
+
+    @keyframes tagsFloat {
+        0% { transform: translateY(0); opacity: 1; }
+        25% { transform: translateY(8px); opacity: 0.8; }
+        50% { transform: translateY(0); opacity: 1; }
+        75% { transform: translateY(-8px); opacity: 0.8; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
         * {
             animation: none !important;
@@ -635,6 +690,7 @@ const projects = [
 <script>
     import gsap from 'gsap';
     import { ScrollTrigger } from 'gsap/ScrollTrigger';
+    import SplitType from 'split-type';
     
     gsap.registerPlugin(ScrollTrigger);
 
@@ -685,6 +741,46 @@ const projects = [
                     cursorText.style.opacity = '0';
                     cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
                 }
+            });
+        });
+    }
+
+    // Split the hero title text
+    const heroText = new SplitType('.hero-title span', { 
+        types: 'chars',
+        tagName: 'span'
+    });
+
+    const container = document.querySelector('.hero-sequence') as HTMLElement;
+    const chars = document.querySelectorAll('.hero-title .char');
+
+    if (container && chars.length > 0) {
+        container.addEventListener('mousemove', (e: MouseEvent) => {
+            const rect = container.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            
+            chars.forEach((char) => {
+                const charRect = char.getBoundingClientRect();
+                const charX = charRect.left - rect.left + charRect.width / 2;
+                const charY = charRect.top - rect.top + charRect.height / 2;
+                
+                const distance = Math.hypot(mouseX - charX, mouseY - charY);
+                const maxDistance = 300;
+                const influence = Math.max(0, 1 - distance / maxDistance);
+                
+                const scale = 1 + influence * 0.3;
+                const weight = 400 + influence * 400;
+                
+                (char as HTMLElement).style.transform = `scale(${scale})`;
+                (char as HTMLElement).style.fontWeight = weight.toString();
+            });
+        });
+
+        container.addEventListener('mouseleave', () => {
+            chars.forEach((char) => {
+                (char as HTMLElement).style.transform = 'scale(1)';
+                (char as HTMLElement).style.fontWeight = '400';
             });
         });
     }
