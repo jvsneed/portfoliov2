@@ -18,6 +18,7 @@
 @font-face {
     font-family: 'Switzer';
     src: url('/fonts/Switzer-Variable.woff') format('woff');
+    src: url('/fonts/Switzer-Variable.ttf') format('ttf');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -79,7 +80,7 @@ h1 {
 
 h2 {
         font-family: var(--font-special);
-        font-size: clamp(2rem, 3.052rem, 3.5rem);
+        font-size: 2rem;
         line-height: 1;
         margin: 0;
         font-weight: 600;
@@ -87,7 +88,7 @@ h2 {
 
 h3 {
     font-family: var(--font-special);
-    font-size: clamp(2rem, 2.441rem, 3rem);
+    font-size: 1.5rem;
     line-height: 1;
     margin: 0;
     font-weight: 600;
@@ -95,7 +96,7 @@ h3 {
 
 h4 {
     font-family: var(--font-special);
-    font-size: clamp(2rem, 1.953rem, 3rem);
+    font-size: 1.2rem;
     line-height: 1;
     margin: 0;
     font-weight: 600;

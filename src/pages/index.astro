@@ -184,22 +184,66 @@ const projects = [
     }
     
 
-    @media (min-width:782px) and (max-width:1121px) {
+    @media (min-width:786px) and (max-width:1121px) {
+        .hero-title span{
+            font-size: calc(11vw + .5rem);
+            
+        }
+
+    }
+    @media (min-width:533px) and (max-width:785px) {
         .hero-title span{
             font-size: calc(11vw + .5rem);
         }
-    }
-    @media (min-width:360px) and (max-width:781px) {
-        .hero-title span{
-            font-size: calc(10vw + .5rem);
+        .role-tags{
+            display:flex;
+            margin: 0 auto;
+            max-width: var(--max-width);
+            line-height: 1;
+            justify-content: flex-end;
+            padding: 0;
         }
     }
+        @media (min-width:360px) and (max-width:532px) {
+            .name-block,
+            .hero-sequence{
+                display:flex;
+                flex-direction: column;
+            justify-content: flex-end;
+        }
+            .hero-title span{
+            font-size: calc(13vw + .5rem);
+        }
+        .role-tags{
+            display:flex;
+            margin: 0 auto;
+            max-width: var(--max-width);
+            line-height: 1;
+            justify-content: flex-end;
+            padding: 0;
+        }
+        .role-tag{
+            font-size: 1rem;
+        }
+        .role-tag:not::after {
+        margin-left: 0;
+    } 
+
+    }
+        .role-tag {
+            font-size: 1rem;
+        }
+        /* .role-tag:not(:last-child)::after {
+        content: '/';
+        margin-left: .5rem;
+    }  */
+    
 
     .role-tags {
         margin: 0 0 0 3.5rem;
         display: flex;
         justify-content: flex-end;
-        gap: 1rem;
+        gap: .25rem;
         opacity: 1;
     }
 
@@ -216,59 +260,13 @@ const projects = [
     }
 
     .role-tag:not(:last-child)::after {
-        content: '/';
-        margin-left: 2rem;
+        content: '✦';
+        margin: 0 .30rem 0 1rem;
         color: var(--color-accent);
     } 
 
-    @media (min-width:634px) and (max-width:768px) {
-        .role-tags{
-            display:block;
-            padding:0 var(--space-sm);
-            margin: 0 auto;
-            max-width: var(--max-width);
-            line-height: 1;
-        }
-        .role-tag {
-            font-size: 1.25rem;
-        }
-        .role-tag:not(:last-child)::after {
-        content: '/';
-        margin-left: .5rem;
-    } 
-    }
-    @media (min-width:509px) and (max-width:633px) {
-        .role-tags{
-            display:block;
-            padding:0 var(--space-sm);
-            margin: 0 auto;
-            max-width: var(--max-width);
-            line-height: 1;
-        }
-        .role-tag {
-            font-size: 1rem;
-        }
-        .role-tag:not(:last-child)::after {
-        content: '/';
-        margin-left: .5rem;
-    } 
-    }
-    @media (max-width:508px) {
-        .role-tags{
-            display:block;
-            padding:0 var(--space-sm);
-            margin: 0 auto;
-            max-width: var(--max-width);
-            line-height: 1;
-        }
-        .role-tag {
-            font-size: .7rem;
-        }
-        .role-tag:not(:last-child)::after {
-        content: '/';
-        margin-left: .5rem;
-    } 
-    }
+
+ 
 
 
 
