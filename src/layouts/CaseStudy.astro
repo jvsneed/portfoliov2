@@ -198,14 +198,36 @@ const { title, role, timeline, team, tools, heroImage, overview, color = 'var(--
         .meta-grid {
             grid-template-columns: repeat(2, 1fr);
             gap: var(--space-md);
+            padding: 0 var(--space-xs);
         }
+        .hero-content{
+            padding: var(--space-md) var(--space-xs);
+
+
+        }
+
+        .hero{
+            padding: var(--space-md) 0;
+        }
+
+        .hero h1{
+            padding: 0;
+        }
+
+        .overview{
+            margin-bottom: 0;
+        }
+
 
         .hero-image {
             height: 40vh;
         }
 
         .case-content :global(section) {
-            padding: var(--space-lg);
+            padding: var(--space-xs);
+        }
+        .case-content{
+            padding:0;
         }
     }
 </style>
