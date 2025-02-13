@@ -2,6 +2,7 @@
 import Layout from './Layout.astro';
 const { frontmatter } = Astro.props;
 const { title, date, tags } = frontmatter;
+const formattedTags = tags.map(tag => tag.toLowerCase());
 ---
 
 <Layout>
@@ -22,7 +23,7 @@ const { title, date, tags } = frontmatter;
                 <div class="sidebar-section">
                     <h2>Tags</h2>
                     <div class="tags-list">
-                        {tags.map(tag => (
+                        {formattedTags.map(tag => (
                             <a href={`/writing?tag=${tag}`} class="tag">
                                 {tag}
                             </a>

@@ -6,7 +6,6 @@ growth: "budding"
 lastModified: "2024-03-13"
 topics: ["Design", "Accessibility", "Color Theory"]
 connections:
-  - { title: "Core Accessibility Principles", url: "/garden/ux/accessibility-principles" }
 ---
 
 # Color Contrast Guide

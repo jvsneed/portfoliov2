@@ -25,20 +25,24 @@ function formatDate(dateStr: string) {
 const posts = await import.meta.glob<Post>('./articles/*.md', { eager: true });
 const postsArray = Object.values(posts);
 
-// Rest of the code with proper typing
+// Convert all tags to lowercase and count occurrences
 const tagCounts = postsArray.reduce((acc, post) => {
     post.frontmatter.tags?.forEach(tag => {
-        acc[tag] = (acc[tag] || 0) + 1;
+        const lowerTag = tag.toLowerCase();
+        acc[lowerTag] = (acc[lowerTag] || 0) + 1;
     });
     return acc;
 }, {} as Record<string, number>);
 
 const allTags = Object.keys(tagCounts).sort();
 
-// Sort posts by date
-const sortedPosts = postsArray.sort((a, b) => {
-    return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
-});
+const sortedPosts = postsArray.map(post => ({
+    ...post,
+    frontmatter: {
+        ...post.frontmatter,
+        tags: post.frontmatter.tags.map(tag => tag.toLowerCase())
+    }
+})).sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
 
 ---
 

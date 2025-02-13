@@ -3,6 +3,7 @@ import Layout from './Layout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 const { frontmatter, url } = Astro.props;
+const formattedTopics = frontmatter.topics.map(topic => topic.toLowerCase());
 ---
 
 <Layout>
@@ -39,9 +40,11 @@ const { frontmatter, url } = Astro.props;
             <aside class="note-sidebar">
                 <div class="sidebar-section">
                     <h2>Topics</h2>
-                    <div class="note-topics">
-                        {frontmatter.topics.map(topic => (
-                            <span class="topic-tag">{topic}</span>
+                    <div class="tags-list">
+                        {formattedTopics.map(topic => (
+                            <a href={`/garden?topic=${topic}`} class="tag">
+                                {topic}
+                            </a>
                         ))}
                     </div>
                 </div>
@@ -145,6 +148,7 @@ p{
         background: var(--color-surface);
         border: 1px solid var(--color-border);
         border-radius: var(--curve-sm);
+        margin-bottom: var(--space-lg);
     }
 
     .sidebar-section h2 {
