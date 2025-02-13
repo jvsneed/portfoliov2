@@ -251,23 +251,39 @@ const links = [
     }
 
     /* Custom cursor text styles */
-    .cursor-text {
-        position: fixed;
-        pointer-events: none;
-        width: 60px;  /* Smaller size for header */
-        height: 60px;
-        background: var(--color-accent);
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: var(--font-mono);
-        font-size: 1rem; /* Slightly smaller text */
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5);
-        transition: opacity 0.3s, transform 0.3s var(--ease-out-spring);
-        z-index: 1000;
+    @media (hover: hover) and (pointer: fine) {
+        .cursor-text {
+            position: fixed;
+            pointer-events: none;
+            width: 60px;  /* Smaller size for header */
+            height: 60px;
+            background: var(--color-accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 1rem; /* Slightly smaller text */
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+            transition: opacity 0.3s, transform 0.3s var(--ease-out-spring);
+            z-index: 1000;
+        }
+
+        .nav-link {
+            cursor: none;
+        }
+    }
+
+    @media (hover: none) or (pointer: coarse) {
+        .cursor-text {
+            display: none;
+        }
+
+        .nav-link {
+            cursor: pointer;
+        }
     }
 </style>
 
@@ -309,27 +325,30 @@ const links = [
         }
     });
 
-    document.addEventListener('mousemove', (e) => {
-        if (cursorText) {
-            cursorText.style.left = e.clientX + 'px';
-            cursorText.style.top = e.clientY + 'px';
-        }
-    });
-
-    links.forEach(link => {
-        link.addEventListener('mouseenter', () => {
+    // Only initialize cursor effects if device supports hover
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        document.addEventListener('mousemove', (e) => {
             if (cursorText) {
-                cursorText.textContent = link.textContent;
-                cursorText.style.opacity = '1';
-                cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorText.style.left = e.clientX + 'px';
+                cursorText.style.top = e.clientY + 'px';
             }
         });
 
-        link.addEventListener('mouseleave', () => {
-            if (cursorText) {
-                cursorText.style.opacity = '0';
-                cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
-            }
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                if (cursorText) {
+                    cursorText.textContent = link.textContent;
+                    cursorText.style.opacity = '1';
+                    cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
+                }
+            });
+
+            link.addEventListener('mouseleave', () => {
+                if (cursorText) {
+                    cursorText.style.opacity = '0';
+                    cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
+                }
+            });
         });
-    });
+    }
 </script>
