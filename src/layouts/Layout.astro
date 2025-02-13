@@ -24,7 +24,6 @@ const {
     type = "website"
 } = Astro.props;
 
-// Fix image URL construction
 const siteUrl = import.meta.env.SITE || 'https://johannasneed.com';
 const imageUrl = new URL(image.startsWith('/') ? image.slice(1) : image, siteUrl).toString();
 ---
