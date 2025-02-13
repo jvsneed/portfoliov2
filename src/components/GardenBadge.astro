@@ -1,0 +1,81 @@
+<a href="/garden" class="garden-badge" aria-label="Visit Digital Garden">
+    <div class="badge-content">🌱</div>
+    <div class="badge-tooltip">Digital Garden</div>
+</a>
+
+<style>
+    .garden-badge {
+        position: fixed;
+        right: 2rem;
+        bottom: 2rem;
+        width: 3.5rem;
+        height: 3.5rem;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        box-shadow: var(--shadow-soft);
+        z-index: 99;
+        transition: all 0.3s var(--ease-out-spring);
+    }
+
+    .badge-content {
+        font-size: 1.5rem;
+        animation: spin 20s linear infinite;
+        transition: transform 0.3s var(--ease-out-spring);
+    }
+
+    .badge-tooltip {
+        position: absolute;
+        bottom: calc(100% + 0.5rem);
+        background: var(--color-fg);
+        color: white;
+        padding: 0.5rem 0.75rem;
+        border-radius: var(--curve-sm);
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        opacity: 0;
+        transform: translateY(0.5rem);
+        transition: all 0.3s var(--ease-out-spring);
+        pointer-events: none;
+        white-space: nowrap;
+    }
+
+    .garden-badge:hover {
+        transform: scale(1.1) rotate(5deg);
+        border-color: var(--color-accent);
+        background: var(--color-accent);
+    }
+
+    .garden-badge:hover .badge-tooltip {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+        .garden-badge {
+            right: 1rem;
+            bottom: 1rem;
+            width: 3rem;
+            height: 3rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .badge-content {
+            animation: none;
+        }
+        
+        .garden-badge:hover {
+            transform: none;
+        }
+    }
+</style>

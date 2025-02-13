@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import GardenBadge from '../components/GardenBadge.astro';
 
 interface Frontmatter {
     title: string;
@@ -90,6 +91,7 @@ const sortedPosts = postsArray.map(post => ({
         </div>
     </div>
     <div class="cursor-text"></div>
+    <GardenBadge />
 </Layout>
 
 <style>

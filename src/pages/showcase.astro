@@ -1,0 +1,306 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Interface for showcase items
+interface ShowcaseItem {
+    title: string;
+    description: string;
+    image: string;
+    category: string;
+    year: string;
+    size: 'small' | 'medium' | 'large' | 'wide' | 'tall'; // Add size property
+    link?: {
+        url: string;
+        label: string;
+    };
+}
+
+// Showcase data
+const showcaseItems: ShowcaseItem[] = [
+    {
+        title: "Design System Components",
+        description: "Visual design exploration for accessible UI components",
+        image: "/showcase/tatemodern-thumbnail2.png",
+        category: "UI Design",
+        year: "2024",
+        size: "tall",
+        link: {
+            url: "https://example.com",
+            label: "View Project"
+        }
+    },
+    {
+        title: "Product Design Concepts",
+        description: "Experimental interface designs",
+        image: "/showcase/tatemodern-thumbnail2.png",
+        category: "Visual Design",
+        year: "2024",
+        size: "large"
+    },
+    {
+        title: "Product Design Concepts",
+        description: "Experimental interface designs",
+        image: "/showcase/tatemodern-thumbnail2.png",
+        category: "Visual Design",
+        year: "2024",
+        size: "small"
+    },
+       {
+        title: "Product Design Concepts",
+        description: "Experimental interface designs",
+        image: "/showcase/tatemodern-thumbnail2.png",
+        category: "Visual Design",
+        year: "2024",
+        size: "large"
+    }
+];
+---
+
+<Layout title="Visual Design Showcase | Johanna Sneed">
+    <div class="page-container">
+        <header class="showcase-header">
+            <h1>Visual Design</h1>
+            <p class="subtitle">Selected visual design work and explorations</p>
+        </header>
+
+        <div class="showcase-grid">
+            {showcaseItems.map(item => (
+                <div class={`showcase-item ${item.size}`}>
+                    <div class="showcase-image">
+                        <img src={item.image} alt={item.title} loading="lazy" />
+                        <div class="showcase-overlay">
+                            <h3>{item.title}</h3>
+                            <p>{item.description}</p>
+                            <div class="showcase-meta">
+                                <span class="category">{item.category}</span>
+                                <span class="year">{item.year}</span>
+                            </div>
+                            {item.link && (
+                                <a href={item.link.url} class="showcase-link" target="_blank" rel="noopener noreferrer">
+                                    {item.link.label}
+                                    <span class="arrow">→</span>
+                                </a>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+        <div class="cursor-text"></div>
+    </div>
+</Layout>
+
+<style>
+    .showcase-header {
+        padding: var(--space-xl) 0;
+    }
+
+    .subtitle {
+        color: var(--color-muted);
+        font-family: var(--font-mono);
+    }
+
+    .showcase-grid {
+        columns: 3 300px;
+        column-gap: var(--space-md);
+        padding: var(--space-lg) 0;
+    }
+
+    .showcase-item {
+        break-inside: avoid;
+        margin-bottom: var(--space-md);
+        cursor: pointer;
+        transform-style: preserve-3d;
+        perspective: 1000px;
+        overflow: hidden; /* Add this to contain the overlay */
+    }
+
+    .showcase-item.small {
+        height: 300px;
+    }
+
+    .showcase-item.medium {
+        height: 400px;
+    }
+
+    .showcase-item.large {
+        height: 500px;
+    }
+
+    .showcase-item.wide {
+        height: 400px;
+        column-span: all; /* Takes up full width */
+    }
+
+    .showcase-item.tall {
+        height: 600px;
+    }
+
+    .showcase-image {
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--curve-sm);
+        border: 1px solid var(--color-border);
+        transition: all 0.4s var(--ease-out-spring);
+    }
+
+    .showcase-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s var(--ease-out-spring);
+    }
+
+    .showcase-overlay {
+        position: absolute;
+        inset: 0;
+        padding: var(--space-md);
+        background: rgba(255, 255, 255, 0.98);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        transform: translateY(101%);
+        /* Modify these transition properties for smoother animation */
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .showcase-item:hover .showcase-overlay {
+        transform: translateY(0);
+    }
+
+    /* Adjust content animations to be smoother */
+    .showcase-overlay h3,
+    .showcase-overlay p,
+    .showcase-meta,
+    .showcase-link {
+        opacity: 0;
+        transform: translateY(10px); /* Reduced from 20px */
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .showcase-item:hover .showcase-overlay h3 {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.1s;
+    }
+
+    .showcase-item:hover .showcase-overlay p {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.2s;
+    }
+
+    .showcase-item:hover .showcase-meta {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.3s;
+    }
+
+    .showcase-item:hover .showcase-link {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.4s;
+    }
+
+    .showcase-meta {
+        display: flex;
+        gap: var(--space-sm);
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
+        margin-top: var(--space-sm);
+    }
+
+    .showcase-item:hover .showcase-image {
+        transform: translateZ(20px) rotateX(2deg) rotateY(-2deg);
+        border-color: var(--color-accent);
+    }
+
+    .showcase-item:hover .showcase-overlay {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .showcase-item:hover img {
+        transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+        .showcase-grid {
+            columns: 2 200px;
+        }
+
+        .showcase-item.wide {
+            height: 300px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .showcase-grid {
+            columns: 1;
+        }
+    }
+
+    .showcase-link {
+        margin-top: var(--space-md);
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--color-accent);
+        border-radius: var(--curve-sm);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s var(--ease-out-spring);
+        background: transparent;
+    }
+
+    .showcase-link:hover {
+        background: var(--color-accent);
+        color: white;
+    }
+
+    .showcase-link .arrow {
+        transition: transform 0.3s var(--ease-out-spring);
+    }
+
+    .showcase-link:hover .arrow {
+        transform: translateX(4px);
+    }
+
+    /* Remove or comment out the cursor-text styles */
+    /*
+    @media (hover: hover) and (pointer: fine) {
+        .project-item,
+        .blog-card {
+            cursor: none;
+        }
+        
+        .cursor-text {
+            // ...cursor styles...
+        }
+    }
+    */
+
+    @media (hover: none) or (pointer: coarse) {
+        .cursor-text {
+            display: none;
+        }
+
+        .showcase-item {
+            cursor: pointer;
+        }
+    }
+</style>
+
+<script>
+    // Remove or comment out cursor-related JavaScript
+    /*
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        // ...cursor effect code...
+    }
+    */
+</script>
