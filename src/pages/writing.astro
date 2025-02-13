@@ -286,7 +286,25 @@ const sortedPosts = postsArray.map(post => ({
         z-index: 1000;
     }
 
+    @media (hover: hover) and (pointer: fine) {
+        .post-card {
+            cursor: none;
+        }
+        
+        .cursor-text {
+            /* existing cursor-text styles */
+        }
+    }
 
+    @media (hover: none) or (pointer: coarse) {
+        .cursor-text {
+            display: none;
+        }
+
+        .post-card {
+            cursor: pointer;
+        }
+    }
 
     .tag {
         display: flex;
@@ -363,23 +381,25 @@ const sortedPosts = postsArray.map(post => ({
     });
 
     // Handle cursor effects
-    if (cursorText) {
-        document.addEventListener('mousemove', (e) => {
-            cursorText.style.left = `${e.clientX}px`;
-            cursorText.style.top = `${e.clientY}px`;
-        });
-
-        postCards.forEach(post => {
-            post.addEventListener('mouseenter', () => {
-                cursorText.textContent = 'Read article';
-                cursorText.style.opacity = '1';
-                cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        if (cursorText) {
+            document.addEventListener('mousemove', (e) => {
+                cursorText.style.left = `${e.clientX}px`;
+                cursorText.style.top = `${e.clientY}px`;
             });
 
-            post.addEventListener('mouseleave', () => {
-                cursorText.style.opacity = '0';
-                cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
+            postCards.forEach(post => {
+                post.addEventListener('mouseenter', () => {
+                    cursorText.textContent = 'Read article';
+                    cursorText.style.opacity = '1';
+                    cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
+                });
+
+                post.addEventListener('mouseleave', () => {
+                    cursorText.style.opacity = '0';
+                    cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
+                });
             });
-        });
+        }
     }
 </script>

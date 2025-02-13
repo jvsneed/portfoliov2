@@ -160,29 +160,35 @@ const projects = [
     }
 
     .name-block {
-        margin: 0 auto;
-        max-width: 100%; 
-        padding:0;
-        text-wrap: balance;
-
+        width: 100%;
+        margin: 0;
+        padding: 0;
     }
 
     .hero-title {
-        /* position: relative; */
         font-family: var(--font-special);
         font-weight: 800;
         margin: 0;
         line-height: 0.9;
+        width: 100%;
     }
-
 
     .hero-title span {
-        display: block;
-        font-size: calc(11vw + .5rem); 
-        letter-spacing: -0.06em; 
-        color: var(--color-fg); 
+        display: inline-block;
+        width: 100%;
+        font-size: clamp(2rem, 15vw, 25rem);
+        letter-spacing: -0.06em;
+        color: var(--color-fg);
+        white-space: nowrap;
+        text-align: left;
     }
     
+    /* Custom breakpoint for extra large screens */
+    @media (min-width: 1800px) {
+        .hero-title span {
+            font-size: clamp(5rem, 18vw, 30rem);
+        }
+    }
 
     @media (min-width:786px) and (max-width:1121px) {
         .hero-title span{
@@ -240,10 +246,11 @@ const projects = [
     
 
     .role-tags {
-        margin: 0 0 0 3.5rem;
+        margin: var(--space-xs) 0 0 auto;
+        width: fit-content;
         display: flex;
         justify-content: flex-end;
-        gap: .25rem;
+        gap: 0.25rem;
         opacity: 1;
     }
 
@@ -285,11 +292,16 @@ const projects = [
     }
 
     @media (max-width:633px) {
+
+        
         .preview-header {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             gap: var(--space-sm);
+            padding: var(--space-xs);
+            max-width: 100%;
+            margin-bottom:0;
         }
 
         .view-all{
@@ -298,6 +310,13 @@ const projects = [
         .preview-nav{
             padding:0;
         }
+        .blog-posts,
+        .featured-projects,
+        .portfolio-preview {
+            padding: var(--space-xs);
+            max-width: 100%;
+
+    }
     } 
 
     .preview-nav {
@@ -546,6 +565,7 @@ const projects = [
             padding: var(--space-xl) 0;
             display:flex;
             justify-content: center;
+            margin-bottom: var(--space-md)
         }
 
         .hero-sequence {
@@ -568,7 +588,7 @@ const projects = [
 
         .portfolio-preview,
         .blog-preview{
-            padding: var(--space-sm) var(--space-xs);   
+            padding: var(--space-sm) var (--space-xs);   
         }
     }
 

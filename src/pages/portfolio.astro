@@ -191,54 +191,73 @@ const allCaseStudies = Object.values(caseStudies);
     }
 
     /* Add cursor text styles */
-    .cursor-text {
-        position: fixed;
-        pointer-events: none;
-        width: 120px;
-        height: 120px;
-        background: var(--color-accent);
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: var(--font-mono);
-        font-size: 0.875rem;
-        text-align: center;
-        padding: 1.5rem;
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5);
-        transition: opacity 0.3s, transform 0.3s var(--ease-out-spring);
-        z-index: 1000;
+    @media (hover: hover) and (pointer: fine) {
+        .project-item {
+            cursor: none;
+        }
+        
+        .cursor-text {
+            position: fixed;
+            pointer-events: none;
+            width: 120px;
+            height: 120px;
+            background: var(--color-accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            text-align: center;
+            padding: 1.5rem;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+            transition: opacity 0.3s, transform 0.3s var(--ease-out-spring);
+            z-index: 1000;
+        }
+    }
+
+    @media (hover: none) or (pointer: coarse) {
+        .cursor-text {
+            display: none;
+        }
+
+        .project-item {
+            cursor: pointer;
+        }
     }
 </style>
 
 <script>
-    // Add cursor effect for project cards
-    const projectCards = document.querySelectorAll('.project-item');
-    const cursorText = document.querySelector('.cursor-text') as HTMLDivElement;
+    // Only initialize cursor effects if device supports hover
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        // Add cursor effect for project cards
+        const projectCards = document.querySelectorAll('.project-item');
+        const cursorText = document.querySelector('.cursor-text') as HTMLDivElement;
 
-    document.addEventListener('mousemove', (e) => {
-        if (cursorText) {
-            cursorText.style.left = e.clientX + 'px';
-            cursorText.style.top = e.clientY + 'px';
-        }
-    });
-
-    projectCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
+        document.addEventListener('mousemove', (e) => {
             if (cursorText) {
-                cursorText.textContent = 'Go to case study';
-                cursorText.style.opacity = '1';
-                cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorText.style.left = e.clientX + 'px';
+                cursorText.style.top = e.clientY + 'px';
             }
         });
 
-        card.addEventListener('mouseleave', () => {
-            if (cursorText) {
-                cursorText.style.opacity = '0';
-                cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
-            }
+        projectCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                if (cursorText) {
+                    cursorText.textContent = 'Go to case study';
+                    cursorText.style.opacity = '1';
+                    cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
+                }
+            });
+
+            card.addEventListener('mouseleave', () => {
+                if (cursorText) {
+                    cursorText.style.opacity = '0';
+                    cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
+                }
+            });
         });
-    });
+    }
 </script>

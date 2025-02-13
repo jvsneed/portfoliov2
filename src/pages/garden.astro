@@ -367,6 +367,26 @@ const links = gardenNotes.flatMap(note =>
         z-index: 1000;
     }
 
+    @media (hover: hover) and (pointer: fine) {
+        .note-card {
+            cursor: none;
+        }
+        
+        .cursor-text {
+            // ...existing cursor-text styles...
+        }
+    }
+
+    @media (hover: none) or (pointer: coarse) {
+        .cursor-text {
+            display: none;
+        }
+
+        .note-card {
+            cursor: pointer;
+        }
+    }
+
     @media (max-width: 768px) {
         .garden-layout {
             grid-template-columns: 1fr;
@@ -482,30 +502,33 @@ const links = gardenNotes.flatMap(note =>
         });
     });
 
-    // Add cursor effect
-    const cursorText = document.querySelector<HTMLDivElement>('.cursor-text');
+    // Only initialize cursor effects if device supports hover
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        // Add cursor effect
+        const cursorText = document.querySelector<HTMLDivElement>('.cursor-text');
 
-    document.addEventListener('mousemove', (e) => {
-        if (cursorText) {
-            cursorText.style.left = `${e.clientX}px`;
-            cursorText.style.top = `${e.clientY}px`;
-        }
-    });
-
-    noteCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
+        document.addEventListener('mousemove', (e) => {
             if (cursorText) {
-                cursorText.textContent = 'Open note';
-                cursorText.style.opacity = '1';
-                cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorText.style.left = `${e.clientX}px`;
+                cursorText.style.top = `${e.clientY}px`;
             }
         });
 
-        card.addEventListener('mouseleave', () => {
-            if (cursorText) {
-                cursorText.style.opacity = '0';
-                cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
-            }
+        noteCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                if (cursorText) {
+                    cursorText.textContent = 'Open note';
+                    cursorText.style.opacity = '1';
+                    cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
+                }
+            });
+
+            card.addEventListener('mouseleave', () => {
+                if (cursorText) {
+                    cursorText.style.opacity = '0';
+                    cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
+                }
+            });
         });
-    });
+    }
 </script>
