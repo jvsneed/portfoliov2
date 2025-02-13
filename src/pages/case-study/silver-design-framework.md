@@ -6,7 +6,7 @@ timeline: "2 months"
 team: "4 UX Researchers"
 tools: ["Figma", "Zoom", "React"]
 heroImage: "/silverdesign-hero.png"
-overview: "With the lack of a design framework specifically tailored for senior users, UX designers and engineers often lack the tools needed to create accessible designs for this age group. Our team aimed to develop a comprehensive framework that includes design guidelines, an evaluation checklist, and UI components to enhance accessibility and inclusivity for senior users."
+overview: "With the lack of a design framework specifically tailored for senior users, UX designers and engineers often lack the tools needed to create accessible designs for this age group. Our team aimed to develop a comprehensive framework that includes design guidelines, an evaluation checklist, and UI components to enhance accessibility and inclusivity for senior users. The project is live at www.silverux.design."
 color: "#FF4444"
 portfolioImage: "/pekin-thumbnail.png"
 category: "UX Research Strategy ✦ Product Leadership"
@@ -24,8 +24,6 @@ As the elderly population grows, the demand for digital experiences tailored to 
 
 
 
----
-
 </section>
 
 <section id="challenge">
@@ -42,7 +40,6 @@ Visitors to large art galleries like the Tate Modern often face challenges navig
 - Conduct user research and refine components based on feedback
 - Develop comprehensive design guidelines and evaluation checklist
 
----
 
 </section>
 <section id="solution">
@@ -54,11 +51,15 @@ Silver Design delivers practical tools to make digital interfaces more accessibl
 - Large, high-contrast text for readability.
 - Consistent design patterns aligned with real-world expectations.
 - Metrics from usability testing and surveys validated the framework’s effectiveness, and the heuristic checklist provided a valuable resource for designers.
-<div style="padding-bottom: 56.25%; position: relative;"><iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/Vfeoe2V9UDU?autoplay=1&controls=0&loop=1&modestbranding=1&mute=1&playlist=Vfeoe2V9UDU&playsinline=1&rel=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"  style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"><small>Powered by <a href="https://embed.tube/embed-code-generator/youtube/">youtube embed video</a> generator</small></iframe></div>
+<br>
+
+<a href="https://silverux.design" target="_blank" style="padding: 1rem; background-color:#FF4444;border-radius:.5rem; color: white; text-decoration:none;">Visit the Silver Design site</a>
+
+<div style="padding-bottom: 56.25%; position: relative;"><iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/Vfeoe2V9UDU?autoplay=1&controls=0&loop=1&modestbranding=1&mute=1&playlist=Vfeoe2V9UDU&playsinline=1&rel=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"  style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; margin-top:1rem;"><small>Powered by <a href="https://embed.tube/embed-code-generator/youtube/">youtube embed video</a> generator</small></iframe></div>
 
 
 
----
+
 
 </section>
 
@@ -268,8 +269,6 @@ Searching for a flight was a mostly straightforward process, but still had impac
 To simplify task 1, we needed to reduce visual clutter and cognitive load by simplifying the search process further. To make getting help easier, we needed to add additional search bars and create a sitemap for users.
 
 
-
----
 </section>
 
 <section id="outcome">

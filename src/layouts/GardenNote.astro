@@ -3,136 +3,143 @@ import Layout from './Layout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 
 const { frontmatter, url } = Astro.props;
-const growthStages = {
-    'seedling': { icon: '🌱', label: 'Just planted, growing ideas' },
-    'budding': { icon: '🌿', label: 'Active growth, work in progress' },
-    'evergreen': { icon: '🌳', label: 'Well maintained, regularly updated' }
-};
 ---
 
 <Layout>
     <article class="garden-note">
-        <header class="note-header">
-            <Breadcrumbs path={url} />
-            <div class="note-meta">
-                <div class="growth-status">
-                    <span class="icon">{growthStages[frontmatter.growth].icon}</span>
-                    <span class="label">{frontmatter.growth}</span>
-                    <span class="description">{growthStages[frontmatter.growth].label}</span>
+        <div class="content-wrapper">
+            <main class="note-content">
+                <header class="note-header">
+                    <Breadcrumbs path={url} />
+                    <div class="note-meta">
+                        <time>Last tended {new Date(frontmatter.lastModified).toLocaleDateString()}</time>
+                    </div>
+                    <h1>{frontmatter.title}</h1>
+                    <p class="note-description">{frontmatter.description}</p>
+                </header>
+                
+                <div class="note-body">
+                    <slot />
                 </div>
-                <time>Last tended {new Date(frontmatter.lastModified).toLocaleDateString()}</time>
-            </div>
-            <h1>{frontmatter.title}</h1>
-            <p class="note-description">{frontmatter.description}</p>
-            <div class="note-topics">
-                {frontmatter.topics.map(topic => (
-                    <span class="topic-tag">{topic}</span>
-                ))}
-            </div>
-        </header>
 
-        <div class="note-content">
-            <slot />
+                {frontmatter.connections && frontmatter.connections.length > 0 && (
+                    <footer class="note-footer">
+                        <h2 class="connections-title">Connected Notes</h2>
+                        <div class="connections">
+                            {frontmatter.connections.map(connection => (
+                                <a href={connection.url} class="connection-card">
+                                    <span class="title">{connection.title}</span>
+                                    <span class="read-more">Read note <span class="arrow">→</span></span>
+                                </a>
+                            ))}
+                        </div>
+                    </footer>
+                )}
+            </main>
+
+            <aside class="note-sidebar">
+                <div class="sidebar-section">
+                    <h2>Topics</h2>
+                    <div class="note-topics">
+                        {frontmatter.topics.map(topic => (
+                            <span class="topic-tag">{topic}</span>
+                        ))}
+                    </div>
+                </div>
+            </aside>
         </div>
-
-        {frontmatter.connections && frontmatter.connections.length > 0 && (
-            <footer class="note-footer">
-                <h2>Connected Notes</h2>
-                <div class="connections">
-                    {frontmatter.connections.map(connection => (
-                        <a href={connection.url} class="connection-card">
-                            <span class="title">{connection.title}</span>
-                            <span class="arrow">→</span>
-                        </a>
-                    ))}
-                </div>
-            </footer>
-        )}
     </article>
 </Layout>
 
 <style>
     .garden-note {
-        max-width: 65ch;
-        margin: 8rem auto 4rem;
-        padding: 0 var(--space-lg);
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: var(--space-xl) var(--space-lg);
     }
+
+    .content-wrapper {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: var(--space-xl);
+        max-width: var(--max-width);
+        margin: 0 auto;
+    }
+
+    /* .note-content {
+        max-width: 65ch;
+    } */
 
     .note-header {
         margin-bottom: var(--space-xl);
     }
 
-    .note-meta {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: var(--space-md);
-        font-family: var(--font-mono);
+    .note-sidebar {
+        position: sticky;
+        top: 5rem;
+        height: fit-content;
+    }
+
+    .sidebar-section {
+        padding: var(--space-md);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--curve-sm);
+    }
+
+    .sidebar-section h2 {
         font-size: 0.875rem;
+        font-family: var(--font-mono);
         color: var(--color-muted);
+        margin-bottom: var(--space-sm);
     }
 
-    .growth-status {
-        display: flex;
-        align-items: center;
-        gap: var(--space-sm);
-    }
-
-    .growth-status .icon {
-        font-size: 1.2rem;
-    }
-
-    .growth-status .label {
-        color: var(--color-accent);
-    }
-
-    h1 {
-        font-size: clamp(2rem, 5vw, 3rem);
-        line-height: 1.1;
-        margin: 0 0 var(--space-sm);
-    }
-
-    .note-description {
-        font-size: 1.1rem;
-        color: var(--color-muted);
-        line-height: 1.6;
-        margin: var(--space-md) 0;
-    }
-
-    .note-topics {
+    .tags-list {
         display: flex;
         flex-wrap: wrap;
         gap: var(--space-xs);
-        margin: var(--space-md) 0;
     }
 
-    .topic-tag {
+    .tag {
         font-family: var(--font-mono);
-        font-size: 0.75rem;
-        padding: 0.25em 0.75em;
-        background: var(--color-surface);
-        border: 1px solid var(--color-border);
-        border-radius: 2px;
+        font-size: 0.875rem;
         color: var(--color-muted);
+        padding: 0.5rem 1rem;
+        border-radius: 2px;
+        text-decoration: none;
+        transition: all 0.3s var(--ease-out-spring);
+        border: 1px solid var(--color-border);
+        background: var(--color-surface);
     }
 
-    .note-content {
-        font-family: var(--font-sans);
-        line-height: 1.7;
+    .tag:hover {
+        background: var(--color-accent);
+        color: white;
+        border-color: var(--color-accent);
     }
 
-    .note-content :global(h2) {
-        font-size: 1.5rem;
-        margin: 2rem 0 1rem;
+    @media (max-width: 768px) {
+        .content-wrapper {
+            grid-template-columns: 1fr;
+        }
+
+        .note-sidebar {
+            position: static;
+            margin-top: var(--space-lg);
+        }
     }
 
-    .note-content :global(h3) {
-        font-size: 1.25rem;
-        margin: 1.5rem 0 0.75rem;
+    .note-meta {
+        display: flex;
+        gap: var(--space-xs);
+        color: var(--color-muted);
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        margin-bottom: var(--space-md);
     }
 
-    .note-content :global(p) {
-        margin: 1rem 0;
+    .tended-label {
+        color: var(--color-accent);
     }
 
     .note-footer {
@@ -141,10 +148,9 @@ const growthStages = {
         border-top: 1px solid var(--color-border);
     }
 
-    .connections {
-        display: grid;
-        gap: var(--space-sm);
-        margin-top: var(--space-md);
+    .connections-title {
+        font-size: 1.25rem;
+        margin-bottom: var(--space-md);
     }
 
     .connection-card {
@@ -157,6 +163,7 @@ const growthStages = {
         border-radius: var(--curve-sm);
         text-decoration: none;
         color: inherit;
+        margin-bottom: var(--space-sm);
         transition: all 0.3s var(--ease-out-spring);
     }
 
@@ -165,15 +172,33 @@ const growthStages = {
         transform: translateX(var(--space-xs));
     }
 
-    @media (max-width: 768px) {
-        .garden-note {
-            padding: 0 var(--space-md);
-        }
+    .read-more {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: all 0.3s var(--ease-out-spring);
+    }
 
-        .note-meta {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: var(--space-xs);
-        }
+    .connection-card:hover .read-more {
+        opacity: 1;
+        transform: translateX(0);
     }
 </style>
+
+<script>
+    // Handle topic clicks to filter garden
+    document.querySelectorAll('.tag').forEach(tag => {
+        tag.addEventListener('click', (e) => {
+            e.preventDefault();
+            const tag = e.currentTarget as HTMLAnchorElement;
+            const topicValue = tag.getAttribute('href')?.split('=')[1];
+            sessionStorage.setItem('selectedCategory', topicValue || '');
+            window.location.href = '/garden';
+        });
+    });
+</script>

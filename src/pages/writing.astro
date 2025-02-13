@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-const posts = await Astro.glob('./writing/*.md');
+const posts = await Astro.glob('./articles/*.md');
 
 // Get all unique tags and count their occurrences
 const tagCounts = posts.reduce((acc, post) => {
@@ -86,6 +86,7 @@ function formatDate(dateStr: string) {
         display: flex;
         gap: var(--space-sm);
         padding-bottom: 0.5rem;
+        flex-wrap:wrap;
     }
 
     .tag {
@@ -204,6 +205,11 @@ function formatDate(dateStr: string) {
     .read-more:hover {
         color: var(--color-fg);
     }
+    .filter-section{
+        margin-top: var(--space-md);
+        margin-bottom: 0;
+        padding: 0;
+    }
 
     .filter-section h2 {
         font-size: 0.875rem;
@@ -260,9 +266,7 @@ function formatDate(dateStr: string) {
         z-index: 1000;
     }
 
-    .filter-section {
-        margin-bottom: var(--space-lg);
-    }
+
 
     .tag {
         display: flex;

@@ -10,6 +10,7 @@ const links = [
 ---
 
 <header>
+    <div class="scroll-progress"></div>
     <div class="header-container">
         <nav>
             <a href="/" class="logo">
@@ -58,7 +59,7 @@ const links = [
     }
 
     .header-container {
-        max-width: var(--max-width);
+        max-width: 100%;
         margin: 0 auto;
         padding: 0 var(--space-xl);
         height: 100%;
@@ -78,6 +79,7 @@ const links = [
         text-decoration: none;
         color: var(--color-fg);
         overflow: visible;
+        font-weight: 900;
     }
 
     .logo-wrapper {
@@ -183,8 +185,8 @@ const links = [
 
     @media (max-width: 768px) {
         .header-container {
-            padding: 0 var(--space-sm);
-        }
+        padding: 0 var(--space-xs);
+    }
 
         .menu-button {
             display: block;
@@ -269,6 +271,27 @@ const links = [
         transition: opacity 0.3s, transform 0.3s var(--ease-out-spring);
         z-index: 1000;
     }
+
+    .scroll-progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--color-border);
+        transform-origin: left;
+    }
+
+    .scroll-progress::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: var(--scroll, 0%);
+        height: 100%;
+        background: var(--color-accent);
+        transition: width 0.1s ease;
+    }
 </style>
 
 <script>
@@ -331,5 +354,11 @@ const links = [
                 cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
             }
         });
+    });
+
+    // Add scroll progress indicator
+    window.addEventListener('scroll', () => {
+        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        (document.querySelector('.scroll-progress') as HTMLElement)?.style.setProperty('--scroll', `${scrollPercent}%`);
     });
 </script>

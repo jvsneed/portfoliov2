@@ -22,7 +22,7 @@ This integrated experience enables gallery visitors to make the most of their vi
 
 _Note: Some information in this case study may be changed to protect confidential or private information. All information and views presented in this case study are my own and do not reflect the views of the Tate Modern._
 
----
+
 
 </section>
 
@@ -34,7 +34,6 @@ Visitors to large art galleries like the Tate Modern often face challenges navig
 
 > How might an integrated solution improve the Tate Modern gallery visit experience?
 
----
 
 </section>
 <section id="solution">
@@ -45,7 +44,6 @@ Our team created a Tate Modern app which enables visitors to easily find art and
 
 <div style="padding-bottom: 56.25%; position: relative;"><iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/ri6RVDNVuI0?autoplay=1&controls=0&loop=1&modestbranding=1&mute=1&playlist=ri6RVDNVuI0&playsinline=1&rel=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"  style="position: absolute; top: 0px; left: 0px; width: 100%; height: 88%;"><small>Powered by <a href="https://embed.tube/embed-code-generator/youtube/">youtube embed video</a> generator</small></iframe></div>
 
----
 
 </section>
 
@@ -98,7 +96,7 @@ Once the features to be included in the prototype were identified, I created a c
 <img src="/images/navigate-the-tate/concept-diagram.png" style="width:60%; display:flex; margin: 0 auto;" alt="a concept diagram demonstrating the connections between the gallery and users" />
 
 
----
+
 </section>
 
 <section id="outcome">

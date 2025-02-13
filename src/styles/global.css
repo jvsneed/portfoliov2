@@ -56,14 +56,6 @@ body {
     min-height: 100vh;
 }
 
-.particle {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: var(--color-accent);
-    border-radius: 50%;
-    pointer-events: none;
-}
 
 /* Typography */
 h1, h2, h3, h4 {
@@ -74,10 +66,15 @@ h1, h2, h3, h4 {
 
 h1 {
     font-family: var(--font-special);
-    font-size: clamp(2rem, 3.815rem, 4rem);
+    font-size: clamp(2rem, 3.815rem, 3.815rem);
     line-height: 1;
     margin: 0;
     font-weight: 600;
+}
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
 }
 
 h2 {
@@ -173,7 +170,14 @@ p{
     margin-bottom: var(--space-xl);
 }
 
-
+ul {
+    padding-left: 1.5rem;
+}
+li {
+    font-size: 1rem;
+    font-family: var(--font-sans);
+    line-height: 1.7;
+ }
 
 /* Common Card Styles */
 .card {

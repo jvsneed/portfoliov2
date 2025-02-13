@@ -30,8 +30,6 @@ This project evaluated the accessibility of ZocDoc.com, a healthcare information
 <br>
 
 
----
-
 </section>
 
 <section id="challenge">
@@ -45,7 +43,6 @@ As the population of individuals with blindness or low vision is expected to dou
 >How might we propose improvements to make Zocdoc more accessible for individuals who are blind or experience low vision?
 <br>
 
----
 
 </section>
 <section id="solution">
@@ -65,8 +62,6 @@ Adjust the behavior of combo boxes and form fields to ensure they work as expect
 
 <br>
 
-
----
 
 </section>
 
@@ -92,8 +87,6 @@ I facilitated 2 of 4 remote, moderated usability studies with blind participants
 - **Post-Task Questionnaires.** Participants rated task difficulty, satisfaction, and confidence levels after each task to gauge their overall experience. Due to the low statistical significance of a small sample size, we focused on qualitative insights and patterns that objectively impacted the screen reader user experience.
 
 
-
----
 </section>
 
 <section id="outcome">

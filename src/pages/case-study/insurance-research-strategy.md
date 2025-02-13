@@ -24,7 +24,6 @@ Pekin Insurance embarked on a digital transformation to improve customer and age
 
 *Some information in this case study may be changed to protect confidential or private information. All information and views presented in this case study are my own and do not reflect the views of Pekin Insurance.*
 
----
 
 </section>
 
@@ -44,7 +43,6 @@ Pekin Insurance was facing challenges with outdated digital platforms that strug
 
 
 
----
 
 </section>
 <section id="solution">
@@ -76,9 +74,6 @@ The digital transformation at Pekin Insurance began delivering tangible results,
 <div class="note">
 Note: These designs were created by the talented UX / visual design members of my team.
 </div>
-
-
----
 
 </section>
 
@@ -261,7 +256,6 @@ It was clear that data was hard to come by as analytics tools were used minimall
 
 
 
----
 </section>
 
 <section id="outcome">

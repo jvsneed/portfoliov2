@@ -3,17 +3,16 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-    <div class="about-container">
+    <div class="page-container">
         <header class="portfolio-header">
             <div class="header-content">
-                <h1 class="section-title">About Me</h1>
+                <h1 class="section-title">About Johanna</h1>
             </div>
         </header>
 
         <div class="content-grid">
             <section class="intro-section">
                 <div class="bio-content">
-                    <h2>Hi, I'm Johanna</h2>
                     <p>
                         I've been working professionally building sites and products since 2012, but I have been designing and developing things for as long as I can remember. I love the process of creating, whether it's a website, a product, or a piece of art. My goal is to make the world a more beautiful and functional place.
                     </p>
@@ -221,11 +220,15 @@ import Layout from '../layouts/Layout.astro';
         border-top: 1px solid var(--color-border);
         width: 100%;
     }
+    .philosophy-section h2{
+        font-size: 2rem;
+        padding-top: var(--space-sm);
+    }
 
     .philosophy-list {
         display: grid;
         gap: var(--space-sm);
-        margin-top: var(--space-md);
+        margin-top: var(--space-sm);
     }
 
     .approach-item {

@@ -4,23 +4,27 @@ interface Props {
 }
 
 const { path } = Astro.props;
-const segments = path.split('/').filter(Boolean);
-const breadcrumbs = segments.map((segment, index) => {
-    const url = '/' + segments.slice(0, index + 1).join('/');
-    return {
-        text: segment.replace(/-/g, ' '),
-        url
-    };
-});
+
+function formatSegment(segment: string): string {
+    return segment
+        .replace(/-/g, ' ')  // Replace hyphens with spaces
+        .replace(/([A-Z])/g, ' $1')  // Add space before capital letters
+        .toLowerCase()  // Convert to lowercase
+        .trim();  // Remove extra spaces
+}
+
+const segments = path
+    .split('/')
+    .filter(Boolean)
+    .slice(1)
+    .map(segment => formatSegment(segment));
 ---
 
-<nav class="breadcrumbs" aria-label="Breadcrumb">
-    {breadcrumbs.map((crumb, index) => (
+<nav class="breadcrumbs" aria-label="Breadcrumbs">
+    {segments.map((segment, index) => (
         <>
-            <span class="separator">/</span>
-            <a href={crumb.url} class={index === breadcrumbs.length - 1 ? 'current' : ''}>
-                {crumb.text}
-            </a>
+            <span class="breadcrumb-item">{segment}</span>
+            {index < segments.length - 1 && <span class="separator">/</span>}
         </>
     ))}
 </nav>
@@ -33,23 +37,12 @@ const breadcrumbs = segments.map((segment, index) => {
         margin-bottom: var(--space-md);
     }
 
-    .breadcrumbs a {
-        color: inherit;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
-    .breadcrumbs a:hover {
-        color: var(--color-accent);
+    .breadcrumb-item {
+        text-transform: capitalize;
     }
 
     .separator {
         margin: 0 0.5rem;
-        color: var(--color-border);
-    }
-
-    .current {
-        color: var(--color-accent);
-        pointer-events: none;
+        color: var(--color-muted);
     }
 </style>
