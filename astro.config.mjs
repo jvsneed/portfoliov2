@@ -6,6 +6,5 @@ import cloudflare from '@astrojs/cloudflare';
 // https://astro.build/config
 export default defineConfig({
   adapter: cloudflare(),
-  site: 'https://johannasneed.com', // Replace with your actual domain
-  // ...other config options...
+  site: 'https://johannasneed.com', 
 });
