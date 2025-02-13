@@ -1,6 +1,17 @@
-<a href="/garden" class="garden-badge" aria-label="Visit Digital Garden">
-    <div class="badge-content">🌱</div>
-    <div class="badge-tooltip">Digital Garden</div>
+<a href="/garden" class="garden-badge" aria-label="Digital Garden">
+    <div class="circular-text">
+        <svg viewBox="0 0 100 100">
+            <defs>
+                <path id="circle-path" d="M50,50m-30,0a30,30 0 1,1 60,0a30,30 0 1,1-60,0"/>
+            </defs>
+            <text>
+                <textPath href="#circle-path" startOffset="0%">
+                    digital  • garden •
+                </textPath>
+            </text>
+        </svg>
+    </div>
+    <div class="badge-icon">🪴</div>
 </a>
 
 <style>
@@ -8,8 +19,8 @@
         position: fixed;
         right: 2rem;
         bottom: 2rem;
-        width: 3.5rem;
-        height: 3.5rem;
+        width: 3rem;  /* Increased overall size */
+        height: 3rem; /* Increased overall size */
         background: var(--color-surface);
         border: 1px solid var(--color-border);
         border-radius: 50%;
@@ -19,40 +30,54 @@
         text-decoration: none;
         box-shadow: var(--shadow-soft);
         z-index: 99;
-        transition: all 0.3s var(--ease-out-spring);
+        transition: all 0.3s var(--ease-out-soft);
     }
 
-    .badge-content {
-        font-size: 1.5rem;
-        animation: spin 20s linear infinite;
-        transition: transform 0.3s var(--ease-out-spring);
-    }
-
-    .badge-tooltip {
+    .circular-text {
         position: absolute;
-        bottom: calc(100% + 0.5rem);
-        background: var(--color-fg);
-        color: white;
-        padding: 0.5rem 0.75rem;
-        border-radius: var(--curve-sm);
-        font-family: var(--font-mono);
-        font-size: 0.75rem;
-        opacity: 0;
-        transform: translateY(0.5rem);
-        transition: all 0.3s var(--ease-out-spring);
+        width: 200%;    /* Made larger for bigger text ring */
+        height: 200%;   /* Made larger for bigger text ring */
+        left: -50%;     /* Adjusted from -40% */
+        top: -50%;      /* Adjusted from -40% */
+        animation: spin 20s linear infinite;
         pointer-events: none;
-        white-space: nowrap;
+        background-color:rgba(255, 255, 255, 0.4);
+        border-radius: 50%;
+    }
+
+    .circular-text svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .circular-text text {
+        font-size: .8rem;          /* Increased from 9px */
+        font-family: var(--font-mono);
+        fill: var(--color-muted);
+        text-transform: uppercase;
+        letter-spacing: 2px;    /* Adjusted from 1.5px */
+        font-weight: 500;        /* Added for better visibility */
+    }
+
+    .badge-icon {
+        font-size: 1.3rem;       /* Slightly reduced from 1.4rem */
+        background: var(--color-surface);
+        width: 2.5rem;           /* Added fixed width for inner circle */
+        height: 2.5rem;          /* Added fixed height for inner circle */
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
     }
 
     .garden-badge:hover {
-        transform: scale(1.1) rotate(5deg);
-        border-color: var(--color-accent);
-        background: var(--color-accent);
+        border: 2px solid var(--color-accent);
+        transform: scale(1.1);
     }
 
-    .garden-badge:hover .badge-tooltip {
-        opacity: 1;
-        transform: translateY(0);
+    .garden-badge:hover .circular-text text {
+        fill: var(--color-accent);
     }
 
     @keyframes spin {
@@ -64,18 +89,14 @@
         .garden-badge {
             right: 1rem;
             bottom: 1rem;
-            width: 3rem;
-            height: 3rem;
+            width: 4.5rem;         /* Adjusted mobile size */
+            height: 4.5rem;        /* Adjusted mobile size */
         }
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .badge-content {
+        .circular-text {
             animation: none;
-        }
-        
-        .garden-badge:hover {
-            transform: none;
         }
     }
 </style>
