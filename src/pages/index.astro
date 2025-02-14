@@ -33,15 +33,23 @@ const latestPosts = postsArray
 
 const projects = [
 {
-        title: "Pekin Insurance User Experience Strategy",
+        title: "Leading a customer experience strategy to enable digital transformation",
         category: "UX Research Strategy ✦ Product Leadership",
         year: "2024",
-        description: "Leading a user research strategy to guide Pekin Insurance's digital transformation.",
+        description: "A comprehensive strategy to improve customer experience across digital touchpoints.",  
         image: "/pekin-thumbnail.png",
         slug: "insurance-research-strategy"  
     },
     {
-        title: "Creating the Silver Design System and Framework",
+        title: "Navigate the Tate",
+        category: "UX Research ✦ UX Design",
+        year: "2024",
+        description: "A mobile app for museum navigation and gallery intergration for visitors.",
+        image: "/tate-thumbnail.png",
+        slug: "navigate-the-tate"  
+    },
+    {
+        title: "Silver Design System and Framework",
         category: "UX Research ✦ Accessibility",
         year: "2024",
         description: "A design system and framework to support senior user needs.",
@@ -87,14 +95,14 @@ const projects = [
 
         <section class="portfolio-preview" data-section="work">
             <div class="preview-header">
-                <h2 class="section-title">Selected work</h2>
-                <div class="preview-nav">
+                <h2 class="section-title">UX Case Studies</h2>
+                <!-- <div class="preview-nav">
                     <a href="/portfolio" class="view-all">All portfolio case studies →</a>
-                </div>
+                </div> -->
             </div>
             
             <div class="featured-projects">
-                {projects.slice(0, 3).map((project, index) => (
+                {projects.map((project, index) => (
                     <a href={`/case-study/${project.slug}`} class="project-item" data-index={index}>
                         <div class="project-content">
                             <div class="project-meta">
@@ -102,10 +110,10 @@ const projects = [
                             </div>
                             <h3 class="project-title">{project.title}</h3>
                             <p class="project-description">{project.description}</p>
-                            <span class="project-link">
+                            {/* <span class="project-link">
                                 <span>Go to case study</span>
                                 <span class="arrow">→</span>
-                            </span>
+                            </span> */}
                         </div>
                         <div class="project-image">
                             <img src={project.image} alt={project.title} />
@@ -116,7 +124,7 @@ const projects = [
         </section>
 
         <section class="blog-preview" data-section="blog">
-            <div class="preview-header">
+            <div class="preview-header writing">
                 <h2 class="section-title">Latest writing</h2>
                 <div class="preview-nav">
                     <a href="/writing" class="view-all">All writing →</a>
@@ -196,63 +204,92 @@ const projects = [
         will-change: transform, font-variation-settings;
     }
 
-    .featured-projects{
+    .featured-projects {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
         gap: var(--space-sm);
+        max-width: 100%;
+    }
+ 
+    .project-item {
+        box-sizing: border-box;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-lg);
+        align-items: center;
+        padding: var(--space-md) var(--space-lg);
+        position: relative;
+        border: 1px solid var(--color-border);
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: var(--curve-sm);
+        transition: all 0.4s var(--ease-out-spring);
+        transition: all 0.4s var(--ease-out-spring),
+        border-color 0.3s ease;
+        text-decoration: none; 
+        color: inherit; 
+        perspective: 1000px;
+        max-width:var(--max-width);
+        margin: 0 auto;
+        /* max-height: fit-content; */
+        overflow:hidden;
+    }
+    .project-content[data-index="0"]{
+        min-width: 100%;
+    }
+
+    
+
+    /* Size variants */
+    .project-item[data-index="0"] {
+        grid-column: span 8;
+        display:flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 0;
+        align-items: start;
+        padding:0;
+    }
+    .project-item[data-index="0"] > .project-content {
+        padding: var(--space-md) var(--space-md) 0 var(--space-md);
+    }
+    .project-item[data-index="0"] > .project-image {
+        max-height: 400px;
+        width: 100%;
+        display: flex;
+        align-items: flex-end;
+    }
+
+
+    .project-item[data-index="1"] {
+        grid-column: span 4;
+        display:flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 0;
+        align-items: start;
+        padding:0;
+    }
+    .project-item[data-index="1"] > .project-content {
+        padding: var(--space-md) var(--space-md) 0 var(--space-md);
+    }
+    .project-item[data-index="1"] > .project-image {
+        padding-left: 0;
+        display:flex;
+        max-height: 370px;
+        margin: 0 auto;
+        align-items: flex-end;
+    }
+
+
+    .project-item[data-index="2"] {
+        grid-column: span 12;
+    }
+
+    
+    .project-item[data-index="3"] {
+        grid-column: span 12;
     }
     
-    /* Custom breakpoint for extra large screens */
-    @media (min-width: 1800px) {
-        .hero-title span {
-            font-size: clamp(5rem, 16vw, 12rem);
-        }
-    }
-
-    @media (min-width:786px) and (max-width:1800px) {
-        .hero-title span{
-            font-size: calc(11vw + .5rem);
-            
-        }
-
-    }
-    @media (min-width:533px) and (max-width:785px) {
-        .hero-title span{
-            font-size: calc(11vw + .5rem);
-        }
-        .role-tags{
-            display:flex;
-            margin: 0 auto;
-            max-width: var(--max-width);
-            line-height: 1;
-            justify-content: flex-end;
-            padding: 0;
-        }
-    }
-        @media (min-width:360px) and (max-width:532px) {
-            .name-block,
-            .hero-sequence{
-                display:flex;
-                flex-direction: column;
-            justify-content: flex-end;
-        }
-            .hero-title span{
-            font-size: calc(13vw + .5rem);
-        }
-        .role-tags{
-            display:flex;
-            margin: 0 auto;
-            max-width: var(--max-width);
-            line-height: 1;
-            justify-content: flex-end;
-            padding: 0;
-        }
-        .role-tag{
-            font-size: 1rem;
-        }
-        .role-tag:not::after {
-        margin-left: 0;
-    } 
-
-    }
         .role-tag {
             font-size: 1rem;
         }
@@ -269,8 +306,6 @@ const projects = [
         justify-content: flex-end;
         gap: 0.25rem;
         opacity: 1;
-        animation: mainFloat 8s var(--ease-out-spring) infinite;
-        animation-delay: 0s; // Remove delay for synchronization
     }
 
     .role-tag {
@@ -291,11 +326,6 @@ const projects = [
         color: var(--color-accent);
     } 
 
-
- 
-
-
-
     .portfolio-preview {
         padding: var(--space-xl) var(--space-lg) var(--space-md) var(--space-lg);
         margin: 0 auto;
@@ -310,41 +340,10 @@ const projects = [
         margin-bottom: var(--space-md);
     }
 
-    @media (max-width:633px) {
-
-        
-        .preview-header {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 2rem;
-            padding: var(--space-xs);
-            max-width: 100%;
-            margin-bottom:0;
-        }
-
-        .view-all{
-            padding: 0!important;
-        }
-        .preview-nav{
-            padding:0;
-        }
-        .featured-projects,
-        .portfolio-preview {
-            padding: var(--space-xs);
-            max-width: 100%;
-
-    }
-
-    .blog-posts {
-        padding: var(--space-xs);
-    }
-    } 
-
     .preview-nav {
         display: flex;
         align-items: center;
-        gap: var(--space-md);
+        gap: var (--space-md);
     }
 
     .nav-line {
@@ -353,41 +352,11 @@ const projects = [
         background: var(--color-accent);
     }
 
-    .featured-projects {
-        display: flex;
-        flex-direction: column;
-        gap: var (--space-sm);
-    }
 
-    .project-item {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 5rem;
-        align-items: center;
-        padding: var(--space-md) var(--space-lg);
-        position: relative;
-        border: 1px solid var(--color-border);
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: var(--curve-sm);
-        transition: all 0.4s var(--ease-out-spring);
-        transition: all 0.4s var(--ease-out-spring),
-        border-color 0.3s ease;
-        text-decoration: none; 
-        color: inherit; 
-        perspective: 1000px;
-        max-width:var(--max-width);
-        margin: 0 auto;
-    }
 
     .project-item:hover {
         border-color: var(--color-accent);
-        transform: translateX(var(--space-sm)) translateZ(20px) rotateX(2deg) rotateY(-2deg);
-    }
-
-    .project-content,
-    .project-image {
-        position: relative;
-        z-index: 1;
+        transform: translateX(var(--space-xs)) translateZ(20px) rotateX(2deg) rotateY(-2deg);
     }
 
     .project-meta {
@@ -413,11 +382,7 @@ const projects = [
     .project-description {
         margin: 0;
         font-size:1rem;
-        line-height: 1.2;
-    }
-    .project-description{
-        max-width: 40ch;
-
+        /* line-height: 1.2; */
     }
 
     .project-image {
@@ -499,7 +464,6 @@ const projects = [
         border-radius: var (--curve-sm);
         transition: all 0.3s var(--ease-out-spring);
         background: rgba(255, 255, 255, 0.8);
-        transform-style: preserve-3d;
         perspective: 1000px;
     }
 
@@ -617,8 +581,40 @@ const projects = [
         }
     }
 
+/* Unified media queries */
+@media (max-width: 1024px) {
+        .featured-projects {
+            gap: var(--space-md);
+        }
+
+        .project-item[data-index="0"],
+        .project-item[data-index="1"],
+        .project-item[data-index="2"],
+        .project-item[data-index="3"] {
+            grid-column: span 12;
+            width: 100%;
+        }
+
+        .project-content {
+            padding: var(--space-md);
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+        }
+    }
 
     @media (max-width: 768px) {
+        .preview-header{
+            padding: 0 var(--space-sm);
+            margin-top: var(--space-md);
+            margin-bottom: 0;
+
+        }
+        .preview-header.writing{
+            padding:0;
+        }
+        
         .content-area {
             width: 100%;
             padding: var(--space-xl) 0;
@@ -645,12 +641,130 @@ const projects = [
             padding: var(--space-sm) var(--space-md);
         }
 
-        .portfolio-preview,
-        .blog-preview{
-            padding: var(--space-sm) var (--space-xs);   
+        .featured-projects {
+            gap: var(--space-sm);
+            padding: 0 var(--space-sm);
+            margin-bottom: var(--space-lg);
+            display:flex;
+            flex-direction: column;
+            max-width: 100%;
+            overflow:hidden;
+        }
+
+        .blog-preview.reveal{
+            padding: 0 var(--space-sm);
+            margin-bottom: var(--space-lg);
+
+
+        }
+        .portfolio-preview{
+            padding: var(--space-sm) var (--space-xs); 
+        }
+        .blog-posts{
+            margin-top: var(--space-md);
+
+        }
+        .project-content {
+            padding: var(--space-sm);
+        }
+
+        .project-description {
+
+            display: flex;
+            flex-direction:column;
+        }
+        
+
+        .project-image {
+            display: none;
+        }
+        .project-item{
+            min-width: 99%;
+            max-width: 100%;
+        }
+        .project-item[data-index="0"],
+        .project-item[data-index="1"] {
+            padding-bottom: var(--space-sm);
+        }
+        .project-item[data-index="0"] > .project-image,
+        .project-item[data-index="1"] > .project-image {
+            display: none;
         }
     }
 
+    /* Custom breakpoint for extra large screens */
+    @media (min-width: 1800px) {
+        .hero-title span {
+            font-size: clamp(5rem, 16vw, 12rem);
+        }
+    }
+
+    @media (min-width:786px) and (max-width:1800px) {
+        .hero-title span{
+            font-size: calc(11vw + .5rem);
+            
+        }
+
+    }
+    @media (min-width:533px) and (max-width:785px) {
+        .hero-title span{
+            font-size: calc(11vw + .5rem);
+        }
+        .role-tags{
+            display:flex;
+            margin: 0 auto;
+            max-width: var(--max-width);
+            line-height: 1;
+            justify-content: flex-end;
+            padding: 0;
+        }
+    }
+        @media (max-width:532px) {
+            .name-block,
+            .hero-sequence{
+                display:flex;
+                flex-direction: column;
+            justify-content: flex-end;
+        }
+            .hero-title span{
+            font-size: calc(13vw + .5rem);
+        }
+        .role-tags{
+            display:flex;
+            margin: 0 auto;
+            max-width: var(--max-width);
+            line-height: 1;
+            justify-content: flex-end;
+            padding: 0;
+        }
+        .role-tag{
+            font-size: 1rem;
+        }
+        .role-tag:not::after {
+        margin-left: 0;
+        } 
+        .project-image{
+            display: none;
+        }
+        .project-item[data-index="0"] {
+            padding-bottom: var(--space-sm);
+        }
+        .project-item[data-index="0"] > .project-image,
+        .project-item[data-index="1"] > .project-image,
+        .project-item[data-index="2"] > .project-image,
+        .project-item[data-index="3"] > .project-image{
+            display: none;
+        }
+
+
+
+    .project-content{
+        padding:0;
+    }
+    .project-title{
+        padding:0;
+        margin-top:0;
+    }
 
         
 </style>
