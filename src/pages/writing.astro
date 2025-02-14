@@ -153,7 +153,6 @@ const sortedPosts = postsArray.map(post => ({
         border-radius: var(--curve-sm);
         background: rgba(255, 255, 255, 0.8);
         transition: all 0.3s var(--ease-out-spring);
-        cursor: none;
         transform-style: preserve-3d;
         perspective: 1000px;
     }
@@ -266,47 +265,6 @@ const sortedPosts = postsArray.map(post => ({
         }
     }
 
-    /* Add cursor text styles */
-    .cursor-text {
-        position: fixed;
-        pointer-events: none;
-        width: 120px;
-        height: 120px;
-        background: var(--color-accent);
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: var(--font-mono);
-        font-size: 0.875rem;
-        text-align: center;
-        padding: 1.5rem;
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5);
-        transition: opacity 0.3s, transform 0.3s var(--ease-out-spring);
-        z-index: 1000;
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-        .post-card {
-            cursor: none;
-        }
-        
-        .cursor-text {
-            /* existing cursor-text styles */
-        }
-    }
-
-    @media (hover: none) or (pointer: coarse) {
-        .cursor-text {
-            display: none;
-        }
-
-        .post-card {
-            cursor: pointer;
-        }
-    }
 
     .tag {
         display: flex;
@@ -343,7 +301,6 @@ const sortedPosts = postsArray.map(post => ({
 
     const filterButtons = document.querySelectorAll<HTMLButtonElement>('.tag');
     const postCards = document.querySelectorAll<PostElement>('.post-card');
-    const cursorText = document.querySelector<HTMLDivElement>('.cursor-text');
 
     function filterPosts(category: string) {
         const normalizedCategory = category.toLowerCase().replace(/\s+/g, '-');
@@ -382,26 +339,4 @@ const sortedPosts = postsArray.map(post => ({
         }
     });
 
-    // Handle cursor effects
-    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-        if (cursorText) {
-            document.addEventListener('mousemove', (e) => {
-                cursorText.style.left = `${e.clientX}px`;
-                cursorText.style.top = `${e.clientY}px`;
-            });
-
-            postCards.forEach(post => {
-                post.addEventListener('mouseenter', () => {
-                    cursorText.textContent = 'Read article';
-                    cursorText.style.opacity = '1';
-                    cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
-                });
-
-                post.addEventListener('mouseleave', () => {
-                    cursorText.style.opacity = '0';
-                    cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
-                });
-            });
-        }
-    }
 </script>

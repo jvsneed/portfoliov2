@@ -265,7 +265,6 @@ const links = gardenNotes.flatMap(note =>
         border-radius: var(--curve-sm);
         background: rgba(255, 255, 255, 0.8);
         transition: all 0.3s var(--ease-out-spring);
-        cursor: none;
         transform-style: preserve-3d;
         perspective: 1000px;
     }
@@ -346,46 +345,6 @@ const links = gardenNotes.flatMap(note =>
         display: none;
     }
 
-    .cursor-text {
-        position: fixed;
-        pointer-events: none;
-        width: 120px;
-        height: 120px;
-        background: var(--color-accent);
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: var(--font-mono);
-        font-size: 0.875rem;
-        text-align: center;
-        padding: 1.5rem;
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5);
-        transition: opacity 0.3s, transform 0.3s var(--ease-out-spring);
-        z-index: 1000;
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-        .note-card {
-            cursor: none;
-        }
-        
-        .cursor-text {
-            // ...existing cursor-text styles...
-        }
-    }
-
-    @media (hover: none) or (pointer: coarse) {
-        .cursor-text {
-            display: none;
-        }
-
-        .note-card {
-            cursor: pointer;
-        }
-    }
 
     @media (max-width: 768px) {
         .garden-layout {
@@ -502,33 +461,4 @@ const links = gardenNotes.flatMap(note =>
         });
     });
 
-    // Only initialize cursor effects if device supports hover
-    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-        // Add cursor effect
-        const cursorText = document.querySelector<HTMLDivElement>('.cursor-text');
-
-        document.addEventListener('mousemove', (e) => {
-            if (cursorText) {
-                cursorText.style.left = `${e.clientX}px`;
-                cursorText.style.top = `${e.clientY}px`;
-            }
-        });
-
-        noteCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                if (cursorText) {
-                    cursorText.textContent = 'Open note';
-                    cursorText.style.opacity = '1';
-                    cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
-                }
-            });
-
-            card.addEventListener('mouseleave', () => {
-                if (cursorText) {
-                    cursorText.style.opacity = '0';
-                    cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
-                }
-            });
-        });
-    }
 </script>

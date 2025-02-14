@@ -5,10 +5,11 @@ import Layout from '../layouts/Layout.astro';
 interface ShowcaseItem {
     title: string;
     description: string;
-    image: string;
+    image: string | null;
+    lottie?: string;  // Add lottie property for animation files
     category: string;
     year: string;
-    size: 'small' | 'medium' | 'large' | 'wide' | 'tall'; // Add size property
+    size: 'small' | 'medium' | 'large' | 'wide' | 'tall' | 'twowide' ; // Add size property
     link?: {
         url: string;
         label: string;
@@ -17,57 +18,93 @@ interface ShowcaseItem {
 
 // Showcase data
 const showcaseItems: ShowcaseItem[] = [
+{
+        title: "Coming soon: Black Moth Tattoo Company Branding",
+        description: "A branding guide for the Black Moth Tattoo Company.",
+        image: "/showcase/black-moth.png",
+        category: "Visual Design",
+        year: "2018",
+        size: "wide"
+    },
     {
-        title: "Design System Components",
-        description: "Visual design exploration for accessible UI components",
+        title: "Navigate the Tate",
+        description: "UI Design for the Tate Modern application.",
         image: "/showcase/tatemodern-thumbnail2.png",
         category: "UI Design",
-        year: "2024",
+        year: "2022",
         size: "tall",
         link: {
-            url: "https://example.com",
-            label: "View Project"
+            url: "http://localhost:4321/case-study/navigate-the-tate",
+            label: "Read the case study"
         }
     },
     {
-        title: "Product Design Concepts",
-        description: "Experimental interface designs",
-        image: "/showcase/tatemodern-thumbnail2.png",
-        category: "Visual Design",
+        title: "Focus Boost",
+        description: "A pomodora based task manager that explores the concept of dopamine menus.",
+        image: "/showcase/focus-boost.gif",
+        category: "Branding",
         year: "2024",
-        size: "large"
+        size: "medium",
+        link: {
+            url: "https://focusboost.explorethis.quest",
+            label: "Try FocusBoost"
+        }
     },
+
     {
-        title: "Product Design Concepts",
-        description: "Experimental interface designs",
-        image: "/showcase/tatemodern-thumbnail2.png",
-        category: "Visual Design",
-        year: "2024",
-        size: "small"
+        title: "Via Labs",
+        description: "An experimental lab to test web animation and immersive design concepts. Not optimized for mobile.",
+        image: "/showcase/via-labs.gif",
+        category: "UI Design",
+        year: "2025",
+        size: "medium",
+        link: {
+            url: "https://via-labs.pages.dev/",
+            label: "Explore the lab"
+        }
+        
     },
+
+
+
        {
-        title: "Product Design Concepts",
-        description: "Experimental interface designs",
-        image: "/showcase/tatemodern-thumbnail2.png",
+        title: "AI flip mobile companion concept",
+        description: "Mockup for a design challenge for flip phone AI interface design.",
+        image: "/showcase/flip-mobile.png",
         category: "Visual Design",
-        year: "2024",
+        year: "2023",
         size: "large"
-    }
+    },
+
+    
+    // {
+    //     title: "Animated Interface",
+    //     description: "Interactive animation prototype",
+    //     image: null,
+    //     lottie: "/animations/playhouse-lottie.json", // Path to your Lottie JSON file
+    //     category: "Motion Design",
+    //     year: "2024",
+    //     size: "medium"
+    // }
 ];
 ---
 
 <Layout title="Visual Design Showcase | Johanna Sneed">
     <div class="page-container">
-        <header class="showcase-header">
+        <header class="header-content">
             <h1>Visual Design</h1>
-            <p class="subtitle">Selected visual design work and explorations</p>
+            <p class="subtitle">Although I love conducting research, I am also a creative person. Below, you won't find any case studies, just a mosaic of images and links from freelance and personal projects I've done.</p>
         </header>
 
         <div class="showcase-grid">
             {showcaseItems.map(item => (
                 <div class={`showcase-item ${item.size}`}>
                     <div class="showcase-image">
-                        <img src={item.image} alt={item.title} loading="lazy" />
+                        {item.lottie ? (
+                            <div class="lottie-container" data-animation={item.lottie}></div>
+                        ) : (
+                            <img src={item.image} alt={item.title} loading="lazy" />
+                        )}
                         <div class="showcase-overlay">
                             <h3>{item.title}</h3>
                             <p>{item.description}</p>
@@ -97,18 +134,19 @@ const showcaseItems: ShowcaseItem[] = [
 
     .subtitle {
         color: var(--color-muted);
-        font-family: var(--font-mono);
+        max-width: 65ch;
+
     }
 
     .showcase-grid {
         columns: 3 300px;
-        column-gap: var(--space-md);
-        padding: var(--space-lg) 0;
+        column-gap: var(--space-xs);
+        padding: var(--space-lg) 0 0 0;
     }
 
     .showcase-item {
         break-inside: avoid;
-        margin-bottom: var(--space-md);
+        margin-bottom: var(--space-xs);
         cursor: pointer;
         transform-style: preserve-3d;
         perspective: 1000px;
@@ -116,24 +154,28 @@ const showcaseItems: ShowcaseItem[] = [
     }
 
     .showcase-item.small {
-        height: 300px;
+        height: 220px;
     }
 
     .showcase-item.medium {
-        height: 400px;
+        height: 315px;
     }
 
     .showcase-item.large {
-        height: 500px;
+        height: 415px;
     }
 
     .showcase-item.wide {
         height: 400px;
         column-span: all; /* Takes up full width */
     }
+    .showcase-item.twowide {
+        height: 400px;
+        grid-area: 1 / 2 / 3 / 3;
+    }
 
     .showcase-item.tall {
-        height: 600px;
+        height: 645px;
     }
 
     .showcase-image {
@@ -141,7 +183,6 @@ const showcaseItems: ShowcaseItem[] = [
         position: relative;
         overflow: hidden;
         border-radius: var(--curve-sm);
-        border: 1px solid var(--color-border);
         transition: all 0.4s var(--ease-out-spring);
     }
 
@@ -163,6 +204,10 @@ const showcaseItems: ShowcaseItem[] = [
         transform: translateY(101%);
         /* Modify these transition properties for smoother animation */
         transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .showcase-overlay p{
+        line-height:1.2;
     }
 
     .showcase-item:hover .showcase-overlay {
@@ -209,7 +254,7 @@ const showcaseItems: ShowcaseItem[] = [
         font-family: var(--font-mono);
         font-size: 0.875rem;
         color: var(--color-accent);
-        margin-top: var(--space-sm);
+        margin-top: var(--space-xs);
     }
 
     .showcase-item:hover .showcase-image {
@@ -243,7 +288,7 @@ const showcaseItems: ShowcaseItem[] = [
     }
 
     .showcase-link {
-        margin-top: var(--space-md);
+        margin-top: var(--space-xs);
         font-family: var(--font-mono);
         font-size: 0.875rem;
         color: var(--color-accent);
@@ -256,6 +301,7 @@ const showcaseItems: ShowcaseItem[] = [
         gap: 0.5rem;
         transition: all 0.3s var(--ease-out-spring);
         background: transparent;
+        width: fit-content;
     }
 
     .showcase-link:hover {
@@ -271,19 +317,12 @@ const showcaseItems: ShowcaseItem[] = [
         transform: translateX(4px);
     }
 
-    /* Remove or comment out the cursor-text styles */
-    /*
-    @media (hover: hover) and (pointer: fine) {
-        .project-item,
-        .blog-card {
-            cursor: none;
-        }
-        
-        .cursor-text {
-            // ...cursor styles...
-        }
+    .lottie-container {
+        width: 100%;
+        height: 100%;
+        background: var(--color-surface);
     }
-    */
+
 
     @media (hover: none) or (pointer: coarse) {
         .cursor-text {
@@ -297,6 +336,38 @@ const showcaseItems: ShowcaseItem[] = [
 </style>
 
 <script>
+    import lottie from 'lottie-web';
+
+    // Initialize Lottie animations
+    document.querySelectorAll('.lottie-container').forEach(container => {
+        const animationPath = container.getAttribute('data-animation');
+        if (animationPath) {
+            const animation = lottie.loadAnimation({
+                container: container as HTMLElement,
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: animationPath
+            });
+
+            // Pause animation when not in viewport
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            animation.play();
+                        } else {
+                            animation.pause();
+                        }
+                    });
+                },
+                { threshold: 0.1 }
+            );
+
+            observer.observe(container);
+        }
+    });
+
     // Remove or comment out cursor-related JavaScript
     /*
     if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {

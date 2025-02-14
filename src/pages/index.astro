@@ -153,7 +153,7 @@ const projects = [
     }
 
     .content-area {
-        padding: 20vh 0rem;
+        padding: 30vh 0rem;
         max-width: var(--max-width);
         margin: 0 auto;
     }
@@ -203,11 +203,11 @@ const projects = [
     /* Custom breakpoint for extra large screens */
     @media (min-width: 1800px) {
         .hero-title span {
-            font-size: clamp(5rem, 18vw, 15rem);
+            font-size: clamp(5rem, 16vw, 12rem);
         }
     }
 
-    @media (min-width:786px) and (max-width:1121px) {
+    @media (min-width:786px) and (max-width:1800px) {
         .hero-title span{
             font-size: calc(11vw + .5rem);
             
@@ -372,7 +372,6 @@ const projects = [
         transition: all 0.4s var(--ease-out-spring);
         transition: all 0.4s var(--ease-out-spring),
         border-color 0.3s ease;
-        cursor: none;  
         text-decoration: none; 
         color: inherit; 
         perspective: 1000px;
@@ -463,7 +462,7 @@ const projects = [
     .view-all {
         font-family: var(--font-mono);
         font-size: 1rem;
-        color: var(--color-accent);
+        color: var(--color-fg);
         text-decoration: none;
         display: flex;
         align-items: center;
@@ -493,7 +492,6 @@ const projects = [
     }
 
     .blog-card {
-        cursor: none;  
         text-decoration: none;  
         color: inherit;  
         padding: var(--space-lg);
@@ -653,44 +651,8 @@ const projects = [
         }
     }
 
-    @media (hover: hover) and (pointer: fine) {
-        .project-item,
-        .blog-card {
-            cursor: none;
-        }
+
         
-        .cursor-text {
-            position: fixed;
-            pointer-events: none;
-            width: 120px;
-            height: 120px;
-            background: var(--color-accent);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--font-mono);
-            font-size: 0.875rem;
-            text-align: center;
-            padding: 1.5rem;
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.5);
-            transition: opacity 0.3s, transform 0.3s var(--ease-out-spring);
-            z-index: 1000;
-        }
-    }
-
-    @media (hover: none) or (pointer: coarse) {
-        .cursor-text {
-            display: none;
-        }
-
-        .project-item,
-        .blog-card {
-            cursor: pointer;
-        }
-    }
 </style>
 
 <script>
@@ -707,49 +669,7 @@ const projects = [
         progressBar?.style.setProperty('--scroll', `${scrollPercent}%`);
     });
 
-    // Add cursor effect for project cards and blog cards
-    const projectCards = document.querySelectorAll('.project-item');
-    const blogCards = document.querySelectorAll('.blog-card');
-    const cursorText = document.querySelector('.cursor-text') as HTMLDivElement;
-
-    // Only initialize cursor effects if device supports hover
-    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-        // Project card cursor effect
-        projectCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                if (cursorText) {
-                    cursorText.textContent = 'Go to case study';
-                    cursorText.style.opacity = '1';
-                    cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
-                }
-            });
-
-            card.addEventListener('mouseleave', () => {
-                if (cursorText) {
-                    cursorText.style.opacity = '0';
-                    cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
-                }
-            });
-        });
-
-        // Blog card cursor effect
-        blogCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                if (cursorText) {
-                    cursorText.textContent = 'Read article';
-                    cursorText.style.opacity = '1';
-                    cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
-                }
-            });
-
-            card.addEventListener('mouseleave', () => {
-                if (cursorText) {
-                    cursorText.style.opacity = '0';
-                    cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
-                }
-            });
-        });
-    }
+   
 
     // Split the hero title text
     const heroText = new SplitType('.hero-title span', { 
@@ -780,13 +700,6 @@ const projects = [
                 
                 (char as HTMLElement).style.transform = `scale(${scale})`;
                 (char as HTMLElement).style.fontWeight = weight.toString();
-            });
-        });
-
-        container.addEventListener('mouseleave', () => {
-            chars.forEach((char) => {
-                (char as HTMLElement).style.transform = 'scale(1)';
-                (char as HTMLElement).style.fontWeight = '400';
             });
         });
     }
