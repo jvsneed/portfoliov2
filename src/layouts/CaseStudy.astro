@@ -50,7 +50,7 @@ const { title, role, timeline, team, tools, heroImage, overview, color = 'var(--
     .hero {
         padding: var(--space-xl) 0;
         background: var(--color-surface);
-        border-bottom: 1px solid var(--color-border);
+        /* border-bottom: 1px solid var(--color-border); */
         
     }
 
@@ -83,7 +83,7 @@ const { title, role, timeline, team, tools, heroImage, overview, color = 'var(--
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: var(--space-lg);
-        padding-bottom: var(--space-xl);
+        padding-bottom: var(--space-md);
 
     }
 
@@ -106,7 +106,7 @@ const { title, role, timeline, team, tools, heroImage, overview, color = 'var(--
 
     .hero-image {
         width: 100%;
-        height: 60vh;
+        max-height: 60vh;
         /* margin-top: var(--space-xl); */
         background: var(--color-surface);
         overflow: hidden;
@@ -192,6 +192,15 @@ const { title, role, timeline, team, tools, heroImage, overview, color = 'var(--
         line-height: inherit;
         opacity: 1;
     }
+    @media (max-width: 1400px) {
+        .hero {
+            padding: var(--space-md) var(--space-xl);
+        }
+        .meta-grid{
+            padding:0 0 var(--space-md) 0;
+        }
+    }
+
 
 
     @media (max-width: 768px) {
@@ -200,6 +209,7 @@ const { title, role, timeline, team, tools, heroImage, overview, color = 'var(--
             gap: var(--space-md);
             padding: 0 var(--space-xs);
         }
+
         .hero-content{
             padding: var(--space-md) var(--space-xs);
 

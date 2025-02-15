@@ -72,6 +72,10 @@ h1 {
     margin: 0;
     font-weight: 600;
 }
+
+.post-date{
+    font-family: var(--font-mono);
+}
 @media (max-width: 768px) {
     h1 {
         font-size: 2.5rem;
