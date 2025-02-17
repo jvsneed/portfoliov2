@@ -3,7 +3,7 @@ layout: ../../../layouts/GardenNote.astro
 title: "Bias in brain-computer interface algorithms"
 description: "Key principles for creating accessible digital experiences"
 growth: "evergreen"
-lastModified: "2026-09-26"
+lastModified: "2024-09-26"
 topics: ["Human-computer interaction", "Brain-computer interface", "Ethics"]
 connections:
   # - { title: "Design System Components", url: "/garden/ux/design-system-components" }
