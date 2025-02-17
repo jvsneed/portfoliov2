@@ -5,7 +5,7 @@ role: "UX researcher, Accessibility auditor"
 timeline: "2 months"
 team: "2 UX Researchers"
 tools: ["Optimal Workshop", "Figma", "Excel"]
-heroImage: "/zocdoc-hero.png"
+heroImage: "/playhouse-hero.png"
 overview: "This project focused on redesigning the information architecture (IA) of the Peoria PlayHouse Children's Museum’s mobile site to improve the overall user navigation experience. The museum’s mission is to provide children with tools and inspiration to explore and create, but its outdated website made it difficult for users to find critical information such as event details, tickets, and membership options. "
 color: "#FF4444"
 portfolioImage: "/pekin-thumbnail.png"
@@ -17,14 +17,13 @@ description: "Leading a user research strategy to guide Pekin Insurance's digita
 <section id="overview">
 
 ## Overview
-This project evaluated the accessibility of ZocDoc.com, a healthcare information website, for users with blindness and low vision (BLV). 
+This project focused on redesigning the information architecture (IA) of the Peoria PlayHouse Children's Museum’s mobile site to improve the overall user navigation experience. The museum’s mission is to provide children with tools and inspiration to explore and create, but its outdated website made it difficult for users to find critical information such as event details, tickets, and membership options. 
 
-**Objectives**
-- Identify accessibility barriers for BLV users when using ZocDoc to search for providers and schedule appointments.
-- Determine how the site aligns with Web Content Accessibility Guidelines (WCAG) and areas where it falls short. Provide actionable recommendations to enhance ZocDoc’s accessibility for BLV users.
+**Objective**
+The primary goal of this redesign was to create a more intuitive structure that would serve the museum’s diverse user base, including caregivers, community supporters, and family gifters.
  
 
-*Some information in this case study may be changed to protect confidential or private information. All information and views presented in this case study are my own and do not reflect the views of ZocDoc.*
+*Some information in this case study may be changed to protect confidential or private information. All information and views presented in this case study are my own and do not reflect the views of the Peoria PlayHouse Children's Museum.*
 
 
 <br>
@@ -36,11 +35,14 @@ This project evaluated the accessibility of ZocDoc.com, a healthcare information
 
 ## The Challenge
 
-As the population of individuals with blindness or low vision is expected to double by 2050, the need for accessible digital healthcare services is critical. ZocDoc, a popular platform for finding healthcare providers and booking appointments, plays a significant role in providing healthcare access. However, many BLV users face barriers while navigating the site, which diminishes their confidence and ability to use the platform independently.  Our goal was to evaluate the accessibility of ZocDoc.com for BLV individuals and uncover usability issues that hindered their experience.
+The Peoria PlayHouse website faced several challenges, including inconsistent labeling, ambiguous categories, and a cluttered layout. These issues made it difficult for users to quickly locate the information they needed, such as museum hours, event details, and donation forms. Furthermore, links to external sites for key actions like purchasing memberships created a disjointed user experience. Key issues identified were:
+- Inconsistent navigation labels. Mixed task-based and topical categories confused users.
+- Content clutter. Outdated blog posts and unclear categorization added unnecessary noise.
+- Inconsistent purchasing experience.Some actions required navigating away from the internal site, creating a fragmented experience.
+
+>How might we make important information on site easier to find?
 
 
-
->How might we propose improvements to make Zocdoc more accessible for individuals who are blind or experience low vision?
 <br>
 
 
@@ -49,18 +51,19 @@ As the population of individuals with blindness or low vision is expected to dou
 
 ## Recommendations
 
-This project was submitted as part of HCI masters coursework, you can read the [Accessibility Study Research findings](https://docs.johannasneed.com/accessibility-study). Based on our findings, we proposed several improvements to ZocDoc.com that would greatly enhance its accessibility for BLV users:
+### Task-Oriented Information Architecture
+Navigation was redesigned around user tasks, leading to categories like "Plan a Visit" and "Support Us." This structure was informed by the results of the card sort and tree jack tests, aligning with user mental models. **Note: The final site map shown was created by my project team mate.** I provided feedback and contributed to the research and content.
 
-### Improved Navigation and Labeling
-Ensure all interactive elements (e.g., buttons, form fields, modals) are properly labeled for screen readers. Add clear headings and appropriate landmarks to improve page navigation and clarity. Streamline navigation paths and improve the consistency of headings and tab orders, so that BLV users can more easily understand and traverse the site.
+<img src="/images/peoria-playhouse/sitemap.png" style="width: 100%; display:flex; margin: 3rem auto;" alt="the large site map for the new site" />
 
-### Streamline Provider Listings
-Group sponsored providers in a separate, clearly labeled section to avoid repetition and confusion. This allows users to skip over these listings after viewing them once.
+### Improved Labeling & Consistency
+Navigation labels were clarified and standardized to improve usability. Task labels, such as "Plan a Visit" and "Explore Programs and Exhibits," were prioritized over topical labels that caused confusion in earlier versions.
 
-### Enhance Interactive Elements
-Adjust the behavior of combo boxes and form fields to ensure they work as expected with all screen readers. Ensure that forms follow a logical tab order and do not auto-navigate to tooltips. Redesign Appointment Scheduling: Simplify the calendar grid interface for easier screen reader navigation. Ensure modal dialogs are announced properly when opened, and provide clear instructions for selecting appointment times. Clarify and label filters to ensure they are accessible via screen readers and function as expected for all users.
+<img src="/images/peoria-playhouse/newflow1.png" style="width: 100%; display:flex; margin: 3rem auto;" alt="" />
+Streamlined Purchase Experience: The purchase flows for tickets, memberships, and donations were streamlined to avoid external site redirects. Wireframes introduced multi-step forms, simplifying long forms with clear instructions and progress.
 
-<br>
+<img src="/images/peoria-playhouse/newflow2.png" style="width: 100%; display:flex; margin: 3rem auto;" alt="t" />
+
 
 
 </section>
@@ -68,23 +71,60 @@ Adjust the behavior of combo boxes and form fields to ensure they work as expect
 <section id="process">
 
 ## Research Process
+<img src="/images/peoria-playhouse/process.png" style="width: 70%; display:flex; margin: 3rem auto;" alt="A diagram of the research process: Content, IA testing, task flow design, then first-click testing" />
 
-I facilitated 2 of 4 remote, moderated usability studies with blind participants, all of whom used screen readers to navigate the web. Participants were recruited using the university's network. Our methodology consisted of:
+### Content Inventory
+I completed a content inventory for half of the site (split with team member) by determining the scope of content being revised, documenting categorized navigation levels and pages, gathering and documenting URLS and page content, and identifying missing, inaccurate, or redundant content. ‍ The content inventory uncovered opportunities to remove outdated blogs and articles, lack of consistency in categorization themes in the navigation, ambiguous page labels, and links to external sites with inconsistent experiences.
 
-- **Task-Based Usability Testing.** Participants were asked to complete three key tasks on ZocDoc: searching for a provider, selecting a provider, and scheduling an appointment.
-  - Flow 1, shown below, requires the user to use the search page, select a service, and navigate the provider listing page
-   - Flow 2, also below, requires the user to select a provider, select a date and time for an appointment, and fill out the appointment form
+### User Personas & Task Analysis
+As a team, we interviewed 15 community members three key personas: Caregivers, Community Supporters, and Family Gifters, each representing a typical user of the museum’s website. Task flows were created for each persona, focusing on core actions like purchasing tickets, finding events, and making donations.
+
+- Two key tasks were selected as part of the redesign because the purchasing experience across the site was inconsistent. Issues identified with the purchasing process include:
+- Interface design that did not match the other purchase experiences and the site's design
+- Long forms with a possible 30+ fields per screen, increasing the likelihood of abandoned purchase attempts
+- Required form fields for optional data with instructions to the user to enter "n/a"
+- The site's content did not show clear visual hierarchy
+
+<div style="padding:2rem; border-radius: 1rem; border:2px solid var(--color-border)">
+<b>Original site and form designs</b>
+<div style="display:flex; flex-wrap:wrap; gap: 1rem; ">
+<img src="/images/peoria-playhouse/oldwires.png" style="width: 30%; display:flex; margin: 3rem auto;" alt="A screenshot shows unclear type hierarchy" />
+<img src="/images/peoria-playhouse/oldform.gif" style="width: 30%; display:flex; margin: 3rem auto;" alt="A screenshot shows a very long purchasing form" />
+</div>
+</div>
 
 
-<img src="/images/zocdoc-accessibility-research/flow1.png" style="width: 90%; display:flex; margin: 3rem auto;" alt="" />
+**Opportunities**
+- Update the purchasing experience for both tasks to have a consistent look and feel with each other and the rest of the website.
+- Group long-form fields and create a multi-page form that gives the user a clear understanding of where they are in the process and the ability to go back to make changes quickly.
+- Make non-required form fields optional.
 
-<img src="/images/zocdoc-accessibility-research/flow2
-.png" style="width: 90%; display:flex; margin: 3rem auto;" alt="" />
+>Research limitation: We do not have enough information about customers' purchasing habits. 
 
+This meant we had to make assumptions about the likelihood they would be a returning customer, how often they make purchases on the site, and whether a customer would buy multiple memberships and fundraiser tickets on the same day.  We opted not to include account creation or purchasing cart due to long order forms. Additional interviews and data analysis can be used to improve this experience further.
 
-- **Think-Aloud Protocol.** Participants verbalized their thoughts during tasks, allowing us to capture insights into their cognitive processes and challenges.
+### Card Sorting
+Four rounds of card sorting, including open and hybrid methods, were conducted to reorganize the site’s structure. The goal of our first open card sort among our two group members was to determine common groupings of 2nd level categories (25 cards) so we could propose new 1st level categories and determine an organizational scheme for the mobile site.
 
-- **Post-Task Questionnaires.** Participants rated task difficulty, satisfaction, and confidence levels after each task to gauge their overall experience. Due to the low statistical significance of a small sample size, we focused on qualitative insights and patterns that objectively impacted the screen reader user experience.
+The goal of the remaining three hybrid card sorts was to test the newly updated 1st level categories by having users group 2nd level content cards under them. The end goal was a refined recommendation for both levels that matched users' mental models.
+
+<img src="/images/peoria-playhouse/cardsort.png" style="width: 70%; display:flex; margin: 3rem auto;" alt="A diagram showing the enhancement of the cards through 3 card sorting exercises" />
+
+>These exercises helped clarify user expectations for navigation labels and revealed a preference for task-oriented categories like "Plan a Visit" and "Support the Museum."
+
+### Tree Jack Testing
+The newly proposed IA was tested through tree jack testing to determine whether users could successfully complete key tasks, such as finding museum hours or purchasing a gift membership. These tests were performed in three rounds with a broad user base to evaluate success rates and fine-tune the final navigation structure.
+<img src="/images/peoria-playhouse/treetest.png" style="width: 50%; display:flex; margin: 3rem auto;" alt="A diagram showing the task completion success rates" />
+
+### Wireframes & First-Click Testing
+I created wireframes for the new flows and conducted a round of first-click testing with 7 randomly selected participants. The goal was to learn about the effectiveness of some of the important screens in the key tasks and whether we could make events easier to find since we received inconsistent results in previous tests with the placement of the Events Calendar in the primary navigation menu.
+
+**Analysis of the test data helped us learn...**
+Can participants initiate a membership purchase?
+Can participants modify an error in their membership purchase?
+Can participants initiate a fundraiser admission ticket purchase?
+Can participants find upcoming events?
+<img src="/images/peoria-playhouse/firstclick.png" style="width: 100%; display:flex; margin: 3rem auto;" alt="First click testing results. Most users opted to select the  calendar link on the home page to find upcoming events. Adding the View All Programs & Events link above the event preview section to improve findability." />
 
 
 </section>
@@ -92,44 +132,34 @@ I facilitated 2 of 4 remote, moderated usability studies with blind participants
 <section id="outcome">
 
 ## Findings
-Our study identified significant accessibility barriers across all tasks. While participants were able to complete some tasks, their experience was marred by inconsistent navigation, improperly labeled elements, and incompatibility with screen readers.
+The research revealed several critical insights:
+### Clearer Labels Were Essential
+Inconsistent and unclear labels in the original navigation caused confusion for users, particularly when trying to find tickets or donations. Task-based labels significantly improved navigation.
 
-### Task 1 - Search for a provider
-Although all participants completed the task, only half used the expected "happy path." Issues included improperly functioning combo boxes and navigating headings on the home page, causing confusion for participants relying on specific screen reader commands. Satisfaction with this task was notably low, with an average score of 2.47 out of 4.
+### Task-Based Grouping Was Preferred
+Users consistently grouped categories based on key actions. Categories like “Plan a Visit” and “Support Us” resonated with users as they focused on their immediate needs and goals.
 
-While easy to navigate using a mouse, the combo box was challenging for screen reader users and shortcuts did not work as study participants expected.
-<img src="/images/zocdoc-accessibility-research/combobox.png" style="width: 70%; display:flex; margin: 3rem auto;" alt="" />
+### Improved Success in Testing
+Across the three rounds of tree jack testing, overall success rates for key tasks improved to 89% in the first round and stayed consistent at 81% in the final round. Directness, or the ability to find information without unnecessary detours, also improved significantly between rounds.
 
-### Task 2 - Select a provider
-Participants struggled with navigating provider listings. The presence of sponsored listings confused some users, and two participants encountered issues using filters. One participant resorted to unconventional methods to navigate the site by navigating through each individual elements using a shortcut. The average satisfaction score for this task was 3.08 out of 4.
+### First-Click Success Rates
+First-click testing showed high success rates, with 100% of participants correctly identifying where to initiate key actions like purchasing a membership or a fundraiser ticket.
 
-It was unclear that the first few listings were sponsored when navigating using a screen reader. The sponsored listings are at the top of each page in the search results, making it unclear to participants that they successfully navigated to a new search results page.
 
-<img src="/images/zocdoc-accessibility-research/sponsoredprovider.png" style="width: 70%; display:flex; margin: 3rem auto;" alt="" />
+</section>
 
-### Task 3 - Schedule an appointment
-This task proved most challenging, with only two participants completing it. The calendar interface was difficult to navigate via screen readers, and improperly labeled buttons caused confusion. Two participants were unable to complete the task successfully due to improper use of focus trapping, and the average satisfaction score for this task was 2.53 out of 4.
+<section>
 
-At the time of the study, the calendar used the css grid display property, causing keyboard navigation to follow an unexpected top-to-bottom pattern instead of the expected left-to-right. This has since been resolved!
-
-<img src="/images/zocdoc-accessibility-research/calendarGrid.png" style="width: 70%; display:flex; margin: 3rem auto;" alt="" />
-
-### Results and Impact
-Our study not only identified critical usability issues but also provided actionable insights that can guide ZocDoc toward a more accessible experience for BLV users. By implementing the recommended changes, ZocDoc could:
-- Enhance user satisfaction, especially for users relying on assistive technologies.
-- Increase task completion rates for essential actions like scheduling appointments.
-- Foster greater confidence and independence among BLV users, allowing them to navigate the platform with ease.
-
-Although the participants could complete some tasks, the overall usability and satisfaction scores were low, revealing substantial room for improvement.
-
+## Results and Impact
+While this project was for academic purposes and the redesign has not been implemented on the live site, testing results indicate a significant improvement in user navigation:
+- 89% success rate in task completion for key actions, such as finding museum hours or purchasing memberships, with high confidence in the navigation structure.
+- 100% success in first-click tests for initiating key tasks, demonstrating the intuitive nature of the redesign.
+- The redesigned site structure significantly reduced the confusion around task completion, particularly for complex flows like purchasing fundraiser tickets or finding upcoming events.
 
 
 ### Future Work and Reflections
-
-Future directions for this research include:
-1. **Accessibility audit.** ZocDoc.com should undergo a formal WCAG 2.2 audit to identify and correct the broader accessibility issues uncovered during this study.
-2. **Cross-Site comparative study.** A comparative analysis of other healthcare platforms could provide further insights into best practices for designing accessible healthcare websites for BLV users.
-3. **Expansion of research scope.** Future research should explore diverse BLV user groups, including individuals with varying degrees of vision loss and technology experience, to further refine accessibility solutions.
-4. **Exploration of multimodal interactions.** Investigate opportunities to implement multimodal feedback, such as auditory cues or haptic feedback, to aid BLV users in navigating the website with more precision and confidence.
+- Expand testing to a broader audience, including real-world users of the Peoria PlayHouse site, to gather feedback post-launch.
+- Incorporate a customer account system to further streamline the purchasing process for frequent visitors.
+- Monitor usage analytics to track how the new navigation impacts user engagement and task success rates over time.
 
 </section>
