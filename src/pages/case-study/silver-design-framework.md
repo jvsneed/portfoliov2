@@ -2,7 +2,7 @@
 layout: ../../layouts/CaseStudy.astro
 title: "Introducing Silver Design, a design system for inclusive web interfaces"
 role: "User researcher, Design system site developer"
-timeline: "2 months"
+timeline: "2024 - 2 months"
 team: "4 UX Researchers"
 tools: ["Figma", "Zoom", "React"]
 heroImage: "/silverdesign-hero.png"

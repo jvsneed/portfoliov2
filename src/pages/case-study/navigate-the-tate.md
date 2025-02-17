@@ -2,7 +2,7 @@
 layout: ../../layouts/CaseStudy.astro
 title: "Navigate the Tate"
 role: "User researcher, primary visual designer and prototyper"
-timeline: "2 months"
+timeline: "2022 - 2 months"
 team: "3 UX Generalists"
 tools: ["Figma", "AxureRP", "Zoom", "Mural"]
 heroImage: "/tate-hero.png"

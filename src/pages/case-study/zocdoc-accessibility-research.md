@@ -2,7 +2,7 @@
 layout: ../../layouts/CaseStudy.astro
 title: "Improving healthcare access for blind and low vision users"
 role: "UX researcher, Accessibility auditor"
-timeline: "2 months"
+timeline: "2023 - 2 months"
 team: "4 UX Researchers"
 tools: ["WAVE", "JAWS", "NVDA", "Zoom"]
 heroImage: "/zocdoc-hero.png"

@@ -2,7 +2,7 @@
 layout: ../../layouts/CaseStudy.astro
 title: "Insurance Research Strategy"
 role: "Digital Experience Manager, UX Researcher"
-timeline: "6 months"
+timeline: "2023 & 2024 - 6 months initial with 2 years of ongoing research"
 team: "I managed the team comprised of UX and engineering"
 tools: ["Visio", "PowerPoint", "Figjam", "Figma"]
 heroImage: "/pekin-hero.png"

@@ -2,7 +2,7 @@
 layout: ../../layouts/CaseStudy.astro
 title: "Improving information architecture for the Peoria PlayHouse website"
 role: "UX researcher, Information Architect"
-timeline: "2 months"
+timeline: "2022 - 2 months"
 team: "2 UX Researchers"
 tools: ["Optimal Workshop", "Figma", "Excel"]
 heroImage: "/playhouse-hero.png"
