@@ -1,12 +1,12 @@
 ---
 layout: ../../layouts/CaseStudy.astro
-title: "Improving healthcare access for blind and low vision users"
+title: "Improving information architecture for the Peoria PlayHouse website"
 role: "UX researcher, Accessibility auditor"
 timeline: "2 months"
-team: "4 UX Researchers"
-tools: ["WAVE", "JAWS", "NVDA", "Zoom"]
+team: "2 UX Researchers"
+tools: ["Optimal Workshop", "Figma", "Excel"]
 heroImage: "/zocdoc-hero.png"
-overview: "This study aimed to identify the obstacles bling and low vision (BLV) users encounter when navigating ZocDoc.com and provide actionable insights for improving the site’s accessibility, specifically focusing on enhancing usability through compliance with Web Content Accessibility Guidelines (WCAG)."
+overview: "This project focused on redesigning the information architecture (IA) of the Peoria PlayHouse Children's Museum’s mobile site to improve the overall user navigation experience. The museum’s mission is to provide children with tools and inspiration to explore and create, but its outdated website made it difficult for users to find critical information such as event details, tickets, and membership options. "
 color: "#FF4444"
 portfolioImage: "/pekin-thumbnail.png"
 category: "UX Research Strategy ✦ Product Leadership"
