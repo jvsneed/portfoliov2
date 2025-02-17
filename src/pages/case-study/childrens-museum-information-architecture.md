@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/CaseStudy.astro
 title: "Improving information architecture for the Peoria PlayHouse website"
-role: "UX researcher, Accessibility auditor"
+role: "UX researcher, Information Architect"
 timeline: "2 months"
 team: "2 UX Researchers"
 tools: ["Optimal Workshop", "Figma", "Excel"]
@@ -9,8 +9,8 @@ heroImage: "/playhouse-hero.png"
 overview: "This project focused on redesigning the information architecture (IA) of the Peoria PlayHouse Children's Museum’s mobile site to improve the overall user navigation experience. The museum’s mission is to provide children with tools and inspiration to explore and create, but its outdated website made it difficult for users to find critical information such as event details, tickets, and membership options. "
 color: "#FF4444"
 portfolioImage: "/pekin-thumbnail.png"
-category: "UX Research Strategy ✦ Product Leadership"
-description: "Leading a user research strategy to guide Pekin Insurance's digital transformation."
+category: "Usability Research ✦ Information Architecture"
+description: "Redesigning the information architecture (IA) of the Peoria PlayHouse Children's Museum’s mobile site"
 
 ---
 
