@@ -103,7 +103,20 @@ const currentYear = new Date().getFullYear();
         .footer-content {
             flex-direction: column;
             gap: var(--space-md);
-            text-align: center;
+            align-items:flex-start;
+            
+        }
+        .footer-nav{
+            display: flex;
+            flex-direction: column;
+            align-items:flex-start;
+            gap: var(--space-sm);
+            width: 100%;
+        }
+        .footer-link{
+            border-bottom:1px solid var(--color-border);
+            width: 100%;
+            padding-bottom: var(--space-xs);
         }
     }
 </style>
