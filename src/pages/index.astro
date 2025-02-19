@@ -136,7 +136,6 @@ const projects = [
                     {projects.map((project, index) => (
                         <a href={`/case-study/${project.slug}`} 
                            class="project-item" 
-                           data-index={index}
                            style={`background-image: url(${project.image});`}>
                             <div class="project-content">
                                 <div class="project-meta">
@@ -260,7 +259,7 @@ const projects = [
     .featured-projects {
         display: flex;
         gap: var(--space-sm);
-        transition: transform 0.4s var(--ease-out-spring);
+        transition: transform 0.4s var (--ease-out-spring);
         width: 100%;
     }
 
@@ -665,7 +664,7 @@ const projects = [
         box-sizing:border-box;
         text-decoration: none;  
         color: inherit;  
-        padding: var(--space-lg);
+        padding: var(--space-md);
         border: 1px solid var(--color-border);
         border-radius: var (--curve-sm);
         transition: all 0.3s var(--ease-out-spring);
@@ -747,10 +746,6 @@ const projects = [
             gap: var(--space-md);
         }
 
-        .project-item{
-            grid-column: span 12;
-            width: 100%;
-        }
 
         .project-content {
             padding: var(--space-md);
@@ -801,9 +796,6 @@ const projects = [
             gap: var(--space-xs);
         }
 
-        .project-item {
-            min-width: calc(100% - var(--space-xs));
-        }
 
         .featured-projects {
             gap: var(--space-sm);
@@ -842,17 +834,8 @@ const projects = [
             display: none;
         }
         .project-item{
-            max-width: 100%;
+            width: 100%;
         }
-        .project-item[data-index="0"],
-        .project-item[data-index="1"] {
-            padding-bottom: var(--space-sm);
-        }
-        .project-item[data-index="0"] > .project-image,
-        .project-item[data-index="1"] > .project-image {
-            display: none;
-        }
-
         .writing-section {
             padding: 0 var(--space-sm);
             margin-bottom: var(--space-lg);
@@ -934,10 +917,12 @@ const projects = [
         padding:0;
         margin-top:0;
     }
+  
     .project-item{
-        margin: 0 auto;
+        margin: 0 auto!important;
         padding: var(--space-sm);
-        max-height: fit-content;
+        max-height: fit-content!important;
+        width: 100%;
         background-image:none!important;
         background-color:var(--color-surface);
     }
@@ -980,11 +965,12 @@ const projects = [
             tagName: 'span'
         });
 
-        // Then set up the mouse move handler
+        // Then set up the mouse handlers
         const heroTitle = document.querySelector('.hero-sequence') as HTMLElement;
         const chars = document.querySelectorAll('.hero-title .char');
 
         if (heroTitle && chars.length > 0) {
+            // Mouse move handler
             heroTitle.addEventListener('mousemove', (e: MouseEvent) => {
                 const rect = heroTitle.getBoundingClientRect();
                 const mouseX = e.clientX - rect.left;
@@ -1004,6 +990,14 @@ const projects = [
                     
                     (char as HTMLElement).style.transform = `scale(${scale})`;
                     (char as HTMLElement).style.fontWeight = weight.toString();
+                });
+            });
+
+            // Add mouseleave handler to reset the text
+            heroTitle.addEventListener('mouseleave', () => {
+                chars.forEach((char) => {
+                    (char as HTMLElement).style.transform = 'scale(1)';
+                    (char as HTMLElement).style.fontWeight = '400';
                 });
             });
         }
