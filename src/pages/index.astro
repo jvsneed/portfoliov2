@@ -972,35 +972,42 @@ const projects = [
         progressBar?.style.setProperty('--scroll', `${scrollPercent}%`);
     });
 
-   
-
-    // Split the hero title text
-    const heroTitle = document.querySelector('.hero-sequence') as HTMLElement;
-    const chars = document.querySelectorAll('.hero-title .char');
-
-    if (heroTitle && chars.length > 0) {
-        heroTitle.addEventListener('mousemove', (e: MouseEvent) => {
-            const rect = heroTitle.getBoundingClientRect();
-            const mouseX = e.clientX - rect.left;
-            const mouseY = e.clientY - rect.top;
-            
-            chars.forEach((char) => {
-                const charRect = char.getBoundingClientRect();
-                const charX = charRect.left - rect.left + charRect.width / 2;
-                const charY = charRect.top - rect.top + charRect.height / 2;
-                
-                const distance = Math.hypot(mouseX - charX, mouseY - charY);
-                const maxDistance = 300;
-                const influence = Math.max(0, 1 - distance / maxDistance);
-                
-                const scale = 1 + influence * 0.3;
-                const weight = 400 + influence * 400;
-                
-                (char as HTMLElement).style.transform = `scale(${scale})`;
-                (char as HTMLElement).style.fontWeight = weight.toString();
-            });
+    // Initialize title animation after DOM content is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        // First split the text
+        const titleText = new SplitType('.hero-title .text', {
+            types: 'chars',
+            tagName: 'span'
         });
-    }
+
+        // Then set up the mouse move handler
+        const heroTitle = document.querySelector('.hero-sequence') as HTMLElement;
+        const chars = document.querySelectorAll('.hero-title .char');
+
+        if (heroTitle && chars.length > 0) {
+            heroTitle.addEventListener('mousemove', (e: MouseEvent) => {
+                const rect = heroTitle.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+                
+                chars.forEach((char) => {
+                    const charRect = char.getBoundingClientRect();
+                    const charX = charRect.left - rect.left + charRect.width / 2;
+                    const charY = charRect.top - rect.top + charRect.height / 2;
+                    
+                    const distance = Math.hypot(mouseX - charX, mouseY - charY);
+                    const maxDistance = 300;
+                    const influence = Math.max(0, 1 - distance / maxDistance);
+                    
+                    const scale = 1 + influence * 0.3;
+                    const weight = 400 + influence * 400;
+                    
+                    (char as HTMLElement).style.transform = `scale(${scale})`;
+                    (char as HTMLElement).style.fontWeight = weight.toString();
+                });
+            });
+        }
+    });
 
     // Projects Navigation
     const projectsContainer = document.querySelector('.featured-projects') as HTMLElement;
