@@ -5,8 +5,8 @@ description: I dabbled in AR and found a beginner-friendly use case...here's how
 lastModified: February 17, 2025
 topics:
   - Technology
-  - User Experience (UX)
-  - Extended Reality (XR)
+  - User Experience
+  - Extended Reality
 connections:
 featured: true
 ---
