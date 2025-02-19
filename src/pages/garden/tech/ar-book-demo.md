@@ -11,7 +11,7 @@ connections:
 featured: true
 ---
 
-I'm not sure how, but I went down a small AR rabbit hole, and surprisingly, it didn't take too much time investment to see results. I spent about 5 hours total from learning to completing this project, I outline my process here. I am considering this a garden note, as I am not an expert in this topic and this isn't _technically_ a tutorial.
+I'm not sure how, but I went down a small AR rabbit hole, and surprisingly, it didn't take too much time investment to see results. I spent about 5 hours total from learning to completing this project and a furniture website project (coming soon), I outline my process here. I am considering this a garden note, as I am not an expert in this topic and this isn't _technically_ a tutorial.
 
 (FYI, the approach I took does require an Apple mobile or tablet device)
 
