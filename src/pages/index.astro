@@ -299,10 +299,15 @@ const projects = [
     }
 
     @media (max-width: 768px) {
+        .projects-container{
+            min-height: fit-content;
+        }
         .featured-projects {
             flex-direction: column;
             gap: var(--space-sm);
             transform: none !important; /* Disable horizontal scrolling on mobile */
+            overflow:visible;
+            min-height: fit-content;
         }
 
         .project-item {
@@ -1057,4 +1062,4 @@ const projects = [
     // Update on resize
     window.addEventListener('resize', updateNavigation);
 </script>
-                            
+``` 
