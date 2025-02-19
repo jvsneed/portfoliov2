@@ -1,7 +1,7 @@
 ---
 import Layout from './Layout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-
+import GardenBadge from '../components/GardenBadge.astro';
 const { frontmatter, url } = Astro.props;
 const formattedTopics = frontmatter.topics.map(topic => topic.toLowerCase());
 ---
@@ -51,6 +51,8 @@ const formattedTopics = frontmatter.topics.map(topic => topic.toLowerCase());
             </aside>
         </div>
     </article>
+    <GardenBadge />
+
 </Layout>
 
 <style>
@@ -78,15 +80,17 @@ const formattedTopics = frontmatter.topics.map(topic => topic.toLowerCase());
     line-height: 1;
     margin: 0;
     font-weight: 300;
-    padding-top: 1rem;
+    padding-top: 3rem;
+    padding-bottom: 0;
 }
 
 :global(h4) {
     font-family: var(--font-special);
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1;
     margin: 0;
-    font-weight: 600;
+    font-weight: 400;
+
 }
 
 :global(h5) {

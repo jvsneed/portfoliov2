@@ -1,5 +1,6 @@
 ---
 import Layout from './Layout.astro';
+import GardenBadge from '../components/GardenBadge.astro';
 const { frontmatter } = Astro.props;
 const { title, role, timeline, team, tools, heroImage, overview, color = 'var(--color-accent)' } = frontmatter;
 ---
@@ -37,9 +38,11 @@ const { title, role, timeline, team, tools, heroImage, overview, color = 'var(--
         </div>}
 
         <div class="case-content">
-            <slot />
+         <slot />
         </div>
     </article>
+    <GardenBadge />
+
 </Layout>
 
 <style>

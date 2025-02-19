@@ -1,9 +1,10 @@
 ---
-title: "Research backed approaches to design user interfaces for seniors"
+title: "Research backed approaches to design user interfaces for the aging population"
 date: "September 23, 2024"
 excerpt: "Modern web design moves fast, and as interfaces become more minimal, one group is often left out: older adults. Here's how you can fix that."
 tags: ["Accessibility", "Human-Computer Interaction", "UX Research", "UX Design"]
 layout: "../../layouts/BlogPost.astro"
+featured: true
 ---
 
 Modern web design moves fast, and as interfaces become more minimal, one group is often left out: older adults. Whether it's tiny text, confusing navigation, or hard-to-spot buttons, modern design frequently prioritizes the needs and preferences of younger users while making the web more difficult for seniors to use.

@@ -1,5 +1,6 @@
 ---
 import Layout from './Layout.astro';
+import GardenBadge from '../components/GardenBadge.astro';
 const { frontmatter } = Astro.props;
 const { title, date, tags } = frontmatter;
 const formattedTags = tags.map(tag => tag.toLowerCase());
@@ -33,6 +34,8 @@ const formattedTags = tags.map(tag => tag.toLowerCase());
             </aside>
         </div>
     </article>
+    <GardenBadge />
+
 </Layout>
 
 <style>

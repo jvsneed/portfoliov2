@@ -1,16 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import GardenBadge from '../components/GardenBadge.astro';
+import type { MarkdownInstance } from 'astro';
 
 interface Frontmatter {
     title: string;
-    date: string;
-    excerpt: string;
-    tags: string[];
+    date?: string;
+    excerpt?: string;
+    description?: string;
+    tags?: string[];
+    featured?: boolean;
+    lastModified?: string;
 }
 
 interface BlogPost {
     frontmatter: Frontmatter;
+    url: string;
+}
+
+interface WritingItem extends MarkdownInstance<Frontmatter> {
     url: string;
 }
 
@@ -23,7 +30,20 @@ function formatDate(dateStr: string) {
     });
 }
 
-const posts = await import.meta.glob<BlogPost>('./articles/*.md', { eager: true });
+// Fetch both blog posts and garden notes
+const posts = await Astro.glob('./articles/*.md');
+const gardenNotes = await Astro.glob('./garden/**/*.md');
+
+// Combine and filter for featured items
+const featuredWriting = ([...posts, ...gardenNotes] as WritingItem[])
+    .filter(item => item.frontmatter.featured)
+    .sort((a, b) => {
+        const dateA = new Date(a.frontmatter.lastModified || a.frontmatter.date || '');
+        const dateB = new Date(b.frontmatter.lastModified || b.frontmatter.date || '');
+        return dateB.getTime() - dateA.getTime();
+    })
+    .slice(0, 3); // Limit to 3 featured items
+
 const postsArray = Object.values(posts);
 
 // Now TypeScript knows the types
@@ -33,40 +53,41 @@ const latestPosts = postsArray
 
 const projects = [
 {
-        title: "Leading a customer experience strategy to enable digital transformation",
-        category: "UX Research Strategy ✦ Product Leadership",
+        title: "Leading the digital strategy at Pekin Insurance",
+        category: "Research Strategy ✦ UX Leadership",
         year: "2024",
-        description: "A comprehensive strategy to improve customer experience across digital touchpoints.",  
+        description: "Improving the customer experience across digital touchpoints.",  
         image: "/pekin-thumbnail.png",
         slug: "insurance-research-strategy"  
     },
     {
-        title: "Peoria PlayHouse",
-        category: "UX Research ✦ UX Design",
+        title: "Creating the Silver Design System and framework",
+        category: "UX Research ✦ Design Systems",
+        year: "2024",
+        description: "A design system and framework to support senior user needs.",
+        image: "/silverdesign-thumbnail.png",
+        slug: "silver-design-framework"  
+    },
+    {
+        title: "Improving the Peoria PlayHouse information architecture",
+        category: "UX Research ✦ Information Architecture",
         year: "2024",
         description: "Information architecture project to improve the childrens museum's website.",
         image: "/playhouse-thumbnail.png",
         slug: "childrens-museum-information-architecture"  
     },
     {
-        title: "Navigate the Tate",
-        category: "UX Research ✦ UX Design",
+        title: "Conducting conceptual research for Navigate the Tate",
+        category: "Usability Research ✦ UX Design",
         year: "2024",
         description: "A mobile app for museum navigation and gallery intergration for visitors.",
         image: "/tate-thumbnail.png",
         slug: "navigate-the-tate"  
     },
+
     {
-        title: "Silver Design System and Framework",
-        category: "UX Research ✦ Accessibility",
-        year: "2024",
-        description: "A design system and framework to support senior user needs.",
-        image: "/silverdesign-thumb.png",
-        slug: "silver-design-framework"  
-    },
-    {
-        title: "Improving healthcare access for blind and low vision users",
-        category: "UX Research ✦ Accessibility",
+        title: "Improving healthcare access for blind & low vision users on ZocDoc",
+        category: "Usability Research ✦ Accessibility Study",
         year: "2024",
         description: "Evaluating the accessibility of ZocDoc with users experiencing blindness and low vision (BLV).",
         image: "/zocdoc-thumbnail.png",
@@ -103,35 +124,54 @@ const projects = [
 
         <section class="portfolio-preview" data-section="work">
             <div class="preview-header">
-                <h2 class="section-title">Portfolio Case Studies</h2>
-                <!-- <div class="preview-nav">
-                    <a href="/portfolio" class="view-all">All portfolio case studies →</a>
-                </div> -->
+                <h2 class="section-title">Research case studies</h2>
+                <div class="nav-controls">
+                    <button class="nav-arrow prev" aria-label="Previous projects">←</button>
+                    <button class="nav-arrow next" aria-label="Next projects">→</button>
+                </div>
             </div>
             
-            <div class="featured-projects">
-                {projects.map((project, index) => (
-                    <a href={`/case-study/${project.slug}`} class="project-item" data-index={index}>
-                        <div class="project-content">
-                            <div class="project-meta">
-                                <span class="project-category">{project.category}</span>
+            <div class="projects-container">
+                <div class="featured-projects">
+                    {projects.map((project, index) => (
+                        <a href={`/case-study/${project.slug}`} 
+                           class="project-item" 
+                           data-index={index}
+                           style={`background-image: url(${project.image});`}>
+                            <div class="project-content">
+                                <div class="project-meta">
+                                    <span class="project-category">{project.category}</span>
+                                </div>
+                                <h3 class="project-title">{project.title}</h3>
+                                <p class="project-description">{project.description}</p>
                             </div>
-                            <h3 class="project-title">{project.title}</h3>
-                            <p class="project-description">{project.description}</p>
-                            {/* <span class="project-link">
-                                <span>Go to case study</span>
-                                <span class="arrow">→</span>
-                            </span> */}
-                        </div>
-                        <div class="project-image">
-                            <img src={project.image} alt={project.title} />
-                        </div>
+                        </a>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <section class="writing-section">
+            <h2 class="section-title">
+               Featured Writing
+            </h2>
+            <div class="writing-grid">
+                {featuredWriting.map((item) => (
+                    <a href={item?.url} class="writing-card">
+                        <span class="content-type">
+                            {item?.url?.includes('/garden/') ? 'Digital garden note' : 'Blog post'}
+                        </span>
+                        <h3 class="project-title">{item.frontmatter.title}</h3>
+                        {/* <p>{item.frontmatter.description}</p> */}
+                        <time>
+                            {new Date(item.frontmatter.lastModified || item.frontmatter.date || '').toLocaleDateString()}
+                        </time>
                     </a>
                 ))}
             </div>
         </section>
 
-        <section class="blog-preview" data-section="blog">
+        <!-- <section class="blog-preview" data-section="blog">
             <div class="preview-header writing">
                 <h2 class="section-title">Latest writing</h2>
                 <div class="preview-nav">
@@ -156,8 +196,7 @@ const projects = [
                     </a>
                 ))}
             </div>
-        </section>
-        <GardenBadge />
+        </section> -->
     </div>
 </Layout>
 
@@ -212,110 +251,98 @@ const projects = [
         will-change: transform, font-variation-settings;
     }
 
-    .featured-projects {
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        gap: var(--space-sm);
-        max-width: 100%;
-    }
- 
-    .project-item {
-        box-sizing: border-box;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: var(--space-lg);
-        align-items: center;
-        padding: var(--space-md) var(--space-lg);
+    .projects-container {
+        overflow: hidden;
         position: relative;
-        border: 1px solid var(--color-border);
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: var(--curve-sm);
-        transition: all 0.4s var(--ease-out-spring);
-        transition: all 0.4s var(--ease-out-spring),
-        border-color 0.3s ease;
-        text-decoration: none; 
-        color: inherit; 
-        perspective: 1000px;
-        max-width:var(--max-width);
-        margin: 0 auto;
-        /* max-height: fit-content; */
-        overflow:hidden;
-    }
-    .project-content[data-index="0"],
-    .project-content[data-index="3"]{
-        min-width: 100%;
-    }
-
-    
-
-    /* Size variants */
-    .project-item[data-index="0"],
-    .project-item[data-index="3"]  {
-        grid-column: span 8;
-        display:flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding-bottom: 0;
-        align-items: start;
-        padding:0;
-    }
-    .project-item[data-index="0"] > .project-content,
-    .project-item[data-index="3"] > .project-content {
-        padding: var(--space-md) var(--space-md) 0 var(--space-md);
-    }
-    .project-item[data-index="0"] > .project-image,
-    .project-item[data-index="3"] > .project-image {
-        max-height: 400px;
         width: 100%;
-        display: flex;
-        align-items: flex-end;
     }
 
-    .project-item[data-index="2"],
-    .project-item[data-index="1"] {
-        grid-column: span 4;
+    .featured-projects {
+        display: flex;
+        gap: var(--space-sm);
+        transition: transform 0.4s var(--ease-out-spring);
+        width: 100%;
+    }
+
+    .project-item {
+        width: 45%; /* Slightly less than 50% to show peek of next item */
+        flex: 0 0 auto;
+        /* Smoother edges */
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        -webkit-perspective: 1000;
+        backface-visibility: hidden;
+        perspective: 1000;
+        isolation: isolate; 
+        /* ...rest of project-item styles... */
+        box-sizing: border-box;
+        position: relative;
+        padding: var(--space-md) var(--space-md);
+        border-radius: var(--curve-sm);
+        text-decoration: none;
+        color: black;
+        overflow: auto;
+        background-size: cover;
+        background-position: center;
+        height: 80vh;
+        display: flex;
+        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    @media (max-width: 768px) {
+        .featured-projects {
+            flex-direction: column;
+            gap: var(--space-sm);
+            transform: none !important; /* Disable horizontal scrolling on mobile */
+        }
+
+        .project-item {
+            width: 100%;
+            min-width: 100%;
+            margin-bottom: var(--space-sm);
+        }
+
+        .nav-controls {
+            display: none!important; /* Hide navigation on mobile */
+        }
+    }
+
+    .project-content {
+        position: relative;
+=        transition: opacity 0.4s var (--ease-out-spring);
         display:flex;
         flex-direction: column;
-        justify-content: space-between;
-        padding-bottom: 0;
-        align-items: start;
-        padding:0;
-    }
-    .project-item[data-index="2"] > .project-content,
-    .project-item[data-index="1"] > .project-content {
-        padding: var(--space-md) var(--space-md) 0 var(--space-md);
-    }
-    .project-item[data-index="2"] > .project-image,
-    .project-item[data-index="1"] > .project-image {
-        padding-left: 0;
-        display:flex;
-    
-        margin: 0 auto;
-        align-items: flex-end;
-        overflow:visible;
-    }
-    .project-item[data-index="2"] > .project-image > img,
-    .project-item[data-index="1"] > .project-image > img {
+        justify-content: center;
+        background-color: rgba(255,255,255,0.9);
+        backdrop-filter: blur(20px);
+        height: 30%;
+        padding: var(--space-md);   
+        border-radius: var(--curve-sm);
 
-        object-position: center top;
-        max-height: 370px;
-        width: auto;
-  
     }
 
-
-    
-    .project-item[data-index="4"] {
-        grid-column: span 12;
+    .project-item:hover .project-content {
+        opacity: 1;
     }
-    
-        .role-tag {
-            font-size: 1rem;
-        }
-        /* .role-tag:not(:last-child)::after {
-        content: '/';
-        margin-left: .5rem;
-    }  */
+
+    .project-category {
+        color: var(--color-accent);
+        opacity: 0.9;
+    }
+
+    .project-description {
+        color: black;
+        opacity: 0.8;
+    }
+
+    .role-tag {
+        font-size: 1rem;
+    }
+    /* .role-tag:not(:last-child)::after {
+    content: '/';
+    margin-left: .5rem;
+}  */
     
 
     .role-tags {
@@ -341,7 +368,7 @@ const projects = [
 
     .role-tag:not(:last-child)::after {
         content: '✦';
-        margin: 0 .30rem 0 1rem;
+        margin: 0 .10rem 0 .5rem;
         color: var(--color-accent);
     } 
 
@@ -371,18 +398,54 @@ const projects = [
         background: var(--color-accent);
     }
 
+    .nav-controls {
+        display: flex;
+        gap: var(--space-xs);
+    }
 
+    .nav-arrow {
+        width: 50px;
+        height: 50px;
+        border: 1px solid var(--color-border);
+        background: var(--color-surface);
+        border-radius: var (--curve-sm);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s var(--ease-out-spring);
+        font-size: 20px;
+        font-weight: 900;
+    }
 
-    .project-item:hover {
+    .nav-arrow:hover {
+        background: var(--color-accent);
+        color: white;
         border-color: var(--color-accent);
-        transform: translateX(var(--space-xs)) translateZ(20px) rotateX(2deg) rotateY(-2deg);
+    }
+
+    .nav-arrow:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .project-title{
+        padding:0;
+        margin: 0;
+        line-height:1.2;
+        text-wrap:pretty;
+    }
+    .project-item:hover {
+        border-color: 1px solid var(--color-accent);
+        transform: translateX(1rem) translateZ(0) rotateX(2deg) rotateY(-2deg);
+
     }
 
     .project-meta {
         display: flex;
         align-items: center;
         gap: var (--space-md);
-        margin-bottom:0);
+        margin-bottom:var(--space-xs);
     }
 
     .project-number {
@@ -394,28 +457,53 @@ const projects = [
     .project-category {
         font-family: var(--font-mono);
         font-size: .9rem;
-        color: var(--color-accent);
+        color: var (--color-accent);
+        text-wrap:pretty;
     }
 
     .post-excerpt,
     .project-description {
-        margin: 0;
+        margin-top: .2rem;
         font-size:1rem;
-        /* line-height: 1.2; */
+        line-height: 1.2;
+        text-wrap:pretty;
     }
 
     .project-image {
         position: relative;
-        border-radius: var(--curve-sm);
         overflow: hidden;
+        min-height:100%;
+        min-width: 40%;
+        max-width:40%;
+        object-fit: cover;
+        display: flex;
+    }
+
+    .project-image::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-bg);
+        opacity: 0.4;
+        transition: opacity 0.3s var(--ease-out-spring);
     }
 
     .project-image img {
         width: 100%;
-        height: 100%;
+        height: 250px;
         object-fit: cover;
-        transition: transform 0.6s var (--ease-out-spring);
+        transition: all 0.6s var(--ease-out-spring);
+        filter: contrast(1.2);
     }
+
+    .project-item:hover .project-image::after {
+        opacity: 0;
+    }
+
+
 
     .project-link {
         display: flex;
@@ -429,12 +517,10 @@ const projects = [
         opacity: 0;
         transform: translateX(-10px);
         transition: all 0.3s var(--ease-out-spring);
+        
     }
 
-    .project-item:hover .project-link {
-        opacity: 1;
-        transform: translateX(0);
-    }
+
 
     .project-link .arrow {
         transition: transform 0.3s var(--ease-out-spring);
@@ -480,7 +566,7 @@ const projects = [
         color: inherit;  
         padding: var(--space-lg);
         border: 1px solid var(--color-border);
-        border-radius: var(--curve-sm);
+        border-radius: var (--curve-sm);
         transition: all 0.3s var(--ease-out-spring);
         background: rgba(255, 255, 255, 0.8);
         perspective: 1000px;
@@ -496,7 +582,7 @@ const projects = [
         font-size: 0.875rem;
         color: var (--color-muted);
         display: block;
-        margin-bottom: var(--space-sm);
+        margin-bottom: var (--space-sm);
     }
 
     .post-meta {
@@ -550,8 +636,61 @@ const projects = [
         transform: translateX(6px);
     }
 
+    .content-type {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--color-accent);
+    }
+
     .first-name {
         display: inline-block;
+    }
+
+    .writing-section {
+        padding: var(--space-xs) var(--space-lg) var(--space-lg) var(--space-lg);
+        margin: 0 auto;
+        max-width: var(--max-width);
+    }
+
+    .writing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--space-sm);
+        margin-top: var(--space-md);
+    }
+
+    .writing-card {
+        box-sizing:border-box;
+        text-decoration: none;  
+        color: inherit;  
+        padding: var(--space-lg);
+        border: 1px solid var(--color-border);
+        border-radius: var (--curve-sm);
+        transition: all 0.3s var(--ease-out-spring);
+        background: rgba(255, 255, 255, 0.8);
+        perspective: 1000px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: calc(var(--space-xs)/2);
+    }
+
+    .writing-card:hover {
+        border-color: var(--color-accent);
+        transform: translateX(1rem) translateZ(20px) rotateX(2deg) rotateY(-2deg);
+    }
+
+    .writing-card p {
+        color: var(--color-muted);
+        margin-bottom: var(--space-md);
+        line-height: 1.5;
+        flex-grow: 1;
+    }
+
+    .writing-card time {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
     }
 
     @keyframes mainFloat {
@@ -606,11 +745,7 @@ const projects = [
             gap: var(--space-md);
         }
 
-        .project-item[data-index="0"],
-        .project-item[data-index="1"],
-        .project-item[data-index="2"],
-        .project-item[data-index="3"],
-        .project-item[data-index="4"] {
+        .project-item{
             grid-column: span 12;
             width: 100%;
         }
@@ -626,7 +761,6 @@ const projects = [
 
     @media (max-width: 768px) {
         .preview-header{
-            padding: 0 var(--space-sm);
             margin-top: var(--space-md);
             margin-bottom: 0;
 
@@ -662,8 +796,15 @@ const projects = [
         }
 
         .featured-projects {
+            gap: var(--space-xs);
+        }
+
+        .project-item {
+            min-width: calc(100% - var(--space-xs));
+        }
+
+        .featured-projects {
             gap: var(--space-sm);
-            padding: 0 var(--space-sm);
             margin-bottom: var(--space-lg);
             display:flex;
             flex-direction: column;
@@ -678,7 +819,7 @@ const projects = [
 
         }
         .portfolio-preview{
-            padding: var(--space-sm) var (--space-xs); 
+            padding: var(--space-sm) var(--space-xs); 
         }
         .blog-posts{
             margin-top: var(--space-md);
@@ -699,7 +840,6 @@ const projects = [
             display: none;
         }
         .project-item{
-            min-width: 99%;
             max-width: 100%;
         }
         .project-item[data-index="0"],
@@ -709,6 +849,15 @@ const projects = [
         .project-item[data-index="0"] > .project-image,
         .project-item[data-index="1"] > .project-image {
             display: none;
+        }
+
+        .writing-section {
+            padding: 0 var(--space-sm);
+            margin-bottom: var(--space-lg);
+        }
+
+        .writing-grid {
+            grid-template-columns: 1fr;
         }
     }
 
@@ -738,8 +887,15 @@ const projects = [
             justify-content: flex-end;
             padding: 0;
         }
+        .project-item{
+        margin: 0 auto;
+    }
     }
         @media (max-width:532px) {
+            .portfolio-preview{
+                padding-top:0;
+                padding-bottom:0;
+            }
             .name-block,
             .hero-sequence{
                 display:flex;
@@ -756,39 +912,47 @@ const projects = [
             line-height: 1;
             justify-content: flex-end;
             padding: 0;
+            text-wrap:pretty;
+
         }
         .role-tag{
-            font-size: 1rem;
+            font-size: .8rem;
+            text-wrap:pretty;
+            margin:0;
+            padding: 0;
         }
         .role-tag:not::after {
-        margin-left: 0;
+        margin: 0;
+        padding:0;
         } 
         .project-image{
             display: none;
         }
-        .project-item[data-index="0"],
-        .project-item[data-index="3"],
-        .project-item[data-index="2"] {
-            padding-bottom: var(--space-sm);
-        }
-        .project-item[data-index="0"] > .project-image,
-        .project-item[data-index="1"] > .project-image,
-        .project-item[data-index="2"] > .project-image,
-        .project-item[data-index="3"] > .project-image,
-        .project-item[data-index="4"] > .project-image{
-            display: none;
-        }
-
-
-
-    .project-content{
-        padding:0;
-    }
     .project-title{
         padding:0;
         margin-top:0;
     }
-
+    .project-item{
+        margin: 0 auto;
+        padding: var(--space-sm);
+        max-height: fit-content;
+        background-image:none!important;
+        background-color:var(--color-surface);
+    }
+    .writing-section{
+        padding: 0 var(--space-xs);
+    }
+    .project-content{
+        padding:0;
+        height: 100%;
+        width: 100%;
+    }
+    .writing-grid{
+        margin-top:var(--space-sm);
+    }
+    .writing-card{
+        padding:var(--space-sm);    
+    }
         
 </style>
 
@@ -809,17 +973,12 @@ const projects = [
    
 
     // Split the hero title text
-    const heroText = new SplitType('.hero-title span', { 
-        types: 'chars',
-        tagName: 'span'
-    });
-
-    const container = document.querySelector('.hero-sequence') as HTMLElement;
+    const heroTitle = document.querySelector('.hero-sequence') as HTMLElement;
     const chars = document.querySelectorAll('.hero-title .char');
 
-    if (container && chars.length > 0) {
-        container.addEventListener('mousemove', (e: MouseEvent) => {
-            const rect = container.getBoundingClientRect();
+    if (heroTitle && chars.length > 0) {
+        heroTitle.addEventListener('mousemove', (e: MouseEvent) => {
+            const rect = heroTitle.getBoundingClientRect();
             const mouseX = e.clientX - rect.left;
             const mouseY = e.clientY - rect.top;
             
@@ -840,4 +999,45 @@ const projects = [
             });
         });
     }
+
+    // Projects Navigation
+    const projectsContainer = document.querySelector('.featured-projects') as HTMLElement;
+    const prevBtn = document.querySelector('.nav-arrow.prev') as HTMLButtonElement;
+    const nextBtn = document.querySelector('.nav-arrow.next') as HTMLButtonElement;
+    let currentIndex = 0;
+
+    function updateNavigation() {
+        if (window.innerWidth <= 768) {
+            // Disable navigation on mobile
+            projectsContainer.style.transform = '';
+            return;
+        }
+
+        const projectItem = projectsContainer.querySelector('.project-item') as HTMLElement;
+        const itemWidth = projectItem?.offsetWidth || 0;
+        const containerWidth = projectsContainer.parentElement?.offsetWidth || 0;
+        const maxIndex = Math.max(0, projectsContainer.children.length - Math.floor(containerWidth / itemWidth));
+        
+        if (prevBtn) prevBtn.disabled = currentIndex <= 0;
+        if (nextBtn) nextBtn.disabled = currentIndex >= maxIndex;
+        
+        projectsContainer.style.transform = `translateX(${-currentIndex * (itemWidth + 8)}px)`;
+    }
+
+    prevBtn?.addEventListener('click', () => {
+        currentIndex = Math.max(0, currentIndex - 1);
+        updateNavigation();
+    });
+
+    nextBtn?.addEventListener('click', () => {
+        const maxIndex = projectsContainer.children.length - 2;
+        currentIndex = Math.min(maxIndex, currentIndex + 1);
+        updateNavigation();
+    });
+
+    // Initialize navigation state
+    updateNavigation();
+
+    // Update on resize
+    window.addEventListener('resize', updateNavigation);
 </script>

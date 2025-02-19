@@ -1,6 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import GardenBadge from '../components/GardenBadge.astro';
 
 interface Frontmatter {
     title: string;
@@ -51,7 +50,7 @@ const sortedPosts = postsArray.map(post => ({
     <div class="page-container">
         <header class="portfolio-header">
             <div class="header-content">
-                <h1 class="section-title">Writing</h1>
+                <h1 class="section-title">Blog</h1>
                 <div class="filter-section">
                     <h2>Filter by tag</h2>
                     <div class="category-tags" id="category-filters">
@@ -91,7 +90,6 @@ const sortedPosts = postsArray.map(post => ({
         </div>
     </div>
     <div class="cursor-text"></div>
-    <GardenBadge />
 </Layout>
 
 <style>
