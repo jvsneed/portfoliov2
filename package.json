@@ -19,5 +19,8 @@
     "lottie-web": "^5.12.2",
     "motion": "^12.4.1",
     "split-type": "^0.3.4"
+  },
+  "devDependencies": {
+    "video.js": "^8.21.0"
   }
 }

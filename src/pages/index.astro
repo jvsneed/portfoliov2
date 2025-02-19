@@ -250,41 +250,50 @@ const projects = [
         will-change: transform, font-variation-settings;
     }
 
+    
     .projects-container {
-        overflow: hidden;
         position: relative;
         width: 100%;
+        cursor: grab;
+        overflow:hidden;
+        height:80vh;
+        display:flex;
+        align-items:center;
+
     }
 
     .featured-projects {
         display: flex;
         gap: var(--space-sm);
-        transition: transform 0.4s var (--ease-out-spring);
+        transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
         width: 100%;
+        max-height: 75vh;
+        align-items:center;
+        box-sizing: content-box ;
+
+
     }
 
     .project-item {
         width: 45%; /* Slightly less than 50% to show peek of next item */
         flex: 0 0 auto;
         /* Smoother edges */
-        transform: translateZ(0);
         -webkit-transform: translateZ(0);
         -webkit-backface-visibility: hidden;
         -webkit-perspective: 1000;
         backface-visibility: hidden;
         perspective: 1000;
         isolation: isolate; 
-        /* ...rest of project-item styles... */
-        box-sizing: border-box;
+        box-sizing: border-box ;
         position: relative;
         padding: var(--space-md) var(--space-md);
         border-radius: var(--curve-sm);
         text-decoration: none;
         color: black;
+        height:75vh;
         overflow: auto;
         background-size: cover;
         background-position: center;
-        height: 80vh;
         display: flex;
         transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
@@ -666,7 +675,7 @@ const projects = [
         color: inherit;  
         padding: var(--space-md);
         border: 1px solid var(--color-border);
-        border-radius: var (--curve-sm);
+        border-radius: var(--curve-sm);
         transition: all 0.3s var(--ease-out-spring);
         background: rgba(255, 255, 255, 0.8);
         perspective: 1000px;
@@ -793,7 +802,7 @@ const projects = [
         }
 
         .featured-projects {
-            gap: var(--space-xs);
+            gap: var (--space-xs);
         }
 
 
@@ -1011,7 +1020,6 @@ const projects = [
 
     function updateNavigation() {
         if (window.innerWidth <= 768) {
-            // Disable navigation on mobile
             projectsContainer.style.transform = '';
             return;
         }
@@ -1024,7 +1032,12 @@ const projects = [
         if (prevBtn) prevBtn.disabled = currentIndex <= 0;
         if (nextBtn) nextBtn.disabled = currentIndex >= maxIndex;
         
-        projectsContainer.style.transform = `translateX(${-currentIndex * (itemWidth + 8)}px)`;
+        // Add smooth scrollIntoView as fallback if transform doesn't work
+        const targetProject = projectsContainer.children[currentIndex] as HTMLElement;
+        if (targetProject) {
+            projectsContainer.style.transform = `translateX(${-currentIndex * (itemWidth + 8)}px)`;
+            targetProject.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+        }
     }
 
     prevBtn?.addEventListener('click', () => {
@@ -1044,3 +1057,4 @@ const projects = [
     // Update on resize
     window.addEventListener('resize', updateNavigation);
 </script>
+                            

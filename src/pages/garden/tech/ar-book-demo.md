@@ -11,7 +11,7 @@ connections:
 featured: true
 ---
 
-I'm not sure how, but I went down a small AR rabbit hole, and surprisingly, it didn't take too much time investment to see results. I spent about 5 hours total from learning to completing this project and a furniture website project (coming soon), I outline my process here. I am considering this a garden note, as I am not an expert in this topic and this isn't _technically_ a tutorial.
+I'm not sure how, but I went down a small AR rabbit hole, and surprisingly, it didn't take too much time investment to see results. I spent about 5 hours total from learning to completing this project and a furniture website project (coming soon), I outline my process here. I am considering this a garden note, as I am not an expert in this topic and this isn't _technically_ a tutorial. Also, I have some previous 3D/Blender experience...
 
 (FYI, the approach I took does require an Apple mobile or tablet device)
 
@@ -54,5 +54,22 @@ A few things I learned:
 - My anchored image alignment is important. The photo of the book I took and cropped was slightly crooked, resulting in my other elements looking crooked relative to it.
 - I can use transparent layers (pngs) in the Reality Composer and .reality files, but they become opaque once exported to usdz files
 - I ended up needing to change one of the behaviors, the "Show" behavior duration should actually be set to zero (0) in order for the elements not be displayed immediately on scene start
+- I think I need to explore Reality Composer pro to work on lighting
 - I had fun!!
+
+<video
+    id="my-video"
+    class="video-js"
+    controls
+    preload="auto"
+    width="300px"
+    height="450px"
+    flui="vjs-16-9"
+    poster="/images/garden/ar-demo-book-cover.jpg"
+    data-setup="{}">
+    <source src="/images/garden/ar-book-demo.mov" type="video/mp4" />
+    <source src="MY_VIDEO.webm" type="video/webm" />
+    </p>
+  </video>
+
 
