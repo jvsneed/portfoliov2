@@ -239,7 +239,7 @@ const projects = [
         width: 100%;
         font-size: clamp(2rem, 15vw, 15rem);
         letter-spacing: -0.06em;
-        color: var(--color-fg);
+        color: var (--color-fg);
         white-space: nowrap;
         text-align:right;
     }
@@ -333,7 +333,7 @@ const projects = [
         height: 30%;
         width: 100%
         padding: var(--space-md);   
-        border-radius: var (--curve-sm);
+        border-radius: var(--curve-sm);
         padding: var(--space-md);
 
     }
@@ -398,7 +398,7 @@ const projects = [
         display: grid;
         grid-template-columns: 1fr auto;
         align-items: center;
-        gap: var (--space-lg);
+        gap: var(--space-lg);
         margin-bottom: var(--space-md);
     }
 
@@ -664,7 +664,7 @@ const projects = [
     }
 
     .writing-section {
-        padding: var(--space-xs) var(--space-lg) var(--space-lg) var (--space-lg);
+        padding: var(--space-xs) var(--space-lg) var(--space-lg) var(--space-lg);
         margin: 0 auto;
         max-width: var(--max-width);
     }
@@ -891,11 +891,13 @@ const projects = [
         .project-item{
         margin: 0 auto;
     }
+    .portfolio-preview{
+                padding: 0 var(--space-sm);
+            }
     }
         @media (max-width:532px) {
             .portfolio-preview{
-                padding-top:0;
-                padding-bottom:0;
+                padding: 0 var(--space-xs);
             }
             .name-block,
             .hero-sequence{
@@ -967,7 +969,7 @@ const projects = [
     
     gsap.registerPlugin(ScrollTrigger);
 
-    // Add scroll progress indicator
+    // Scroll progress indicator
     window.addEventListener('scroll', () => {
         const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
         const progressBar = document.querySelector('.scroll-progress') as HTMLElement;
@@ -976,18 +978,16 @@ const projects = [
 
     // Initialize title animation after DOM content is loaded
     document.addEventListener('DOMContentLoaded', () => {
-        // First split the text
         const titleText = new SplitType('.hero-title .text', {
             types: 'chars',
             tagName: 'span'
         });
 
-        // Then set up the mouse handlers
         const heroTitle = document.querySelector('.hero-sequence') as HTMLElement;
         const chars = document.querySelectorAll('.hero-title .char');
 
         if (heroTitle && chars.length > 0) {
-            // Mouse move handler
+            // Mouse move handler for title animation
             heroTitle.addEventListener('mousemove', (e: MouseEvent) => {
                 const rect = heroTitle.getBoundingClientRect();
                 const mouseX = e.clientX - rect.left;
@@ -1010,7 +1010,6 @@ const projects = [
                 });
             });
 
-            // Add mouseleave handler to reset the text
             heroTitle.addEventListener('mouseleave', () => {
                 chars.forEach((char) => {
                     (char as HTMLElement).style.transform = 'scale(1)';
@@ -1020,92 +1019,89 @@ const projects = [
         }
     });
 
+    // Refactored project navigation logic
     function initProjectNavigation() {
-        let isInitialized = false;
+        type NavigationElements = {
+            container: HTMLElement;
+            prevBtn: HTMLButtonElement;
+            nextBtn: HTMLButtonElement;
+        };
+
+        function getNavigationElements(): NavigationElements | null {
+            const container = document.querySelector('.featured-projects');
+            const prevBtn = document.querySelector('.nav-arrow.prev');
+            const nextBtn = document.querySelector('.nav-arrow.next');
+
+            if (!container || !prevBtn || !nextBtn) {
+                console.warn('Project navigation elements not found');
+                return null;
+            }
+
+            return {
+                container: container as HTMLElement,
+                prevBtn: prevBtn as HTMLButtonElement,
+                nextBtn: nextBtn as HTMLButtonElement
+            };
+        }
+
         let currentIndex = 0;
+        const elements = getNavigationElements();
+        
+        if (!elements) return;
+        
+        const { container, prevBtn, nextBtn } = elements;
 
-        function setup() {
-            const projectsContainer = document.querySelector('.featured-projects') as HTMLElement | null;
-            const prevBtn = document.querySelector('.nav-arrow.prev') as HTMLButtonElement | null;
-            const nextBtn = document.querySelector('.nav-arrow.next') as HTMLButtonElement | null;
-
-            if (!projectsContainer || !prevBtn || !nextBtn || isInitialized) {
+        function updateNavigation() {
+            if (window.innerWidth <= 768) {
+                container.style.transform = '';
                 return;
             }
 
-            function updateNavigation() {
-                if (!projectsContainer || !prevBtn || !nextBtn) return;
-                
-                if (window.innerWidth <= 768) {
-                    projectsContainer.style.transform = '';
-                    return;
-                }
+            const projectItems = container.querySelectorAll<HTMLElement>('.project-item');
+            if (!projectItems.length) return;
 
-                const projectItems = projectsContainer.querySelectorAll<HTMLElement>('.project-item');
-                if (!projectItems.length) return;
+            const itemWidth = projectItems[0].offsetWidth;
+            const containerWidth = container.parentElement?.offsetWidth || 0;
+            const maxIndex = Math.max(0, projectItems.length - Math.floor(containerWidth / itemWidth));
 
-                const itemWidth = projectItems[0].offsetWidth;
-                const containerWidth = projectsContainer.parentElement?.offsetWidth || 0;
-                const maxIndex = Math.max(0, projectItems.length - Math.floor(containerWidth / itemWidth));
+            prevBtn.disabled = currentIndex <= 0;
+            nextBtn.disabled = currentIndex >= maxIndex;
 
-                prevBtn.disabled = currentIndex <= 0;
-                nextBtn.disabled = currentIndex >= maxIndex;
+            requestAnimationFrame(() => {
+                container.style.transform = `translateX(${-currentIndex * (itemWidth + 8)}px)`;
+            });
+        }
 
-                requestAnimationFrame(() => {
-                    if (projectsContainer) {
-                        projectsContainer.style.transform = `translateX(${-currentIndex * (itemWidth + 8)}px)`;
-                    }
-                });
-            }
-
-            function handlePrevClick() {
-                if (!projectsContainer) return;
-                currentIndex = Math.max(0, currentIndex - 1);
-                updateNavigation();
-            }
-
-            function handleNextClick() {
-                if (!projectsContainer) return;
-                const maxIndex = projectsContainer.children.length - 2;
-                currentIndex = Math.min(maxIndex, currentIndex + 1);
-                updateNavigation();
-            }
-
-            // Clean up existing listeners
-            const cleanupListeners = () => {
-                prevBtn?.removeEventListener('click', handlePrevClick);
-                nextBtn?.removeEventListener('click', handleNextClick);
-                window.removeEventListener('resize', updateNavigation);
-            };
-
-            cleanupListeners();
-
-            // Add fresh listeners
-            prevBtn.addEventListener('click', handlePrevClick);
-            nextBtn.addEventListener('click', handleNextClick);
-            window.addEventListener('resize', updateNavigation);
-
-            // Initial update
+        function handlePrevClick() {
+            currentIndex = Math.max(0, currentIndex - 1);
             updateNavigation();
-            isInitialized = true;
-
-            return cleanupListeners;
         }
 
-        // Try to initialize immediately
-        let cleanup = setup();
-
-        // If it fails, retry after a short delay
-        if (!isInitialized) {
-            setTimeout(() => {
-                cleanup = setup();
-            }, 100);
+        function handleNextClick() {
+            const projectItems = container.querySelectorAll<HTMLElement>('.project-item');
+            if (!projectItems.length) return;
+            const maxIndex = projectItems.length - 2;
+            currentIndex = Math.min(maxIndex, currentIndex + 1);
+            updateNavigation();
         }
 
-        return () => cleanup?.();
+        // Attach event listeners
+        prevBtn.addEventListener('click', handlePrevClick);
+        nextBtn.addEventListener('click', handleNextClick);
+        window.addEventListener('resize', updateNavigation);
+
+        // Initial call
+        updateNavigation();
+
+        // Return cleanup function
+        return () => {
+            prevBtn.removeEventListener('click', handlePrevClick);
+            nextBtn.removeEventListener('click', handleNextClick);
+            window.removeEventListener('resize', updateNavigation);
+        };
     }
 
-    // Initialize on both DOMContentLoaded and astro:page-load
+    // Manage initialization and cleanup
     let cleanup: (() => void) | undefined;
 
     function initialize() {
@@ -1120,10 +1116,8 @@ const projects = [
         initialize();
     }
 
-    // Navigation
+    // Navigation events
     document.addEventListener('astro:page-load', initialize);
-
-    // Cleanup on navigation away
     document.addEventListener('astro:before-swap', () => {
         if (cleanup) cleanup();
     });
