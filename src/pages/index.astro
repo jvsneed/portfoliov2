@@ -891,26 +891,8 @@ const projects = [
         }
 
     }
-    @media (min-width:533px) and (max-width:785px) {
-        .hero-title span{
-            font-size: calc(11vw + .5rem);
-        }
-        .role-tags{
-            display:flex;
-            margin: 0 auto;
-            max-width: var(--max-width);
-            line-height: 1;
-            justify-content: flex-end;
-            padding: 0;
-        }
-        .project-item{
-        margin: 0 auto;
-    }
-    .portfolio-preview{
-                padding: 0 var(--space-sm);
-            }
-    }
-        @media (max-width:532px) {
+        
+        @media (max-width:785px) {
             .portfolio-preview{
                 padding: 0 var(--space-xs);
             }
@@ -983,14 +965,22 @@ const projects = [
     }
 
     .swiper-slide {
-        width: 45%; /* Match original project width */
+        min-width: 100%; /* Match original project width */
         opacity: 0.8;
         transition: opacity 0.3s ease;
+        height: auto !important;
+
     }
 
     .swiper-slide-active {
         opacity: 1;
     }
+
+    .swiper-wrapper{
+        display: flex;
+        flex-direction: column;
+    }
+
 
     /* Hide default Swiper navigation */
     :global(.swiper-button-next),
@@ -998,15 +988,6 @@ const projects = [
         display: none;
     }
 
-    /* Override Swiper's default sizing */
-    .swiper {
-        width: 100%;
-    }
-
-    .swiper-slide {
-        width: 45% !important;  /* Force original width */
-        height: auto !important;
-    }
 
     @media (max-width: 768px) {
         .swiper-slide {
