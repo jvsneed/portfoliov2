@@ -1,6 +1,6 @@
 ---
 layout: ../../../layouts/GardenNote.astro
-title: Creating my first augmented reality project
+title: I made my first(basic) augmented reality project, and it was fun!
 description: I dabbled in AR and found a beginner-friendly use case...here's how it went
 lastModified: February 17, 2025
 topics:
@@ -8,10 +8,12 @@ topics:
   - User Experience
   - Extended Reality
 connections:
+  - title: Integrating augmented reality project(iOS) into a consumer experience
+    url: /garden/tech/ar-chair-demo
 featured: true
 ---
 
-I'm not sure how, but I went down a small AR rabbit hole, and surprisingly, it didn't take too much time investment to see results. I spent about 5 hours total from learning to completing this project and a furniture website project (coming soon), I outline my process here. I am considering this a garden note, as I am not an expert in this topic and this isn't _technically_ a tutorial. Also, I have some previous 3D/Blender experience...
+I'm not sure how, but I went down a small AR rabbit hole, and surprisingly, it didn't take too much time investment to see results. I spent about 5 hours total from learning to completing this project and a [furniture website project](./ar-chair-demo) , I outline my process here. I am considering this a garden note, as I am not an expert in this topic and this isn't _technically_ a tutorial. Also, I have some previous 3D/Blender experience...
 
 (FYI, the approach I took does require an Apple mobile or tablet device)
 
@@ -64,7 +66,7 @@ A few things I learned:
     preload="auto"
     width="300px"
     height="450px"
-    flui="vjs-16-9"
+    fluid="vjs-16-9"
     poster="/images/garden/ar-demo-book-cover.jpg"
     data-setup="{}">
     <source src="/images/garden/ar-book-demo.mov" type="video/mp4" />
