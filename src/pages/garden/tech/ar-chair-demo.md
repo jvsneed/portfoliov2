@@ -20,18 +20,6 @@ Caveat: AR experiences only work on mobile/tablet Apple devices. You can visit t
 
 That most difficult part of the project was designing and developing a site to mockup. I did a review of the Apple pages to figure out how they got the usdz models to display on their site, and turns out, it's just using the rel="AR" attribute on their links. I created the AR scene using Reality Composer (see quick demo in my first [AR project post](./ar-book-demo.md), sourced the 3D asset from sketchfab, and did a reverse image search to find more suitable project images.
 
-<video
-    id="my-video"
-    class="video-js"
-    controls
-    preload="auto"
-    width="400px"
-    fluid="vjs-16-9"
-    poster="/images/garden/ar-chair-demo.jpeg"
-    data-setup="{}">
-    <source src="/images/garden/ar-chair-demo.MP4" type="video/mp4" />
-    <source src="MY_VIDEO.webm" type="video/webm" />
-    </p>
-  </video>
+<div style="padding-bottom: 177.78%; position: relative;"><iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/NGyW8jKkYMA?autoplay=1&loop=1&modestbranding=1&mute=1&playlist=NGyW8jKkYMA&rel=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"  style="position: absolute; top: 0px; left: 0px; width: auto; height: 70vh;"><small>Powered by <a href="https://embed.tube/embed-code-generator/youtube/">youtube embed video</a> generator</small></iframe></div>
 
 
