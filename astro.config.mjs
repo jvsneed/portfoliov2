@@ -6,5 +6,7 @@ import cloudflare from '@astrojs/cloudflare';
 // https://astro.build/config
 export default defineConfig({
   adapter: cloudflare(),
-  site: 'https://johannasneed.com', 
+  site: 'https://johannasneed.com',
+  // @ts-ignore
+  viewTransitions: true,
 });

@@ -4,6 +4,7 @@ import Footer from '../components/Footer.astro';
 import '../styles/global.css';  // Add this import
 import '../styles/responsive.css';
 import GardenBadge from '../components/GardenBadge.astro';
+import { ViewTransitions } from 'astro:transitions';
 const currentPath = Astro.url.pathname;
 const links = [
     { path: '/', label: 'Home' },
@@ -59,7 +60,7 @@ const imageUrl = new URL(image.startsWith('/') ? image.slice(1) : image, siteUrl
         <meta property="twitter:title" content={title} />
         <meta property="twitter:description" content={description} />
         <meta property="twitter:image" content={imageUrl} />
-
+        <ViewTransitions />
     </head>
     <body>
         <Header />

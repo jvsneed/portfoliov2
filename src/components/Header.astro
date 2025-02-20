@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
 const currentPath = Astro.url.pathname;
 const links = [
     { path: '/', label: 'Home' },
@@ -10,7 +11,7 @@ const links = [
 ];
 ---
 
-<header>
+<header transition:persist>
     <div class="scroll-progress"></div>
     <div class="header-container">
         <nav>
@@ -308,28 +309,31 @@ const links = [
 </style>
 
 <script>
-    // Add this at the start of your script section
-    function updateActiveLinks() {
-        const currentPath = window.location.pathname;
-        const links = document.querySelectorAll('.nav-link');
-        
-        links.forEach(link => {
-            const href = link.getAttribute('href');
-            if (href === currentPath) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        });
-    }
+function normalize(path) {
+  if (path !== '/' && path.endsWith('/')) {
+    return path.slice(0, -1);
+  }
+  return path;
+}
 
-    // Call on initial load
+function updateActiveLinks() {
+    const currentPath = normalize(window.location.pathname);
+    const links = document.querySelectorAll('.nav-link');
+    
+    links.forEach(link => {
+        const linkPath = normalize(link.getAttribute('href') || '');
+        if (linkPath === currentPath) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+}
+    // Update active state on page load
     updateActiveLinks();
 
-    // Update on navigation
-    document.addEventListener('astro:page-load', () => {
-        updateActiveLinks();
-    });
+    // Update active state when navigation occurs
+    document.addEventListener('astro:after-navigation', updateActiveLinks);
 
     const menuButton = document.querySelector('.menu-button') as HTMLButtonElement;
     const navLinks = document.querySelector('.nav-links') as HTMLElement;
