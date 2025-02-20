@@ -1,12 +1,15 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
-const currentPath = Astro.url.pathname;
+
+function normalizePath(path) {
+    return path === '/' ? path : path.replace(/\/$/, '');
+}
+
+const currentPath = normalizePath(Astro.url.pathname);
 const links = [
     { path: '/', label: 'Home' },
-    // { path: '/portfolio', label: 'Research' },
-    // { path: '/showcase', label: 'Creative' },
     { path: '/writing', label: 'Blog' },
-    {path: '/garden', label: 'Garden'},
+    { path: '/garden', label: 'Garden' },
     { path: '/about', label: 'About' }
 ];
 ---
@@ -35,7 +38,7 @@ const links = [
                     <li>
                         <a 
                             href={path} 
-                            class:list={['nav-link', { active: currentPath === path }]}
+                            class:list={['nav-link', { active: currentPath === normalizePath(path) }]}
                         >
                             {label}
                         </a>
@@ -310,10 +313,7 @@ const links = [
 
 <script>
 function normalize(path) {
-  if (path !== '/' && path.endsWith('/')) {
-    return path.slice(0, -1);
-  }
-  return path;
+    return path === '/' ? path : path.replace(/\/$/, '');
 }
 
 function updateActiveLinks() {
@@ -329,82 +329,83 @@ function updateActiveLinks() {
         }
     });
 }
-    // Update active state on page load
-    updateActiveLinks();
 
-    // Update active state when navigation occurs
-    document.addEventListener('astro:after-navigation', updateActiveLinks);
+// Update active state on page load
+updateActiveLinks();
 
-    const menuButton = document.querySelector('.menu-button') as HTMLButtonElement;
-    const navLinks = document.querySelector('.nav-links') as HTMLElement;
-    const navLinkElements = document.querySelectorAll('.nav-link');
-    const cursorText = document.querySelector('.cursor-text') as HTMLElement;
-    const links = document.querySelectorAll('.nav-link');
+// Update active state when navigation occurs
+document.addEventListener('astro:after-navigation', updateActiveLinks);
 
-    menuButton?.addEventListener('click', () => {
-        const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
-        menuButton.setAttribute('aria-expanded', (!isExpanded).toString());
-        menuButton.classList.toggle('active');
-        navLinks?.classList.toggle('active');
-        document.body.classList.toggle('menu-open');
+const menuButton = document.querySelector('.menu-button') as HTMLButtonElement;
+const navLinks = document.querySelector('.nav-links') as HTMLElement;
+const navLinkElements = document.querySelectorAll('.nav-link');
+const cursorText = document.querySelector('.cursor-text') as HTMLElement;
+const links = document.querySelectorAll('.nav-link');
+
+menuButton?.addEventListener('click', () => {
+    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+    menuButton.setAttribute('aria-expanded', (!isExpanded).toString());
+    menuButton.classList.toggle('active');
+    navLinks?.classList.toggle('active');
+    document.body.classList.toggle('menu-open');
+});
+
+// Add index for staggered animation
+navLinkElements.forEach((link, index) => {
+    (link as HTMLElement).style.setProperty('--index', index.toString());
+});
+
+// Close menu when clicking links
+navLinkElements.forEach(link => {
+    link.addEventListener('click', () => {
+        menuButton.classList.remove('active');
+        navLinks.classList.remove('active');
+        document.body.classList.remove('menu-open');
     });
+});
 
-    // Add index for staggered animation
-    navLinkElements.forEach((link, index) => {
-        (link as HTMLElement).style.setProperty('--index', index.toString());
-    });
+// Close menu on resize if open
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && navLinks?.classList.contains('active')) {
+        menuButton.classList.remove('active');
+        navLinks.classList.remove('active');
+        document.body.classList.remove('menu-open');
+    }
+});
 
-    // Close menu when clicking links
-    navLinkElements.forEach(link => {
-        link.addEventListener('click', () => {
-            menuButton.classList.remove('active');
-            navLinks.classList.remove('active');
-            document.body.classList.remove('menu-open');
-        });
-    });
-
-    // Close menu on resize if open
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 768 && navLinks?.classList.contains('active')) {
-            menuButton.classList.remove('active');
-            navLinks.classList.remove('active');
-            document.body.classList.remove('menu-open');
+// Only initialize cursor effects if device supports hover
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.addEventListener('mousemove', (e) => {
+        if (cursorText) {
+            cursorText.style.left = e.clientX + 'px';
+            cursorText.style.top = e.clientY + 'px';
         }
     });
 
-    // Only initialize cursor effects if device supports hover
-    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-        document.addEventListener('mousemove', (e) => {
+    links.forEach(link => {
+        link.addEventListener('mouseenter', () => {
             if (cursorText) {
-                cursorText.style.left = e.clientX + 'px';
-                cursorText.style.top = e.clientY + 'px';
+                cursorText.textContent = link.textContent;
+                cursorText.style.opacity = '1';
+                cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
             }
         });
 
-        links.forEach(link => {
-            link.addEventListener('mouseenter', () => {
-                if (cursorText) {
-                    cursorText.textContent = link.textContent;
-                    cursorText.style.opacity = '1';
-                    cursorText.style.transform = 'translate(-50%, -50%) scale(1)';
-                }
-            });
-
-            link.addEventListener('mouseleave', () => {
-                if (cursorText) {
-                    cursorText.style.opacity = '0';
-                    cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
-                }
-            });
+        link.addEventListener('mouseleave', () => {
+            if (cursorText) {
+                cursorText.style.opacity = '0';
+                cursorText.style.transform = 'translate(-50%, -50%) scale(0.5)';
+            }
         });
-    }
-
-    // Add scroll progress indicator
-    window.addEventListener('scroll', () => {
-        const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-        const progressBar = document.querySelector('.scroll-progress') as HTMLElement;
-        if (progressBar) {
-            progressBar.style.transform = `scaleX(${scrollPercent / 100})`;
-        }
     });
+}
+
+// Add scroll progress indicator
+window.addEventListener('scroll', () => {
+    const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    const progressBar = document.querySelector('.scroll-progress') as HTMLElement;
+    if (progressBar) {
+        progressBar.style.transform = `scaleX(${scrollPercent / 100})`;
+    }
+});
 </script>
