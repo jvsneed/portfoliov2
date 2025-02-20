@@ -244,6 +244,11 @@ const imageUrl = new URL(image.startsWith('/') ? image.slice(1) : image, siteUrl
             transform: translateX(-100%);
             pointer-events: none;
         }
+        .page-container,
+        .main-content{
+            max-width:98%;
+            overflow:hidden;
+        }
     }
 
     .intro {

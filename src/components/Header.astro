@@ -168,7 +168,7 @@ const links = [
 
     .nav-link.active {
         color: var(--color-accent);
-        border-top: 3px solid var(--color-accent);
+        border-bottom: 3px solid var(--color-accent);
 
     }
 
@@ -308,6 +308,29 @@ const links = [
 </style>
 
 <script>
+    // Add this at the start of your script section
+    function updateActiveLinks() {
+        const currentPath = window.location.pathname;
+        const links = document.querySelectorAll('.nav-link');
+        
+        links.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === currentPath) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+
+    // Call on initial load
+    updateActiveLinks();
+
+    // Update on navigation
+    document.addEventListener('astro:page-load', () => {
+        updateActiveLinks();
+    });
+
     const menuButton = document.querySelector('.menu-button') as HTMLButtonElement;
     const navLinks = document.querySelector('.nav-links') as HTMLElement;
     const navLinkElements = document.querySelectorAll('.nav-link');
