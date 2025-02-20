@@ -333,7 +333,7 @@ const projects = [
         height: 30%;
         width: 100%
         padding: var(--space-md);   
-        border-radius: var(--curve-sm);
+        border-radius: var (--curve-sm);
         padding: var(--space-md);
 
     }
@@ -398,7 +398,7 @@ const projects = [
         display: grid;
         grid-template-columns: 1fr auto;
         align-items: center;
-        gap: var(--space-lg);
+        gap: var (--space-lg);
         margin-bottom: var(--space-md);
     }
 
@@ -664,7 +664,7 @@ const projects = [
     }
 
     .writing-section {
-        padding: var(--space-xs) var(--space-lg) var(--space-lg) var(--space-lg);
+        padding: var(--space-xs) var(--space-lg) var(--space-lg) var (--space-lg);
         margin: 0 auto;
         max-width: var(--max-width);
     }
@@ -1020,49 +1020,72 @@ const projects = [
         }
     });
 
-    // Projects Navigation
-    const projectsContainer = document.querySelector('.featured-projects') as HTMLElement;
-    const prevBtn = document.querySelector('.nav-arrow.prev') as HTMLButtonElement;
-    const nextBtn = document.querySelector('.nav-arrow.next') as HTMLButtonElement;
-    let currentIndex = 0;
+    function initProjectNavigation() {
+        const projectsContainer = document.querySelector('.featured-projects') as HTMLElement;
+        const prevBtn = document.querySelector('.nav-arrow.prev') as HTMLButtonElement;
+        const nextBtn = document.querySelector('.nav-arrow.next') as HTMLButtonElement;
+        let currentIndex = 0;
 
-    function updateNavigation() {
-        if (window.innerWidth <= 768) {
-            projectsContainer.style.transform = '';
-            return;
+        function updateNavigation() {
+            if (!projectsContainer || window.innerWidth <= 768) {
+                if (projectsContainer) projectsContainer.style.transform = '';
+                return;
+            }
+
+            const projectItem = projectsContainer.querySelector('.project-item') as HTMLElement;
+            const itemWidth = projectItem?.offsetWidth || 0;
+            const containerWidth = projectsContainer.parentElement?.offsetWidth || 0;
+            const maxIndex = Math.max(0, projectsContainer.children.length - Math.floor(containerWidth / itemWidth));
+            
+            if (prevBtn) prevBtn.disabled = currentIndex <= 0;
+            if (nextBtn) nextBtn.disabled = currentIndex >= maxIndex;
+            
+            const targetProject = projectsContainer.children[currentIndex] as HTMLElement;
+            if (targetProject) {
+                projectsContainer.style.transform = `translateX(${-currentIndex * (itemWidth + 8)}px)`;
+            }
         }
 
-        const projectItem = projectsContainer.querySelector('.project-item') as HTMLElement;
-        const itemWidth = projectItem?.offsetWidth || 0;
-        const containerWidth = projectsContainer.parentElement?.offsetWidth || 0;
-        const maxIndex = Math.max(0, projectsContainer.children.length - Math.floor(containerWidth / itemWidth));
-        
-        if (prevBtn) prevBtn.disabled = currentIndex <= 0;
-        if (nextBtn) nextBtn.disabled = currentIndex >= maxIndex;
-        
-        // Add smooth scrollIntoView as fallback if transform doesn't work
-        const targetProject = projectsContainer.children[currentIndex] as HTMLElement;
-        if (targetProject) {
-            projectsContainer.style.transform = `translateX(${-currentIndex * (itemWidth + 8)}px)`;
-            targetProject.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+        // Remove old event listeners if they exist
+        prevBtn?.removeEventListener('click', prevClickHandler);
+        nextBtn?.removeEventListener('click', nextClickHandler);
+
+        function prevClickHandler() {
+            currentIndex = Math.max(0, currentIndex - 1);
+            updateNavigation();
         }
+
+        function nextClickHandler() {
+            const maxIndex = (projectsContainer?.children.length || 0) - 2;
+            currentIndex = Math.min(maxIndex, currentIndex + 1);
+            updateNavigation();
+        }
+
+        // Add new event listeners
+        prevBtn?.addEventListener('click', prevClickHandler);
+        nextBtn?.addEventListener('click', nextClickHandler);
+
+        // Initialize navigation state
+        updateNavigation();
+
+        // Update on resize
+        window.removeEventListener('resize', updateNavigation);
+        window.addEventListener('resize', updateNavigation);
+
+        return () => {
+            // Cleanup function
+            prevBtn?.removeEventListener('click', prevClickHandler);
+            nextBtn?.removeEventListener('click', nextClickHandler);
+            window.removeEventListener('resize', updateNavigation);
+        };
     }
 
-    prevBtn?.addEventListener('click', () => {
-        currentIndex = Math.max(0, currentIndex - 1);
-        updateNavigation();
+    // Initial setup
+    let cleanup = initProjectNavigation();
+
+    // Reinitialize on page navigation
+    document.addEventListener('astro:page-load', () => {
+        if (cleanup) cleanup();
+        cleanup = initProjectNavigation();
     });
-
-    nextBtn?.addEventListener('click', () => {
-        const maxIndex = projectsContainer.children.length - 2;
-        currentIndex = Math.min(maxIndex, currentIndex + 1);
-        updateNavigation();
-    });
-
-    // Initialize navigation state
-    updateNavigation();
-
-    // Update on resize
-    window.addEventListener('resize', updateNavigation);
 </script>
-``` 
