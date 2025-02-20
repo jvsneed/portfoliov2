@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import type { MarkdownInstance } from 'astro';
+// Add Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 interface Frontmatter {
     title: string;
@@ -126,25 +129,28 @@ const projects = [
             <div class="preview-header">
                 <h2 class="section-title">Research case studies</h2>
                 <div class="nav-controls">
-                    <button class="nav-arrow prev" aria-label="Previous projects">←</button>
-                    <button class="nav-arrow next" aria-label="Next projects">→</button>
+                    <button class="nav-arrow prev custom-prev" aria-label="Previous projects">←</button>
+                    <button class="nav-arrow next custom-next" aria-label="Next projects">→</button>
                 </div>
             </div>
             
-            <div class="projects-container">
-                <div class="featured-projects">
-                    {projects.map((project, index) => (
-                        <a href={`/case-study/${project.slug}`} 
-                           class="project-item" 
-                           style={`background-image: url(${project.image});`}>
-                            <div class="project-content">
-                                <div class="project-meta">
-                                    <span class="project-category">{project.category}</span>
+            <!-- Swiper structure -->
+            <div class="swiper projects-container">
+                <div class="swiper-wrapper">
+                    {projects.map((project) => (
+                        <div class="swiper-slide">
+                            <a href={`/case-study/${project.slug}`} 
+                               class="project-item" 
+                               style={`background-image: url(${project.image});`}>
+                                <div class="project-content">
+                                    <div class="project-meta">
+                                        <span class="project-category">{project.category}</span>
+                                    </div>
+                                    <h3 class="project-title">{project.title}</h3>
+                                    <p class="project-description">{project.description}</p>
                                 </div>
-                                <h3 class="project-title">{project.title}</h3>
-                                <p class="project-description">{project.description}</p>
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     ))}
                 </div>
             </div>
@@ -275,7 +281,7 @@ const projects = [
     }
 
     .project-item {
-        width: 45%; /* Slightly less than 50% to show peek of next item */
+        width: 100%; /* Slightly less than 50% to show peek of next item */
         flex: 0 0 auto;
         /* Smoother edges */
         -webkit-transform: translateZ(0);
@@ -296,6 +302,15 @@ const projects = [
         background-position: center;
         display: flex;
         transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    .swiper-wrapper {
+        width: 100%;
+        gap: var(--space-xs);
+    }
+    .swiper-slide,
+    .swiper-slide active{
+       max-width: 45%;
+
     }
 
     @media (max-width: 768px) {
@@ -533,14 +548,14 @@ const projects = [
         text-decoration: none;
         opacity: 0;
         transform: translateX(-10px);
-        transition: all 0.3s var(--ease-out-spring);
+        transition: all 0.3s var (--ease-out-spring);
         
     }
 
 
 
     .project-link .arrow {
-        transition: transform 0.3s var(--ease-out-spring);
+        transition: transform 0.3s var (--ease-out-spring);
     }
 
     .project-link:hover .arrow {
@@ -637,7 +652,7 @@ const projects = [
         color: var(--color-accent);
         opacity: 0;
         transform: translateX(-10px);
-        transition: all 0.3s var(--ease-out-spring);
+        transition: all 0.3s var (--ease-out-spring);
     }
 
     .blog-card:hover .read-more {
@@ -646,7 +661,7 @@ const projects = [
     }
 
     .read-more .arrow {
-        transition: transform 0.3s var(--ease-out-spring);
+        transition: transform 0.3s var (--ease-out-spring);
     }
 
     .read-more:hover .arrow {
@@ -787,7 +802,7 @@ const projects = [
             padding: var(--space-xl) 0;
             display:flex;
             justify-content: center;
-            margin-bottom: var(--space-md)
+            margin-bottom: var (--space-md)
         }
 
         .hero-sequence {
@@ -960,12 +975,53 @@ const projects = [
         padding:var(--space-sm);    
     }
         
+    /* Add Swiper-specific styles */
+    .swiper {
+        width: 100%;
+        height: 80vh;
+        padding: 1rem 0;
+    }
+
+    .swiper-slide {
+        width: 45%; /* Match original project width */
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+    }
+
+    .swiper-slide-active {
+        opacity: 1;
+    }
+
+    /* Hide default Swiper navigation */
+    :global(.swiper-button-next),
+    :global(.swiper-button-prev) {
+        display: none;
+    }
+
+    /* Override Swiper's default sizing */
+    .swiper {
+        width: 100%;
+    }
+
+    .swiper-slide {
+        width: 45% !important;  /* Force original width */
+        height: auto !important;
+    }
+
+    @media (max-width: 768px) {
+        .swiper-slide {
+            width: 100% !important;
+            margin-bottom: 0 !important;
+        }
+    }
 </style>
 
 <script>
     import gsap from 'gsap';
     import { ScrollTrigger } from 'gsap/ScrollTrigger';
     import SplitType from 'split-type';
+    import Swiper from 'swiper';
+    import { Navigation } from 'swiper/modules';
     
     gsap.registerPlugin(ScrollTrigger);
 
@@ -1020,92 +1076,51 @@ const projects = [
     });
 
     function initProjectNavigation() {
-        console.log('Initializing project navigation');
-
-        type NavigationState = {
-            container: HTMLElement;
-            prevBtn: HTMLButtonElement;
-            nextBtn: HTMLButtonElement;
-            currentIndex: number;
-            isInitialized: boolean;
-        };
-
-        const state: NavigationState = {
-            container: document.querySelector('.featured-projects') as HTMLElement,
-            prevBtn: document.querySelector('.nav-arrow.prev') as HTMLButtonElement,
-            nextBtn: document.querySelector('.nav-arrow.next') as HTMLButtonElement,
-            currentIndex: 0,
-            isInitialized: false
-        };
-
-        // Early return if elements don't exist
-        if (!state.container || !state.prevBtn || !state.nextBtn) {
-            console.warn('Navigation elements not found');
-            return;
-        }
-
-        function getMaxIndex(): number {
-            const projectItems = state.container.querySelectorAll<HTMLElement>('.project-item');
-            if (!projectItems.length) return 0;
-
-            const itemWidth = projectItems[0].offsetWidth;
-            const containerWidth = state.container.parentElement?.offsetWidth || 0;
-            const visibleItems = Math.floor(containerWidth / itemWidth);
-            return Math.max(0, projectItems.length - visibleItems);
-        }
-
-        function updateNavigation() {
-            if (window.innerWidth <= 768) {
-                state.container.style.transform = '';
-                return;
+        const swiper = new Swiper('.projects-container', {
+            modules: [Navigation],
+            slidesPerView: 2, // Show 2 slides at once on desktop
+            spaceBetween: 16,
+            grabCursor: true,
+            centeredSlides: false,
+            initialSlide: 0,
+            navigation: {
+                prevEl: '.custom-prev',
+                nextEl: '.custom-next',
+            },
+            breakpoints: {
+                // Desktop view
+                768: {
+                    enabled: true,
+                    slidesPerView: 2,
+                    spaceBetween: 16,
+                },
+                // Mobile view
+                0: {
+                    enabled: true,
+                    slidesPerView: 1,
+                    spaceBetween: 16,
+                }
+            },
+            on: {
+                slideChange: function() {
+                    const prevBtn = document.querySelector('.custom-prev') as HTMLButtonElement;
+                    const nextBtn = document.querySelector('.custom-next') as HTMLButtonElement;
+                    if (prevBtn && nextBtn) {
+                        prevBtn.disabled = this.isBeginning;
+                        nextBtn.disabled = this.isEnd;
+                    }
+                }
             }
+        });
 
-            const projectItems = state.container.querySelectorAll<HTMLElement>('.project-item');
-            if (!projectItems.length) return;
-
-            const itemWidth = projectItems[0].offsetWidth;
-            const maxIndex = getMaxIndex();
-
-            // Update button states
-            state.prevBtn.disabled = state.currentIndex <= 0;
-            state.nextBtn.disabled = state.currentIndex >= maxIndex;
-
-            // Smooth scroll with GPU acceleration
-            requestAnimationFrame(() => {
-                state.container.style.transform = `translate3d(${-state.currentIndex * (itemWidth + 8)}px, 0, 0)`;
-            });
-
-            console.log(`Navigation updated: index=${state.currentIndex}, maxIndex=${maxIndex}`);
-        }
-
-        function handlePrevClick() {
-            state.currentIndex = Math.max(0, state.currentIndex - 1);
-            updateNavigation();
-        }
-
-        function handleNextClick() {
-            const maxIndex = getMaxIndex();
-            state.currentIndex = Math.min(maxIndex, state.currentIndex + 1);
-            updateNavigation();
-        }
-
-        // Only attach listeners if not already initialized
-        if (!state.isInitialized) {
-            state.prevBtn.addEventListener('click', handlePrevClick);
-            state.nextBtn.addEventListener('click', handleNextClick);
-            window.addEventListener('resize', updateNavigation);
-            state.isInitialized = true;
-            console.log('Navigation listeners attached');
-        }
-
-        // Initial update
-        updateNavigation();
+        return () => swiper.destroy();
     }
 
-    // Initialize on both DOM ready and page transitions
+    let cleanup: (() => void) | undefined;
+
     function initialize() {
-        console.log('Initialize called');
-        initProjectNavigation();
+        if (cleanup) cleanup();
+        cleanup = initProjectNavigation();
     }
 
     // Initial load
@@ -1116,10 +1131,8 @@ const projects = [
     }
 
     // Handle Astro page transitions
-    document.addEventListener('astro:page-load', () => {
-        console.log('astro:page-load triggered');
-        initialize();
+    document.addEventListener('astro:page-load', initialize);
+    document.addEventListener('astro:before-swap', () => {
+        if (cleanup) cleanup();
     });
-
-    // No cleanup on page transitions since the portfolio section persists
 </script>

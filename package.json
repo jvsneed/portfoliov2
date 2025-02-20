@@ -18,7 +18,8 @@
     "gsap": "^3.12.7",
     "lottie-web": "^5.12.2",
     "motion": "^12.4.1",
-    "split-type": "^0.3.4"
+    "split-type": "^0.3.4",
+    "swiper": "^11.2.4"
   },
   "devDependencies": {
     "video.js": "^8.21.0"
