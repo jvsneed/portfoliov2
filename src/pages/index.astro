@@ -1019,94 +1019,93 @@ const projects = [
         }
     });
 
-    // Refactored project navigation logic
     function initProjectNavigation() {
-        type NavigationElements = {
+        console.log('Initializing project navigation');
+
+        type NavigationState = {
             container: HTMLElement;
             prevBtn: HTMLButtonElement;
             nextBtn: HTMLButtonElement;
+            currentIndex: number;
+            isInitialized: boolean;
         };
 
-        function getNavigationElements(): NavigationElements | null {
-            const container = document.querySelector('.featured-projects');
-            const prevBtn = document.querySelector('.nav-arrow.prev');
-            const nextBtn = document.querySelector('.nav-arrow.next');
+        const state: NavigationState = {
+            container: document.querySelector('.featured-projects') as HTMLElement,
+            prevBtn: document.querySelector('.nav-arrow.prev') as HTMLButtonElement,
+            nextBtn: document.querySelector('.nav-arrow.next') as HTMLButtonElement,
+            currentIndex: 0,
+            isInitialized: false
+        };
 
-            if (!container || !prevBtn || !nextBtn) {
-                console.warn('Project navigation elements not found');
-                return null;
-            }
-
-            return {
-                container: container as HTMLElement,
-                prevBtn: prevBtn as HTMLButtonElement,
-                nextBtn: nextBtn as HTMLButtonElement
-            };
+        // Early return if elements don't exist
+        if (!state.container || !state.prevBtn || !state.nextBtn) {
+            console.warn('Navigation elements not found');
+            return;
         }
 
-        let currentIndex = 0;
-        const elements = getNavigationElements();
-        
-        if (!elements) return;
-        
-        const { container, prevBtn, nextBtn } = elements;
+        function getMaxIndex(): number {
+            const projectItems = state.container.querySelectorAll<HTMLElement>('.project-item');
+            if (!projectItems.length) return 0;
+
+            const itemWidth = projectItems[0].offsetWidth;
+            const containerWidth = state.container.parentElement?.offsetWidth || 0;
+            const visibleItems = Math.floor(containerWidth / itemWidth);
+            return Math.max(0, projectItems.length - visibleItems);
+        }
 
         function updateNavigation() {
             if (window.innerWidth <= 768) {
-                container.style.transform = '';
+                state.container.style.transform = '';
                 return;
             }
 
-            const projectItems = container.querySelectorAll<HTMLElement>('.project-item');
+            const projectItems = state.container.querySelectorAll<HTMLElement>('.project-item');
             if (!projectItems.length) return;
 
             const itemWidth = projectItems[0].offsetWidth;
-            const containerWidth = container.parentElement?.offsetWidth || 0;
-            const maxIndex = Math.max(0, projectItems.length - Math.floor(containerWidth / itemWidth));
+            const maxIndex = getMaxIndex();
 
-            prevBtn.disabled = currentIndex <= 0;
-            nextBtn.disabled = currentIndex >= maxIndex;
+            // Update button states
+            state.prevBtn.disabled = state.currentIndex <= 0;
+            state.nextBtn.disabled = state.currentIndex >= maxIndex;
 
+            // Smooth scroll with GPU acceleration
             requestAnimationFrame(() => {
-                container.style.transform = `translateX(${-currentIndex * (itemWidth + 8)}px)`;
+                state.container.style.transform = `translate3d(${-state.currentIndex * (itemWidth + 8)}px, 0, 0)`;
             });
+
+            console.log(`Navigation updated: index=${state.currentIndex}, maxIndex=${maxIndex}`);
         }
 
         function handlePrevClick() {
-            currentIndex = Math.max(0, currentIndex - 1);
+            state.currentIndex = Math.max(0, state.currentIndex - 1);
             updateNavigation();
         }
 
         function handleNextClick() {
-            const projectItems = container.querySelectorAll<HTMLElement>('.project-item');
-            if (!projectItems.length) return;
-            const maxIndex = projectItems.length - 2;
-            currentIndex = Math.min(maxIndex, currentIndex + 1);
+            const maxIndex = getMaxIndex();
+            state.currentIndex = Math.min(maxIndex, state.currentIndex + 1);
             updateNavigation();
         }
 
-        // Attach event listeners
-        prevBtn.addEventListener('click', handlePrevClick);
-        nextBtn.addEventListener('click', handleNextClick);
-        window.addEventListener('resize', updateNavigation);
+        // Only attach listeners if not already initialized
+        if (!state.isInitialized) {
+            state.prevBtn.addEventListener('click', handlePrevClick);
+            state.nextBtn.addEventListener('click', handleNextClick);
+            window.addEventListener('resize', updateNavigation);
+            state.isInitialized = true;
+            console.log('Navigation listeners attached');
+        }
 
-        // Initial call
+        // Initial update
         updateNavigation();
-
-        // Return cleanup function
-        return () => {
-            prevBtn.removeEventListener('click', handlePrevClick);
-            nextBtn.removeEventListener('click', handleNextClick);
-            window.removeEventListener('resize', updateNavigation);
-        };
     }
 
-    // Manage initialization and cleanup
-    let cleanup: (() => void) | undefined;
-
+    // Initialize on both DOM ready and page transitions
     function initialize() {
-        if (cleanup) cleanup();
-        cleanup = initProjectNavigation();
+        console.log('Initialize called');
+        initProjectNavigation();
     }
 
     // Initial load
@@ -1116,9 +1115,11 @@ const projects = [
         initialize();
     }
 
-    // Navigation events
-    document.addEventListener('astro:page-load', initialize);
-    document.addEventListener('astro:before-swap', () => {
-        if (cleanup) cleanup();
+    // Handle Astro page transitions
+    document.addEventListener('astro:page-load', () => {
+        console.log('astro:page-load triggered');
+        initialize();
     });
+
+    // No cleanup on page transitions since the portfolio section persists
 </script>
