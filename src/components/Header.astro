@@ -153,25 +153,32 @@ const links = [
         font-weight: 500;
         position: relative;
         padding: 0.5em 0;
-        text-decoration: none; /* Add this line */
-        /* cursor: none; */
+        text-decoration: none;
     }
 
-    /* Remove or modify these hover/active states */
+    /* New line indicator styles */
     .nav-link::after {
-        display: none; /* Remove underline effect */
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--color-accent);
+        transition: width 0.3s var(--ease-out-spring);
     }
 
-    .nav-link:hover {
-        color: var(--color-fg);
+    .nav-link:hover::after {
+        width: 100%;
     }
 
+    .nav-link.active::after {
+        width: 100%;
+    }
+
+    /* Remove the old active styles */
     .nav-link.active {
-        color: var(--color-accent);
-    }
-
-    .active::after {
-        display: none; /* Remove active underline */
+        color: var(--color-fg);
     }
 
     .menu-button {
@@ -271,7 +278,7 @@ const links = [
             font-size: 1rem; /* Slightly smaller text */
             opacity: 0;
             transform: translate(-50%, -50%) scale(0.5);
-            transition: opacity 0.3s, transform 0.3s var(--ease-out-spring);
+            transition: opacity 0.3s, transform 0.3s var (--ease-out-spring);
             z-index: 1000;
         }
 
