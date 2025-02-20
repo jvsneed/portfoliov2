@@ -109,7 +109,7 @@ const links = [
         top: 0.25em;
         transform: translateY(-100%); /* Changed from 100% to -100% */
         opacity: 0;
-        transition: all 0.4s var (--ease-out-spring);
+        transition: all 0.4s var(--ease-out-spring);
         white-space: nowrap;
     }
 
@@ -153,23 +153,27 @@ const links = [
         font-weight: 500;
         position: relative;
         padding: 0.5em 0;
-        text-decoration: none;
+        text-decoration: none; /* Add this line */
+        /* cursor: none; */
     }
 
-    /* Remove the complex line indicator styles */
+    /* Remove or modify these hover/active states */
     .nav-link::after {
-        display: none;
+        display: none; /* Remove underline effect */
     }
 
-    /* Simple border bottom for active state */
-    .nav-link.active {
-        color: var(--color-fg);
-        border-bottom: 2px solid var(--color-accent);
-    }
-
-    /* Keep hover state simple */
     .nav-link:hover {
         color: var(--color-fg);
+    }
+
+    .nav-link.active {
+        color: var(--color-accent);
+        border-top: 3px solid var(--color-accent);
+
+    }
+
+    .active::after {
+        display: none; /* Remove active underline */
     }
 
     .menu-button {
@@ -269,7 +273,7 @@ const links = [
             font-size: 1rem; /* Slightly smaller text */
             opacity: 0;
             transform: translate(-50%, -50%) scale(0.5);
-            transition: opacity 0.3s, transform 0.3s var (--ease-out-spring);
+            transition: opacity 0.3s, transform 0.3s var(--ease-out-spring);
             z-index: 1000;
         }
 
