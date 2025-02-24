@@ -7,7 +7,7 @@ function normalizePath(path: string) {
 
 const currentPath = normalizePath(Astro.url.pathname);
 const links = [
-    { path: '/', label: 'Home' },
+    { path: '/', label: 'Portfolio' },
     { path: '/writing/', label: 'Blog' },
     { path: '/garden/', label: 'Garden' },
     { path: '/about/', label: 'About' }
@@ -174,7 +174,7 @@ const links = [
 
     .nav-link[data-active="true"] {
         color: var(--color-accent);
-        border-bottom: 3px solid var(--color-accent);
+        border-top: 3px solid var(--color-accent);
     }
 
     /* Keyboard focus styles */
