@@ -6,7 +6,7 @@ lastModified: "2025-02-25"
 topics: ["accessibility", "learning"]
 connections:
   - { title: "All of my bookmarks", url: "/garden/miscellaneous/bookmarks" }
-
+image: "/images/gardem/meets-accessibility-resources.png"
 ---
 
 I attended the Smashing Meets Accessibility conference online last week. Betweenthe speakers and the chat, a ton of great links were shared. I collected them in my [bookmarks](/garden/miscellaneous/bookmarks):

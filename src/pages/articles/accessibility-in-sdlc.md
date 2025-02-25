@@ -5,7 +5,7 @@ excerpt: "By embedding accessibility into every phase of the software developmen
 tags: ["Accessibility", "Web Development"]
 layout: "../../layouts/BlogPost.astro"
 featured: true
-image: "/accessibility-in-sdlc.png"
+image: "/images/articles/accessibility-in-sdlc.png"
 ---
 
 Accessibility should never be an afterthought. By embedding accessibility into every phase of the software development lifecycle (SDLC) and following a user-centered design process, we create products that work for everyone. Prioritizing accessibility early aligns teams with user needs, reduces rework, and improves usability for all.
