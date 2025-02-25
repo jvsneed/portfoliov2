@@ -10,7 +10,7 @@ topics:
 connections:
   - title: Integrating augmented reality project(iOS) into a consumer experience
     url: /garden/tech/ar-chair-demo
-featured: false
+  - { title: "All of my bookmarks", url: "/garden/miscellaneous/bookmarks" }
 ---
 
 I'm not sure how, but I went down a small AR rabbit hole, and surprisingly, it didn't take too much time investment to see results. I spent about 5 hours total from learning to completing this project and a [furniture website project](./ar-chair-demo) , I outline my process here. I am considering this a garden note, as I am not an expert in this topic and this isn't _technically_ a tutorial. Also, I have some previous 3D/Blender experience...
