@@ -19,12 +19,12 @@
         position: fixed;
         right: 2rem;
         bottom: 2rem;
-        width: 3rem;  /* Increased overall size */
-        height: 3rem; /* Increased overall size */
+        width: 3rem;
+        height: 3rem;
         background: var(--color-surface);
         border: 1px solid var(--color-border);
         border-radius: 50%;
-        display: flex;
+        display: var(--garden-badge-display, flex);
         align-items: center;
         justify-content: center;
         text-decoration: none;
@@ -35,10 +35,10 @@
 
     .circular-text {
         position: absolute;
-        width: 200%;    /* Made larger for bigger text ring */
-        height: 200%;   /* Made larger for bigger text ring */
-        left: -50%;     /* Adjusted from -40% */
-        top: -50%;      /* Adjusted from -40% */
+        width: 200%;
+        height: 200%;
+        left: -50%;
+        top: -50%;
         animation: spin 20s linear infinite;
         pointer-events: none;
         background-color:rgba(255, 255, 255, 0.7);
@@ -51,19 +51,19 @@
     }
 
     .circular-text text {
-        font-size: .8rem;          /* Increased from 9px */
+        font-size: .8rem;
         font-family: var(--font-mono);
         fill: var(--color-muted);
         text-transform: uppercase;
-        letter-spacing: 2px;    /* Adjusted from 1.5px */
-        font-weight: 500;        /* Added for better visibility */
+        letter-spacing: 2px;
+        font-weight: 500;
     }
 
     .badge-icon {
-        font-size: 1.3rem;       /* Slightly reduced from 1.4rem */
+        font-size: 1.3rem;
         background: var(--color-surface);
-        width: 2.5rem;           /* Added fixed width for inner circle */
-        height: 2.5rem;          /* Added fixed height for inner circle */
+        width: 2.5rem;
+        height: 2.5rem;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -89,8 +89,8 @@
         .garden-badge {
             right: 2em;
             bottom: 2rem;
-            width: 3rem;         /* Adjusted mobile size */
-            height: 3rem;        /* Adjusted mobile size */
+            width: 3rem;
+            height: 3rem;
         }
     }
 

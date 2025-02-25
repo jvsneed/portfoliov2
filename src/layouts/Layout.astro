@@ -5,6 +5,7 @@ import '../styles/global.css';  // Add this import
 import '../styles/responsive.css';
 import GardenBadge from '../components/GardenBadge.astro';
 import { ViewTransitions } from 'astro:transitions';
+import PagePeek from '../components/PagePeek.astro';
 const currentPath = Astro.url.pathname;
 const links = [
     { path: '/', label: 'Home' },
@@ -69,6 +70,8 @@ const imageUrl = new URL(image.startsWith('/') ? image.slice(1) : image, siteUrl
             <slot />
         </main>
         <Footer />
+        <PagePeek />
+        <GardenBadge />
     </body>
     <GardenBadge />
 

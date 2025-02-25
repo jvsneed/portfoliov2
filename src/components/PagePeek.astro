@@ -1,0 +1,184 @@
+<template id="page-peek-template">
+    <div class="page-peek">
+        <div class="page-peek-iframe-wrapper">
+            <iframe class="page-peek-iframe" loading="lazy"></iframe>
+        </div>
+    </div>
+</template>
+
+<style>
+    .page-peek {
+        position: fixed;
+        z-index: 1000;
+        pointer-events: none;
+        opacity: 0;
+        display: none;
+        border-radius: var(--curve-sm);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        overflow: hidden;
+    }
+
+    .page-peek.visible {
+        opacity: 1;
+        display: block;
+    }
+
+    .page-peek-iframe-wrapper {
+        width: 400px;
+        height: 300px;
+        overflow: hidden;
+    }
+
+    .page-peek-iframe {
+        width: 100%;
+        height: 200%;
+        border: none;
+        pointer-events: none;
+        transform: translateY(-300px);
+    }
+
+    /* Smooth transition for garden badge in preview */
+    :root {
+        --garden-badge-transition: opacity 0.3s ease-out;
+    }
+
+    .page-peek-iframe {
+        --garden-badge-display: block;
+    }
+
+    .page-peek-iframe :global(.garden-badge) {
+        opacity: 0;
+        transition: opacity 0.3s ease-out;
+    }
+
+    @media (max-width: 768px) {
+        .page-peek {
+            display: none;
+        }
+    }
+
+    /* Add visual indicator for garden links */
+    a[data-garden-link="true"] {
+        text-decoration-style: dotted;
+    }
+</style>
+
+<script>
+    class PagePeek {
+        private template: HTMLTemplateElement;
+        private peek: HTMLElement | null = null;
+        private iframe: HTMLIFrameElement | null = null;
+        private currentLink: HTMLAnchorElement | null = null;
+
+        constructor() {
+            this.template = document.getElementById('page-peek-template') as HTMLTemplateElement;
+            if (!this.template) {
+                console.error('PagePeek: Template not found');
+                return;
+            }
+            this.init();
+        }
+
+        private init() {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => this.setupLinks());
+            } else {
+                this.setupLinks();
+            }
+        }
+
+        private setupLinks() {
+            document.querySelectorAll('a').forEach(link => {
+                if (this.isGardenLink(link)) {
+                    this.setupLink(link);
+                    link.setAttribute('data-garden-link', 'true');
+                }
+            });
+        }
+
+        private isGardenLink(link: HTMLAnchorElement): boolean {
+            const href = link.getAttribute('href');
+            if (!href) return false;
+            const isGardenPath = href.startsWith('/garden/');
+            const isGardenCard = link.classList.contains('connection-card') || 
+                                link.classList.contains('note-card');
+            return isGardenPath || isGardenCard;
+        }
+
+        private setupLink(link: HTMLAnchorElement) {
+            link.addEventListener('mouseenter', (e) => this.show(e.currentTarget as HTMLAnchorElement));
+            link.addEventListener('mouseleave', () => this.hide());
+            link.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+        }
+
+        private handleMouseMove(e: MouseEvent) {
+            if (!this.peek || !this.peek.classList.contains('visible')) return;
+
+            const x = e.clientX + 20;
+            const y = e.clientY + 20;
+            
+            const rect = this.peek.getBoundingClientRect();
+            const rightEdge = x + rect.width;
+            const bottomEdge = y + rect.height;
+            
+            const finalX = rightEdge > window.innerWidth ? x - rect.width - 40 : x;
+            const finalY = bottomEdge > window.innerHeight ? y - rect.height - 40 : y;
+
+            this.peek.style.transform = `translate(${finalX}px, ${finalY}px)`;
+        }
+
+        private show(link: HTMLAnchorElement) {
+            if (!this.peek) {
+                const clone = this.template.content.cloneNode(true) as DocumentFragment;
+                this.peek = clone.querySelector('.page-peek') as HTMLElement;
+                this.iframe = clone.querySelector('.page-peek-iframe') as HTMLIFrameElement;
+                
+                // Set up the load event listener once
+                if (this.iframe) {
+                    this.iframe.addEventListener('load', () => {
+                        try {
+                            const iframeDoc = this.iframe?.contentDocument;
+                            if (iframeDoc) {
+                                // Inject initial styles
+                                const style = iframeDoc.createElement('style');
+                                style.textContent = `
+                                    .garden-badge {
+                                        opacity: 0 !important;
+                                        visibility: hidden !important;
+                                        transition: opacity 0.5s ease-out, visibility 0.5s ease-out !important;
+                                        pointer-events: none !important;
+                                    }
+                                `;
+                                iframeDoc.head.appendChild(style);
+                            }
+                        } catch (e) {
+                            // Ignore cross-origin errors
+                        }
+                    });
+                }
+                
+                document.body.appendChild(clone);
+            }
+
+            if (this.iframe && this.currentLink !== link) {
+                this.currentLink = link;
+                this.iframe.src = link.href;
+            }
+
+            if (this.peek) {
+                this.peek.classList.add('visible');
+            }
+        }
+
+        private hide() {
+            if (this.peek) {
+                this.peek.classList.remove('visible');
+            }
+        }
+    }
+
+    document.addEventListener('astro:page-load', () => new PagePeek());
+    document.addEventListener('DOMContentLoaded', () => new PagePeek());
+</script> 
