@@ -1,7 +1,7 @@
 ---
 layout: ../../../layouts/GardenNote.astro
 title: "Notes from the Meets Accessibility Conference"
-description: "The preesenters and chat shared tons of great resources and I learned a few things."
+description: "The presenters and chat shared tons of great resources and I learned a few things."
 lastModified: "2025-02-25"
 topics: ["accessibility", "learning"]
 connections:
