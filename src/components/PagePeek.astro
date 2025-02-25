@@ -31,6 +31,14 @@
         overflow: hidden;
     }
 
+    /* Hide on mobile and touch devices */
+    @media (hover: none), (max-width: 768px) {
+        .page-peek,
+        .page-peek.visible {
+            display: none !important;
+        }
+    }
+
     .page-peek-iframe {
         width: 100%;
         height: 200%;
@@ -39,11 +47,7 @@
         transform: translateY(-300px);
     }
 
-    /* Smooth transition for garden badge in preview */
-    :root {
-        --garden-badge-transition: opacity 0.3s ease-out;
-    }
-
+    /* Hide garden badge in preview */
     .page-peek-iframe {
         --garden-badge-display: block;
     }
@@ -51,6 +55,11 @@
     .page-peek-iframe :global(.garden-badge) {
         opacity: 0;
         transition: opacity 0.3s ease-out;
+    }
+
+    /* Smooth transition for garden badge in preview */
+    :root {
+        --garden-badge-transition: opacity 0.3s ease-out;
     }
 
     @media (max-width: 768px) {
@@ -71,8 +80,20 @@
         private peek: HTMLElement | null = null;
         private iframe: HTMLIFrameElement | null = null;
         private currentLink: HTMLAnchorElement | null = null;
+        private isMobileOrTouch: boolean;
 
         constructor() {
+            // Check if device is mobile or touch-based
+            this.isMobileOrTouch = ('ontouchstart' in window) || 
+                                  (navigator.maxTouchPoints > 0) || 
+                                  window.matchMedia('(hover: none)').matches ||
+                                  window.matchMedia('(max-width: 768px)').matches;
+
+            // Don't initialize on mobile/touch devices
+            if (this.isMobileOrTouch) {
+                return;
+            }
+
             this.template = document.getElementById('page-peek-template') as HTMLTemplateElement;
             if (!this.template) {
                 console.error('PagePeek: Template not found');
@@ -82,6 +103,8 @@
         }
 
         private init() {
+            if (this.isMobileOrTouch) return;
+
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', () => this.setupLinks());
             } else {
@@ -90,6 +113,8 @@
         }
 
         private setupLinks() {
+            if (this.isMobileOrTouch) return;
+
             document.querySelectorAll('a').forEach(link => {
                 if (this.isGardenLink(link)) {
                     this.setupLink(link);
@@ -179,6 +204,16 @@
         }
     }
 
-    document.addEventListener('astro:page-load', () => new PagePeek());
-    document.addEventListener('DOMContentLoaded', () => new PagePeek());
+    // Only initialize if not mobile/touch
+    const initPagePeek = () => {
+        if (!('ontouchstart' in window) && 
+            !(navigator.maxTouchPoints > 0) && 
+            !window.matchMedia('(hover: none)').matches &&
+            !window.matchMedia('(max-width: 768px)').matches) {
+            new PagePeek();
+        }
+    };
+
+    document.addEventListener('astro:page-load', initPagePeek);
+    document.addEventListener('DOMContentLoaded', initPagePeek);
 </script> 
