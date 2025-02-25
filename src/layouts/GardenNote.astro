@@ -4,9 +4,17 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import GardenBadge from '../components/GardenBadge.astro';
 const { frontmatter, url } = Astro.props;
 const formattedTopics = frontmatter.topics.map(topic => topic.toLowerCase());
+
+// Prepare metadata for social sharing
+const description = frontmatter.description || `${frontmatter.title} - A digital garden note by Johanna Sneed`;
+const socialImage = frontmatter.image || '/site-preview.png';
 ---
 
-<Layout>
+<Layout
+    title={frontmatter.title}
+    description={description}
+    image={socialImage}
+    type="article">
     <article class="garden-note">
         <div class="content-wrapper">
             <main class="note-content">

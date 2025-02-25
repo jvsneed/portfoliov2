@@ -3,9 +3,17 @@ import Layout from './Layout.astro';
 import GardenBadge from '../components/GardenBadge.astro';
 const { frontmatter } = Astro.props;
 const { title, role, timeline, team, tools, heroImage, overview, color = 'var(--color-accent)' } = frontmatter;
+
+// Prepare metadata for social sharing
+const description = overview || `${title} - A case study by Johanna Sneed`;
+const socialImage = heroImage || '/site-preview.png';
 ---
 
-<Layout>
+<Layout
+    title={title}
+    description={description}
+    image={socialImage}
+    type="article">
     <article class="case-study">
         <div class="hero">
             <div class="hero-content">

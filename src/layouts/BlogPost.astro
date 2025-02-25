@@ -2,11 +2,19 @@
 import Layout from './Layout.astro';
 import GardenBadge from '../components/GardenBadge.astro';
 const { frontmatter } = Astro.props;
-const { title, date, tags } = frontmatter;
+const { title, date, tags, excerpt, image } = frontmatter;
 const formattedTags = tags.map(tag => tag.toLowerCase());
+
+// Prepare metadata for social sharing
+const description = excerpt || `${title} - A blog post by Johanna Sneed`;
+const socialImage = image || '/site-preview.png';
 ---
 
-<Layout>
+<Layout
+    title={title}
+    description={description}
+    image={socialImage}
+    type="article">
     <article class="blog-post">
         <div class="content-wrapper">
             <main class="post-content">
