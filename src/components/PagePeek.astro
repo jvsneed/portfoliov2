@@ -126,6 +126,14 @@
         private isGardenLink(link: HTMLAnchorElement): boolean {
             const href = link.getAttribute('href');
             if (!href) return false;
+            
+            // Exclude garden badge and navigation links
+            if (link.classList.contains('garden-badge')) return false;
+            
+            // Check if link is in header/nav
+            const isInHeader = link.closest('header, nav, .nav-links') !== null;
+            if (isInHeader) return false;
+            
             const isGardenPath = href.startsWith('/garden/');
             const isGardenCard = link.classList.contains('connection-card') || 
                                 link.classList.contains('note-card');
