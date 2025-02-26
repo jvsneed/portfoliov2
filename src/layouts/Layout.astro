@@ -64,17 +64,15 @@ const imageUrl = new URL(image.startsWith('/') ? image.slice(1) : image, siteUrl
         <ViewTransitions />
     </head>
     <body>
+        <a href="#main-content" class="skip-link">Skip to main content</a>
         <Header />
-        <main class="main-content" role="main" id="main-content">
-            <a href="#main-content" class="skip-link">Skip to main content</a>
+        <main class="main-content" role="main" id="main-content" tabindex="-1">
             <slot />
         </main>
         <Footer />
         <PagePeek />
         <GardenBadge />
     </body>
-    <GardenBadge />
-
 </html>
 
 <style is:global>
@@ -387,20 +385,32 @@ const imageUrl = new URL(image.startsWith('/') ? image.slice(1) : image, siteUrl
 
 
     .skip-link {
-        position: absolute;
-        top: -100px;
+        position: fixed;
+        top: -100%;
         left: 50%;
         transform: translateX(-50%);
         background: var(--color-accent);
         color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 0 0 4px 4px;
-        z-index: 1001;
-        transition: top 0.3s;
+        padding: 1rem 2rem;
+        text-decoration: none;
+        z-index: 9999;
+        opacity: 0;
+        border-radius: 0 0 var(--curve-sm) var(--curve-sm);
+        transition: top 0.3s ease, opacity 0.3s ease;
+        font-family: var(--font-sans);
+        font-size: 1rem;
     }
 
-    .skip-link:focus {
+    .skip-link:focus-visible {
         top: 0;
+        opacity: 1;
+        outline: 2px solid white;
+        outline-offset: -4px;
+    }
+
+    /* Ensure main content is focusable */
+    .main-content:focus {
+        outline: none;
     }
 
     /* Custom cursor text styles */

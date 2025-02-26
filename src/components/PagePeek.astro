@@ -1,7 +1,7 @@
 <template id="page-peek-template">
-    <div class="page-peek">
+    <div class="page-peek" role="tooltip" aria-hidden="true">
         <div class="page-peek-iframe-wrapper">
-            <iframe class="page-peek-iframe" loading="lazy"></iframe>
+            <iframe class="page-peek-iframe" loading="lazy" title="Page preview" tabindex="-1"></iframe>
         </div>
     </div>
 </template>
@@ -72,6 +72,23 @@
     a[data-garden-link="true"] {
         text-decoration-style: dotted;
     }
+
+    /* Add focus styles for keyboard navigation */
+    a[data-garden-link="true"]:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 2px;
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 2px;
+    }
+
+    /* Hide preview on reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+        .page-peek,
+        .page-peek.visible {
+            transition: none;
+        }
+    }
 </style>
 
 <script>
@@ -141,9 +158,20 @@
         }
 
         private setupLink(link: HTMLAnchorElement) {
+            // Add keyboard support
             link.addEventListener('mouseenter', (e) => this.show(e.currentTarget as HTMLAnchorElement));
             link.addEventListener('mouseleave', () => this.hide());
             link.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+            link.addEventListener('focus', (e) => this.show(e.currentTarget as HTMLAnchorElement));
+            link.addEventListener('blur', () => this.hide());
+            link.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    this.hide();
+                }
+            });
+            
+            // Add ARIA attributes
+            link.setAttribute('aria-describedby', 'page-peek-preview');
         }
 
         private handleMouseMove(e: MouseEvent) {
@@ -167,6 +195,10 @@
                 const clone = this.template.content.cloneNode(true) as DocumentFragment;
                 this.peek = clone.querySelector('.page-peek') as HTMLElement;
                 this.iframe = clone.querySelector('.page-peek-iframe') as HTMLIFrameElement;
+                
+                // Set ARIA attributes
+                this.peek.setAttribute('id', 'page-peek-preview');
+                this.peek.setAttribute('role', 'tooltip');
                 
                 // Set up the load event listener once
                 if (this.iframe) {
@@ -202,12 +234,14 @@
 
             if (this.peek) {
                 this.peek.classList.add('visible');
+                this.peek.setAttribute('aria-hidden', 'false');
             }
         }
 
         private hide() {
             if (this.peek) {
                 this.peek.classList.remove('visible');
+                this.peek.setAttribute('aria-hidden', 'true');
             }
         }
     }

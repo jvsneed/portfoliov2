@@ -1,6 +1,9 @@
-<a href="/garden" class="garden-badge" aria-label="Digital Garden">
-    <div class="circular-text">
-        <svg viewBox="0 0 100 100">
+<a href="/garden" 
+   class="garden-badge" 
+   aria-label="Visit Digital Garden"
+   role="link">
+    <div class="circular-text" aria-hidden="true">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
             <defs>
                 <path id="circle-path" d="M50,50m-30,0a30,30 0 1,1 60,0a30,30 0 1,1-60,0"/>
             </defs>
@@ -11,7 +14,7 @@
             </text>
         </svg>
     </div>
-    <div class="badge-icon">🪴</div>
+    <div class="badge-icon" aria-hidden="true">🪴</div>
 </a>
 
 <style>
@@ -31,6 +34,8 @@
         box-shadow: var(--shadow-soft);
         z-index: 99;
         transition: all 0.3s var(--ease-out-soft);
+        min-width: 44px; /* Minimum touch target size */
+        min-height: 44px;
     }
 
     .circular-text {
@@ -85,18 +90,45 @@
         to { transform: rotate(360deg); }
     }
 
-    @media (max-width: 768px) {
+    /* Improved focus styles */
+    .garden-badge:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 4px;
+        transform: scale(1.1);
+    }
+
+    /* Support for high contrast mode */
+    @media (forced-colors: active) {
         .garden-badge {
-            right: 2em;
-            bottom: 2rem;
-            width: 3rem;
-            height: 3rem;
+            border: 2px solid CanvasText;
+        }
+        .garden-badge:hover,
+        .garden-badge:focus-visible {
+            border: 2px solid Highlight;
         }
     }
 
+    /* Respect reduced motion preferences */
     @media (prefers-reduced-motion: reduce) {
+        .garden-badge {
+            transition: none;
+        }
+        .garden-badge:hover,
+        .garden-badge:focus-visible {
+            transform: none;
+        }
         .circular-text {
             animation: none;
+        }
+    }
+
+    /* Ensure sufficient touch target size on mobile */
+    @media (max-width: 768px) {
+        .garden-badge {
+            right: 1rem;
+            bottom: 1rem;
+            width: 4rem;
+            height: 4rem;
         }
     }
 </style>
