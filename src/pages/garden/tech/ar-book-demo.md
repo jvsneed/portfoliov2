@@ -19,7 +19,7 @@ I'm not sure how, but I went down a small AR rabbit hole, and surprisingly, it d
 
 ## Gathering resources
 I searched the web for AR, VR, and 3D related sites and resources. Here are some of the links I've found:
-<iframe style="border: 0; width: 100%; height: 450px; margin-bottom:2rem;" allowfullscreen frameborder="0" src="https://raindrop.io/whoisHunkyDory/extended-reality-xr-tools-and-resources-52630885/embed/theme=light"></iframe>
+<iframe style="border: 0; width: 100%; height: 450px; margin-bottom:2rem;" allowfullscreen frameborder="0" src="https://raindrop.io/savedbyjo/extended-reality-xr-tools-and-resources-52630885/embed/theme=light"></iframe>
 
 
 
