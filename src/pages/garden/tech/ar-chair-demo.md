@@ -1,6 +1,6 @@
 ---
 layout: ../../../layouts/GardenNote.astro
-title: Augmented Reality in a Consumer Experience (iOS Only)
+title: Augmented Reality(AR) in a consumer experience (iOS Only)
 description: I created a mock furniture site to integrate an AR experience, allowing users to view 3D furniture models in their space.
 lastModified: February 20, 2025
 topics:
@@ -22,7 +22,7 @@ This AR experience only works on Apple mobile and tablet devices. You can visit 
 
 The most difficult part of this project was designing and developing the mock site itself since I'd be sharing it pubicly. I analyzed Apple's implementation and found that their AR integration relies on the rel="AR" attribute in links to USDZ models. To build my experience:
 
-I created the AR scene using Reality Composer [AR project post](./ar-book-demo.md)
+I created the AR scene using Reality Composer [AR project post](./ar-book-demo)
 I sourced the 3D asset from Sketchfab
 I used reverse image search to find more suitable project images
 This project was a great exploration of AR in e-commerce, and I look forward to improving it further.
