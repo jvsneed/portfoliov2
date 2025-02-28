@@ -19,7 +19,6 @@ A few moths ago, a connection shared this article on BlueSky: [AI as Extraherics
 Article link: [The Socratic Method for Self-Discovery in Large Language Models](https://princeton-nlp.github.io/SocraticAI/)
 
 Here are my thoughts on AI-AI decision making using the Socratic Method.
-Summary
 
 ## Summary
 Large language models (LLMs) can be enhanced by having multiple AI agents work together on a task, rather than relying on a single model prompt. In the article, different agents take on distinct roles (like “analyst” or “proofreader”) to leverage their unique strengths as a team​.
