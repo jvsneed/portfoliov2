@@ -24,16 +24,18 @@ Summary
 ## Summary
 Large language models (LLMs) can be enhanced by having multiple AI agents work together on a task, rather than relying on a single model prompt. In the article, different agents take on distinct roles (like “analyst” or “proofreader”) to leverage their unique strengths as a team​.
 
-In particular, the authors draw inspiration from the Socratic method. Which intro to philosophy fails to warn could be seen as combative to close-minded people. The goal, however, is to elicit deeper analytical thinking in LLMs. Traditional prompting strategies such as Chain-of-Thought (CoT) or ReAct have improved LLM reasoning by making them explain step-by-step, but these methods rely on fixed, 
+In particular, the authors draw inspiration from the Socratic method. Which intro to philosophy fails to warn could be seen as combative by close-minded people (am I funny yet?). The goal, however, is to elicit deeper analytical thinking in LLMs. Traditional prompting strategies such as Chain-of-Thought (CoT) or ReAct have improved LLM reasoning by making them explain step-by-step, but these methods rely on fixed, 
 
 By contrast, a Socratic approach encourages free-form inquiry: multiple LLMs ask each other questions, challenge answers, and build on ideas in an open dialogue​.
 
- This shift represents a rethinking of “prompting” – moving away from rigid prompts toward autonomous multi-agent conversations. The authors’ preliminary experiments show that LLMs can engage in such self-driven dialogue, effectively “self-discovering” knowledge and broadening their perspective on a problem through back-and-forth questioning​
+ This shift represents a rethinking of “prompting” and moving away from rigid prompts toward autonomous multi-agent conversations. The authors’ preliminary experiments show that LLMs can engage in such self-driven dialogue, effectively “self-discovering” knowledge and broadening their perspective on a problem through back-and-forth questioning​.
 
-.
-I love to talk about the ethics and biases of these practices...so here we go.
+
+
 
 ## Limitations and challenges
+Assessing limitations is the best way to make progress, so here's what I captured from the article...
+
 There is the danger of reinforcing errors or biases: if one agent shares a mistaken assumption, the others might agree or build on it, leading the group astray. The authors note that multi-agent dialogue may amplify misinformation or bias if not carefully managed​!!
 
 A concrete example was seen when the SocraticAI agents all agreed on an incorrect fact (treating 71 as a prime when it isn’t); without external intervention, the collaboration can confidently proceed down a wrong path​. 
