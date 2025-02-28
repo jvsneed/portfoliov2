@@ -1,17 +1,15 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import '../styles/global.css';  // Add this import
+import '../styles/global.css';
 import '../styles/responsive.css';
 import GardenBadge from '../components/GardenBadge.astro';
 import { ViewTransitions } from 'astro:transitions';
 import PagePeek from '../components/PagePeek.astro';
+
+// Get current path to determine if we're in the garden section
 const currentPath = Astro.url.pathname;
-const links = [
-    { path: '/', label: 'Home' },
-    { path: '/portfolio', label: 'Portfolio' },
-    { path: '/writing', label: 'Writing' },
-];
+const isGardenPage = currentPath.includes("/garden/");
 
 interface Props {
     title?: string;
@@ -70,7 +68,7 @@ const imageUrl = new URL(image.startsWith('/') ? image.slice(1) : image, siteUrl
             <slot />
         </main>
         <Footer />
-        <PagePeek />
+        {isGardenPage && <PagePeek />}
         <GardenBadge />
     </body>
 </html>

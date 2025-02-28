@@ -1,5 +1,4 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
 
 function normalizePath(path: string) {
     return path === '/' ? '/' : path.replace(/\/?$/, '/');
@@ -25,6 +24,24 @@ const links = [
                     <span class="logo-dot"></span>
                 </div>
             </a>
+            <div class="nav-wrapper">
+                <ul class="nav-links" id="nav-menu" role="menubar">
+                    {links.map(({ path, label }) => (
+                        <li role="none">
+                            <a 
+                                href={path} 
+                                class="nav-link"
+                                role="menuitem"
+                                data-path={path}
+                                data-active={currentPath === path}
+                                aria-current={currentPath === path ? 'page' : undefined}
+                            >
+                                {label}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
             <button 
                 type="button" 
                 class="menu-button" 
@@ -34,22 +51,6 @@ const links = [
             >
                 <span class="menu-text">Menu</span>
             </button>
-            <ul class="nav-links" id="nav-menu" role="menubar">
-                {links.map(({ path, label }) => (
-                    <li role="none">
-                        <a 
-                            href={path} 
-                            class="nav-link"
-                            role="menuitem"
-                            data-path={path}
-                            data-active={currentPath === path}
-                            aria-current={currentPath === path ? 'page' : undefined}
-                        >
-                            {label}
-                        </a>
-                    </li>
-                ))}
-            </ul>
         </nav>
     </div>
     <div class="cursor-text" aria-hidden="true"></div>
@@ -149,6 +150,12 @@ const links = [
         transform: translate(140px, -100%);
     }
 
+    .nav-wrapper {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+    }
+
     .nav-links {
         display: flex;
         gap: var(--space-lg);
@@ -207,6 +214,10 @@ const links = [
 
         .menu-button.active {
             color: var(--color-accent);
+        }
+
+        .nav-wrapper {
+            flex-direction: column;
         }
 
         .nav-links {

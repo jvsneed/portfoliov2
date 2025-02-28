@@ -8,8 +8,7 @@ featured: false
 ---
 For as long as I can remember, I've creating and writing something, somewhere, for no one.
 
-<img src="/images/garden/existential-hehes.jpg">
-
+<img src="/images/garden/existential-hehes.jpg" style="width:100%;" alt="comic of two men standing next to two black blobs, one, a salesman states sure the abyss is great for staring into, but if screaming is your thing, you'll want to go with the void">
 >comic by [Michael J Comics (I think)](https://www.instagram.com/michaeljcomics/)
 
 

@@ -1,0 +1,113 @@
+---
+interface Props {
+    currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+const isEnglish = !currentPath.includes("/fr/");
+
+function getTranslatedPath(path: string): string {
+    // Handle both exact garden page and nested pages
+    if (path.endsWith("/garden") || path.endsWith("/garden/")) {
+        return isEnglish ? "/fr/garden" : "/garden";
+    }
+    // Handle other garden pages
+    if (isEnglish) {
+        return `/fr${path}`;
+    }
+    return path.replace("/fr/", "/");
+}
+
+async function hasTranslation(currentPath: string): Promise<boolean> {
+    // Always show translation for main garden pages
+    if (currentPath.endsWith("/garden") || currentPath.endsWith("/garden/")) {
+        return true;
+    }
+
+    // For other pages, check if translation exists
+    const targetPath = getTranslatedPath(currentPath);
+    try {
+        if (isEnglish) {
+            const files = await Astro.glob("/src/pages/fr/garden/**/*.md");
+            return files.some(file => file.url === targetPath);
+        } else {
+            const files = await Astro.glob("/src/pages/garden/**/*.md");
+            return files.some(file => file.url === targetPath);
+        }
+    } catch (error) {
+        console.error("Error checking translations:", error);
+        return false;
+    }
+}
+
+const translatedPath = getTranslatedPath(currentPath);
+const buttonText = isEnglish ? "Version française" : "Read in English";
+const sectionTitle = isEnglish ? "Translate" : "Traduire";
+const showTranslation = await hasTranslation(currentPath);
+---
+
+{showTranslation && (
+    <div class="sidebar-section">
+        <h2>{sectionTitle}</h2>
+        <div class="translation-wrapper">
+            <a href={translatedPath} class="translation-button">
+                {buttonText}
+            </a>
+        </div>
+    </div>
+)}
+
+<style>
+    .sidebar-section {
+        padding: var(--space-md);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--curve-sm);
+        margin-bottom: var(--space-lg);
+    }
+
+    .sidebar-section h2 {
+        font-size: 0.875rem;
+        font-family: var(--font-mono);
+        color: var(--color-muted);
+        margin-bottom: var(--space-sm);
+    }
+
+    .translation-wrapper {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0;
+        margin: 0;
+    }
+
+    .translation-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        background: var(--color-surface);
+        border: 1px solid var(--color-accent);
+        transition: all 0.2s ease;
+    }
+
+    .translation-button:hover {
+        background: var(--color-accent);
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        .translation-wrapper {
+            padding: var(--space-sm);
+        }
+
+        .translation-button {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>

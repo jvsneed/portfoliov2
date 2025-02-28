@@ -1,0 +1,37 @@
+---
+interface Props {
+    translationUrl: string | null;
+    language: "en" | "fr";
+}
+
+const { translationUrl, language } = Astro.props;
+
+const buttonText = language === "en" ? "Lire en français" : "Read in English";
+---
+
+{translationUrl && (
+    <a href={translationUrl} class="translation-link">
+        {buttonText}
+    </a>
+)}
+
+<style>
+    .translation-link {
+        display: inline-flex;
+        align-items: center;
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--color-accent);
+        border-radius: var(--curve-sm);
+        margin-top: var(--space-md);
+        transition: all 0.2s ease;
+    }
+
+    .translation-link:hover {
+        background: var(--color-accent);
+        color: white;
+    }
+</style>

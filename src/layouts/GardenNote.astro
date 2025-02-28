@@ -2,12 +2,58 @@
 import Layout from './Layout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import GardenBadge from '../components/GardenBadge.astro';
+import TranslationWrapper from '../components/TranslationWrapper.astro';
+
+interface Props {
+    frontmatter: {
+        title: string;
+        description?: string;
+        lastModified?: string;
+        topics?: string[];
+        connections?: Array<{ title: string; url: string; }>;
+        image?: string;
+    };
+    url: string;
+}
+
 const { frontmatter, url } = Astro.props;
-const formattedTopics = frontmatter.topics.map(topic => topic.toLowerCase());
+const isFrenchlanguage = url.includes("/fr/");
+
+const topicTranslations: Record<string, string> = {
+    "Technology": "Technologie",
+    "User Experience": "Expérience Utilisateur",
+    "Extended Reality": "Réalité Étendue",
+    "Web": "Web",
+    "Personal thoughts": "Réflexions Personnelles"
+};
+
+const translations = {
+    lastUpdated: isFrenchlanguage ? "Dernière mise à jour le" : "Last updated",
+    relatedLinks: isFrenchlanguage ? "Liens connexes" : "Related links"
+};
+
+const sidebarTranslations = {
+    topics: isFrenchlanguage ? "Sujets" : "Topics",
+    translate: isFrenchlanguage ? "Traduire" : "Translate"
+};
+
+const formattedDate = new Date(frontmatter.lastModified || "").toLocaleDateString(
+    isFrenchlanguage ? "fr-FR" : "en-US",
+    {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    }
+);
+
+// Translate topics if in French and ensure it's not undefined
+const translatedTopics = frontmatter.topics?.map(topic => 
+    isFrenchlanguage ? (topicTranslations[topic] || topic) : topic
+) || [];
 
 // Prepare metadata for social sharing
 const description = frontmatter.description || `${frontmatter.title} - A digital garden note by Johanna Sneed`;
-const socialImage = frontmatter.image || '/site-preview.png';
+const socialImage = frontmatter.image || "/site-preview.png";
 ---
 
 <Layout
@@ -20,10 +66,8 @@ const socialImage = frontmatter.image || '/site-preview.png';
             <main class="note-content">
                 <header class="note-header">
                     <Breadcrumbs path={url} />
-
                     <h1>{frontmatter.title}</h1>
-                    <time>Last tended {new Date(frontmatter.lastModified).toLocaleDateString()}</time>
-                    <!-- <p class="note-description">{frontmatter.description}</p> -->
+                    <time>{translations.lastUpdated} {formattedDate}</time>
                 </header>
                 
                 <div class="note-body">
@@ -32,7 +76,7 @@ const socialImage = frontmatter.image || '/site-preview.png';
 
                 {frontmatter.connections && frontmatter.connections.length > 0 && (
                     <footer class="note-footer">
-                        <h2 class="connections-title">Connected Notes</h2>
+                        <h2 class="connections-title">{translations.relatedLinks}</h2>
                         <div class="connections">
                             {frontmatter.connections.map(connection => (
                                 <a href={connection.url} class="connection-card">
@@ -47,20 +91,21 @@ const socialImage = frontmatter.image || '/site-preview.png';
 
             <aside class="note-sidebar">
                 <div class="sidebar-section">
-                    <h2>Topics</h2>
+                    <h2>{sidebarTranslations.topics}</h2>
                     <div class="tags-list">
-                        {formattedTopics.map(topic => (
+                        {translatedTopics.map(topic => (
                             <a href={`/garden?topic=${topic}`} class="tag">
                                 {topic}
                             </a>
                         ))}
                     </div>
                 </div>
+                
+                <TranslationWrapper currentPath={url} />
             </aside>
         </div>
     </article>
     <GardenBadge />
-
 </Layout>
 
 <style>
@@ -192,7 +237,7 @@ p{
         text-decoration: none;
         transition: all 0.3s var(--ease-out-spring);
         border: 1px solid var(--color-border);
-        background: var(--color-surface);
+        background: var (--color-surface);
     }
 
     .tag:hover {
@@ -242,12 +287,12 @@ p{
         align-items: center;
         padding: var(--space-md);
         background: var(--color-surface);
-        border: 1px solid var(--color-border);
+        border: 1px solid var (--color-border);
         border-radius: var(--curve-sm);
         text-decoration: none;
         color: inherit;
         margin-bottom: var(--space-sm);
-        transition: all 0.3s var(--ease-out-spring);
+        transition: all 0.3s var (--ease-out-spring);
     }
 
     .connection-card:hover {
@@ -270,6 +315,17 @@ p{
     .connection-card:hover .read-more {
         opacity: 1;
         transform: translateX(0);
+    }
+
+    .sidebar-section :global(.translation-wrapper) {
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar-section :global(.translation-button) {
+        width: 100%;
+        justify-content: center;
+        margin-top: var(--space-xs);
     }
 </style>
 

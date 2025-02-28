@@ -157,19 +157,16 @@ const projects = [
         </section>
 
         <section class="writing-section">
-            <h2 class="section-title">
-               Featured Writing
-            </h2>
+            <h2 class="section-title">Featured Writing</h2>
             <div class="writing-grid">
                 {featuredWriting.map((item) => (
                     <a href={item?.url} class="writing-card">
                         <span class="content-type">
-                            {item?.url?.includes('/garden/') ? 'Digital garden note' : 'Blog post'}
+                            {item?.url?.includes("/garden/") ? "Digital garden note" : "Blog post"}
                         </span>
                         <h3 class="project-title">{item.frontmatter.title}</h3>
-                        {/* <p>{item.frontmatter.description}</p> */}
                         <time>
-                            {new Date(item.frontmatter.lastModified || item.frontmatter.date || '').toLocaleDateString()}
+                            {new Date(item.frontmatter.lastModified || item.frontmatter.date || "").toLocaleDateString()}
                         </time>
                     </a>
                 ))}
@@ -319,7 +316,7 @@ const projects = [
         }
         .featured-projects {
             flex-direction: column;
-            gap: var(--space-sm);
+            gap: var (--space-sm);
             transform: none !important; /* Disable horizontal scrolling on mobile */
             overflow:visible;
             min-height: fit-content;
@@ -705,6 +702,7 @@ const projects = [
         flex-direction: column;
         justify-content: space-between;
         gap: calc(var(--space-xs)/2);
+        min-height: auto; /* Remove fixed height to allow content to determine size */
     }
 
     .writing-card:hover {
@@ -723,6 +721,17 @@ const projects = [
         font-family: var(--font-mono);
         font-size: 0.875rem;
         color: var(--color-muted);
+    }
+
+    .preview-text {
+        color: var(--color-muted);
+        margin: var(--space-xs) 0;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
     }
 
     @keyframes mainFloat {

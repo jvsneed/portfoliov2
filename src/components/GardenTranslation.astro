@@ -1,0 +1,52 @@
+---
+interface Props {
+    currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+const isEnglish = !currentPath.includes("/fr/");
+
+function getTranslatedPath(path: string): string {
+    return isEnglish ? "/fr/garden" : "/garden";
+}
+
+const translatedPath = getTranslatedPath(currentPath);
+const buttonText = isEnglish ? "Version française" : "Read in English";
+---
+
+<button class="tag" onclick={`window.location.href='${translatedPath}'`}>
+    {buttonText}
+</button>
+
+<style>
+    .tag {
+        display: flex;
+        align-items: center;
+        text-align: start;
+        width: 100%;
+        font-family: var(--font-mono);
+        font-size: 1rem;
+        color: var(--color-muted);
+        padding: 1rem;
+        border: 1px solid var(--color-border);
+        border-radius: 2px;
+        background: var(--color-surface);
+        cursor: pointer;
+        transition: all 0.3s var(--ease-out-spring);
+    }
+
+    .tag:hover {
+        background: var(--color-accent);
+        color: white;
+        border-color: var(--color-accent);
+        transform: translateY(-2px);
+    }
+
+    /* Match garden tag styles */
+    .sidebar-section & {
+        border-radius: 2px;
+        padding: 1rem;
+        font-size: 1rem;
+        justify-content: start;
+    }
+</style>

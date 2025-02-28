@@ -1,16 +1,23 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import GardenTranslation from '../components/GardenTranslation.astro';
+import Layout from '../../../layouts/Layout.astro';
+import GardenTranslation from '../../../components/GardenTranslation.astro';
+import type { MarkdownInstance } from 'astro';
+import GardenBadge from '../../../components/GardenBadge.astro';
 
-// Fetch all garden note files
-const gardenNotes = await Astro.glob('./garden/**/*.md');
+interface Frontmatter {
+    title: string;
+    date?: string;
+    description?: string;
+    topics?: string[];
+    lastModified?: string;
+}
 
-// Add helper function for consistent tag normalization
+const gardenNotes = await Astro.glob('./**/*.md');
+
 function normalizeTag(tag: string): string {
     return tag.toLowerCase().trim();
 }
 
-// Update how we prepare tag data
 const categoryCount = gardenNotes.reduce((acc, note) => {
     note.frontmatter.topics?.forEach(topic => {
         const normalizedTopic = normalizeTag(topic);
@@ -23,52 +30,56 @@ const allCategories = [...new Set(gardenNotes.flatMap(note =>
     note.frontmatter.topics?.map(normalizeTag) || []
 ))].sort();
 
-// Add safety checks for the growth stage
 const sortedNotes = gardenNotes
     .sort((a, b) => {
         return new Date(b.frontmatter.lastModified).getTime() - new Date(a.frontmatter.lastModified).getTime();
     });
 
-// Use normalized tags in data preparation
-const links = gardenNotes.flatMap(note => 
-    (note.frontmatter.topics || [])
-        .map(topic => ({
-            source: note.url,
-            target: normalizeTag(topic)
-        }))
-);
+const translations = {
+    title: "Jardin Numérique",
+    intro: "Contrairement à un blog, le Jardin Numérique est une collection évolutive de notes et de réflexions qui se développent au fil du temps. C'est ici que je collecte et affine mes pensées, idées et connaissances sur des sujets qui m'intéressent. L'idée est d'\"apprendre en public\".",
+    learnMore: "En savoir plus sur les jardins numériques",
+    searchLabel: "Rechercher des notes",
+    filterByTag: "Filtrer par tag",
+    allTags: "tous les tags",
+    tended: "Dernière mise à jour le",
+    language: "Langue"
+};
 ---
 
 <Layout>
     <div class="page-container">
         <header class="header-content">
-            <h1 class="section-title">Digital Garden</h1>
-            <p class="garden-intro">Unlike a blog, the Digital Garden is a growing collection of notes and thoughts that evolve over time. This is where I collect and refine thoughts, ideas, and knowledge from topics that catch my interest. The idea here is to "learn in public". 
-                <a href="https://maggieappleton.com/garden-history/" target="_blank" rel="noopener">Learn more about digital gardens</a>.
+            <h1 class="section-title">{translations.title}</h1>
+            <p class="garden-intro">
+                {translations.intro}
+                <a href="https://maggieappleton.com/garden-history/" target="_blank" rel="noopener">
+                    {translations.learnMore}
+                </a>
             </p>
         </header>
 
         <div class="garden-layout">
             <aside class="garden-sidebar">
                 <div class="sidebar-section">
-                    <GardenTranslation currentPath="/garden" />
+                    <GardenTranslation currentPath="/fr/garden" />
                 </div>
                 
                 <div class="sidebar-section">
-                    <h2>Search notes</h2>
+                    <h2>{translations.searchLabel}</h2>
                     <input 
                         type="search" 
                         id="garden-search"
                         class="search-input" 
-                        aria-label="Search notes"
+                        aria-label={translations.searchLabel}
                     />
                 </div>
 
                 <div class="sidebar-section">
-                    <h2>Filter by tag</h2>
+                    <h2>{translations.filterByTag}</h2>
                     <div class="filter-tags">
                         <button class="tag active" data-category="all">
-                            all tags
+                            {translations.allTags}
                             <span class="count">{gardenNotes.length}</span>
                         </button>
                         {allCategories.map(category => (
@@ -88,19 +99,16 @@ const links = gardenNotes.flatMap(note =>
                            class="note-card" 
                            data-categories={note.frontmatter.topics?.map(normalizeTag).join('|')}>
                             <div class="note-header">
-                                <time class="last-tended">Tended {new Date(note.frontmatter.lastModified).toLocaleDateString('en-US', {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric'
-                                })}</time>
+                                <time class="last-tended">
+                                    {translations.tended} {new Date(note.frontmatter.lastModified).toLocaleDateString('fr-FR', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric'
+                                    })}
+                                </time>
                             </div>
                             <h2>{note.frontmatter.title}</h2>
                             <p>{note.frontmatter.description}</p>
-                            {/* <div class="note-topics">
-                                {note.frontmatter.topics?.map(topic => (
-                                    <span class="topic-tag">{topic}</span>
-                                ))}
-                            </div> */}
                         </a>
                     ))}
                 </div>
@@ -108,10 +116,11 @@ const links = gardenNotes.flatMap(note =>
         </div>
         <div class="cursor-text"></div>
     </div>
+    <GardenBadge />
 </Layout>
 
 <style>
-
+    /* Using identical styles from garden.astro */
     .garden-header {
         margin-bottom: var(--space-xl);
     }
@@ -128,7 +137,6 @@ const links = gardenNotes.flatMap(note =>
         gap: var(--space-xl);
         align-items: start;
     }
-
 
     .garden-sidebar {
         position: sticky;
@@ -170,57 +178,10 @@ const links = gardenNotes.flatMap(note =>
         gap: var(--space-xs);
     }
 
-    .garden-filters {
-        margin: var(--space-sm) 0;
-        padding: var(--space-md);
-        background: var(--color-surface);
-        border: 1px solid var(--color-border);
-        border-radius: var(--curve-sm);
-    }
-
-    .search-section {
-        margin-bottom: var(--space-md);
-    }
-
-    .search-input {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        font-family: var(--font-mono);
-        font-size: 1rem;
-        color: var(--color-fg);
-        background: var(--color-surface);
-        border: 1px solid var(--color-border);
-        border-radius: var(--curve-sm);
-        transition: all 0.3s var(--ease-out-spring);
-    }
-
-    .search-input:focus {
-        outline: none;
-        border-color: var(--color-accent);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 25%, transparent);
-    }
-
-    .search-input::placeholder {
-        color: var(--color-muted);
-    }
-
-    .filter-section h2 {
-        font-size: 0.875rem;
-        font-family: var (--font-mono);
-        color: var(--color-muted);
-        margin-bottom: var(--space-sm);
-    }
-
-    .category-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--space-xs);
-    }
-
     .tag {
         display: flex;
         align-items: center;
-        text-align:start;
+        text-align: start;
         gap: 0.5rem;
         font-family: var(--font-mono);
         font-size: 1rem;
@@ -282,32 +243,6 @@ const links = gardenNotes.flatMap(note =>
         transform: translateX(1rem) translateZ(20px) rotateX(2deg) rotateY(-2deg);
     }
 
-    .read-more {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin-top: var(--space-md);
-        font-family: var(--font-mono);
-        font-size: 0.875rem;
-        color: var(--color-accent);
-        opacity: 0;
-        transform: translateX(-10px);
-        transition: all 0.3s var(--ease-out-spring);
-    }
-
-    .note-card:hover .read-more {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-    .read-more .arrow {
-        transition: transform 0.3s var(--ease-out-spring);
-    }
-
-    .read-more:hover .arrow {
-        transform: translateX(6px);
-    }
-
     .note-header {
         display: flex;
         justify-content: space-between;
@@ -333,27 +268,6 @@ const links = gardenNotes.flatMap(note =>
         line-height: 1.5;
     }
 
-    .note-topics {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var (--space-xs);
-    }
-
-    .topic-tag {
-        font-family: var (--font-mono);
-        font-size: 0.75rem;
-        padding: 0.25em 0.75em;
-        background: var(--color-surface);
-        border: 1px solid var (--color-border);
-        border-radius: 2px;
-        color: var(--color-muted);
-    }
-
-    .note-card.hidden {
-        display: none;
-    }
-
-
     @media (max-width: 768px) {
         .garden-layout {
             grid-template-columns: 1fr;
@@ -374,18 +288,6 @@ const links = gardenNotes.flatMap(note =>
             flex-wrap: wrap;
         }
 
-        .garden-container {
-            padding: var(--space-xl) var(--space-md);
-        }
-
-        .category-tags {
-            overflow-x: auto;
-            padding-bottom: var(--space-sm);
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            white-space: nowrap;
-        }
-
         .notes-grid {
             grid-template-columns: 1fr;
         }
@@ -399,19 +301,19 @@ const links = gardenNotes.flatMap(note =>
 
     const filterButtons = document.querySelectorAll<HTMLButtonElement>('.tag');
     const noteCards = document.querySelectorAll<NoteElement>('.note-card');
+    const searchInput = document.getElementById('garden-search') as HTMLInputElement;
+
+    function normalizeTag(tag: string): string {
+        return tag.toLowerCase().trim();
+    }
 
     function filterNotes(category: string) {
         const normalizedCategory = category.toLowerCase().trim();
         
-        // Update button states
         filterButtons.forEach(btn => {
-            btn.classList.remove('active');
-            if (normalizeTag(btn.dataset.category || '') === normalizedCategory) {
-                btn.classList.add('active');
-            }
+            btn.classList.toggle('active', normalizeTag(btn.dataset.category || '') === normalizedCategory);
         });
 
-        // Filter notes
         noteCards.forEach(card => {
             if (category === 'all') {
                 card.style.display = '';
@@ -419,20 +321,10 @@ const links = gardenNotes.flatMap(note =>
             }
 
             const categories = (card.dataset.categories || '').split('|');
-            const hasCategory = categories.some(cat => 
-                normalizeTag(cat) === normalizedCategory
-            );
-            
-            card.style.display = hasCategory ? '' : 'none';
+            card.style.display = categories.some(cat => normalizeTag(cat) === normalizedCategory) ? '' : 'none';
         });
     }
 
-    // Helper function for consistent tag normalization
-    function normalizeTag(tag: string): string {
-        return tag.toLowerCase().trim();
-    }
-
-    // Set up filter button click handlers
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             const category = button.dataset.category || 'all';
@@ -440,7 +332,17 @@ const links = gardenNotes.flatMap(note =>
         });
     });
 
-    // Handle initial filter if one is set in session storage
+    searchInput?.addEventListener('input', (e) => {
+        const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+        
+        noteCards.forEach(note => {
+            const title = note.querySelector('h2')?.textContent?.toLowerCase() || '';
+            const description = note.querySelector('p')?.textContent?.toLowerCase() || '';
+            const matches = title.includes(searchTerm) || description.includes(searchTerm);
+            note.style.display = matches ? '' : 'none';
+        });
+    });
+
     document.addEventListener('DOMContentLoaded', () => {
         const selectedCategory = sessionStorage.getItem('selectedCategory');
         if (selectedCategory) {
@@ -448,25 +350,4 @@ const links = gardenNotes.flatMap(note =>
             sessionStorage.removeItem('selectedCategory');
         }
     });
-
-    // Add search functionality
-    const searchInput = document.getElementById('garden-search') as HTMLInputElement;
-    const notes = document.querySelectorAll<HTMLElement>('.note-card');
-
-    searchInput?.addEventListener('input', (e) => {
-        const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
-        
-        notes.forEach(note => {
-            const title = note.querySelector('h2')?.textContent?.toLowerCase() || '';
-            const description = note.querySelector('p')?.textContent?.toLowerCase() || '';
-            const topics = note.getAttribute('data-topics')?.toLowerCase() || '';
-            
-            const matches = title.includes(searchTerm) || 
-                          description.includes(searchTerm) || 
-                          topics.includes(searchTerm);
-
-            note.style.display = matches ? '' : 'none';
-        });
-    });
-
 </script>

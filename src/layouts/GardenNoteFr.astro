@@ -1,0 +1,164 @@
+---
+import Layout from "./Layout.astro";
+
+interface Props {
+    frontmatter: {
+        title: string;
+        description?: string;
+        lastModified?: string;
+        topics?: string[];
+        connections?: Array<{ title: string; url: string; }>;
+    };
+}
+
+const { frontmatter } = Astro.props;
+const formattedDate = new Date(frontmatter.lastModified || "").toLocaleDateString("fr-FR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+});
+
+// Map topics to French
+const topicTranslations: Record<string, string> = {
+    "Technology": "Technologie",
+    "User Experience": "Expérience Utilisateur",
+    "Extended Reality": "Réalité Étendue",
+    "Web": "Web",
+    "Personal thoughts": "Réflexions Personnelles"
+};
+---
+
+<Layout title={frontmatter.title} description={frontmatter.description}>
+    <div class="page-container">
+        <article class="garden-note">
+            <header class="header-content">
+                <div class="meta">
+                    {frontmatter.topics && (
+                        <div class="topics">
+                            {frontmatter.topics.map(topic => (
+                                <span class="topic-tag">
+                                    {topicTranslations[topic] || topic}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+                    <time datetime={frontmatter.lastModified}>
+                        Dernière mise à jour le {formattedDate}
+                    </time>
+                </div>
+                <h1>{frontmatter.title}</h1>
+                {frontmatter.description && <p class="description">{frontmatter.description}</p>}
+            </header>
+
+            <div class="content">
+                <slot />
+            </div>
+
+            {frontmatter.connections && (
+                <footer class="connections">
+                    <h2>Liens connexes</h2>
+                    <ul>
+                        {frontmatter.connections.map(({ title, url }) => (
+                            <li>
+                                <a href={url}>{title}</a>
+                            </li>
+                        ))}
+                    </ul>
+                </footer>
+            )}
+        </article>
+    </div>
+</Layout>
+
+<style>
+    .garden-note {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: var(--space-lg) 0;
+    }
+
+    .meta {
+        display: flex;
+        gap: var(--space-md);
+        align-items: center;
+        color: var(--color-muted);
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+    }
+
+    .topics {
+        display: flex;
+        gap: var(--space-xs);
+    }
+
+    .topic-tag {
+        color: var(--color-accent);
+    }
+
+    .topic-tag:not(:last-child)::after {
+        content: "✦";
+        margin-left: var(--space-xs);
+        color: var(--color-accent);
+    }
+
+    h1 {
+        font-family: var(--font-special);
+        font-size: 2.5rem;
+        line-height: 1.2;
+        margin: var(--space-sm) 0;
+    }
+
+    .description {
+        font-size: 1.25rem;
+        color: var(--color-muted);
+        line-height: 1.5;
+        max-width: 65ch;
+    }
+
+    .content {
+        margin-top: var(--space-xl);
+        font-size: 1.125rem;
+        line-height: 1.6;
+    }
+
+    .content :global(p) {
+        margin-bottom: var(--space-md);
+    }
+
+    .content :global(img) {
+        max-width: 100%;
+        border-radius: var(--curve-sm);
+        margin: var(--space-md) 0;
+    }
+
+    .connections {
+        margin-top: var(--space-xl);
+        padding-top: var(--space-lg);
+        border-top: 1px solid var(--color-border);
+    }
+
+    .connections h2 {
+        font-family: var(--font-special);
+        font-size: 1.5rem;
+        margin-bottom: var(--space-md);
+    }
+
+    .connections ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+
+    .connections a {
+        color: var(--color-accent);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+    }
+
+    .connections a:hover {
+        text-decoration: underline;
+    }
+</style>
