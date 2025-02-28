@@ -1,6 +1,6 @@
 ---
 layout: ../../../layouts/GardenNote.astro
-title: "SocraticAI in agent-agent interaction"
+title: "SocraticAI for agent-agent interaction"
 description: "Thoughts on an interesting article about using the socratic method for agent-agent interaction"
 growth: "evergreen"
 lastModified: "2025-02-27"
@@ -9,6 +9,8 @@ connections:
   # - { title: "Design System Components", url: "/garden/ux/design-system-components" }
   # - { title: "Color Contrast Guide", url: "/garden/design/color-contrast" }
   # - { title: "Inclusive Design Principles", url: "/garden/design/inclusive-design-principles" }
+featured: true
+
 
 ---
 A few moths ago, a connection shared this article on BlueSky: [AI as Extraherics: Fostering Higher-order Thinking Skills in Human-AI Interaction](https://arxiv.org/html/2409.09218v2). Which is an interesting read in itself, but it paralleled with the Socratic AI concept which employs a similar method to help AI agents work toward the best solution. Essentially, taking the "extraheric" concept, and applying it  between AI agents. Adding the human context and cognitive growth was interesting to read, and I'll write more on what I've learned in a future note.

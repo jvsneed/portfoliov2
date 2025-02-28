@@ -9,7 +9,7 @@ connections:
 image: "/images/gardem/meets-accessibility-resources.png"
 ---
 
-I attended the Smashing Meets Accessibility conference online last week. Betweenthe speakers and the chat, a ton of great links were shared. I collected them in my [bookmarks](/garden/miscellaneous/bookmarks):
+I attended the Smashing Meets Accessibility conference online last week. Between the speakers and the chat, a ton of great links were shared. I collected them in my [bookmarks](/garden/miscellaneous/bookmarks):
 <iframe style="border: 0; width: 100%; height: 600px;" allowfullscreen frameborder="0" src="https://raindrop.io/savedbyjo/meets-accessibility-resources-52692319/embed"></iframe>
 
 <br>
