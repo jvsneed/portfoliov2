@@ -2,7 +2,7 @@
 layout: ../../../layouts/GardenNote.astro
 title: "Why I create into the void"
 description: "Exploring the paradox of creating when no one is watching (and the irony of writing this)"
-lastModified: "2025-02-29"
+lastModified: "2025-02-28"
 topics: ["Web", "Personal thoughts"]
 featured: true
 ---
