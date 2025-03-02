@@ -1,11 +1,11 @@
 ---
-title: "How to incorporate accessibility into every step of the software development lifecycle"
-date: "November 21, 2024"
-excerpt: "By embedding accessibility into every phase of the software development lifecycle, we create products that work for everyone."
-tags: ["Accessibility", "Web Development"]
-layout: "../../layouts/BlogPost.astro"
-featured: false
-image: "/images/articles/accessibility-in-sdlc.png"
+layout: ../../../layouts/GardenNote.astro
+title: How to incorporate accessibility into every step of the software development lifecycle
+description: By embedding accessibility into every phase of the software development lifecycle, we create products that work for everyone.
+lastModified: November 21, 2024
+topics:
+  - Accessibility
+  - Web Development
 ---
 
 Accessibility should never be an afterthought. By embedding accessibility into every phase of the software development lifecycle (SDLC) and following a user-centered design process, we create products that work for everyone. Prioritizing accessibility early aligns teams with user needs, reduces rework, and improves usability for all.

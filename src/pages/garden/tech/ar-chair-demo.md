@@ -4,9 +4,9 @@ title: Augmented Reality(AR) in a consumer experience (iOS Only)
 description: I created a mock furniture site to integrate an AR experience, allowing users to view 3D furniture models in their space.
 lastModified: February 20, 2025
 topics:
-  - Technology
   - User Experience
   - Extended Reality
+  - Web development
 connections:
   - title: I made my first(basic) augmented reality project, and it was fun!
     url: /garden/tech/ar-book-demo

@@ -4,7 +4,7 @@ title: "SocraticAI for agent-agent interaction"
 description: "Thoughts on an interesting article about using the socratic method for agent-agent interaction"
 growth: "evergreen"
 lastModified: "2025-02-27"
-topics: ["human-computer interaction", "AI agents", "Ethics"]
+topics: ["human-computer interaction", "AI", "Ethics"]
 connections:
   # - { title: "Design System Components", url: "/garden/ux/design-system-components" }
   # - { title: "Color Contrast Guide", url: "/garden/design/color-contrast" }

@@ -166,9 +166,6 @@ const projects = [
                             {item?.url?.includes("/garden/") ? "Digital garden note" : "Blog post"}
                         </span>
                         <h3 class="project-title">{item.frontmatter.title}</h3>
-                        <time>
-                            {new Date(item.frontmatter.lastModified || item.frontmatter.date || "").toLocaleDateString()}
-                        </time>
                     </a>
                 ))}
             </div>
@@ -693,7 +690,7 @@ const projects = [
         box-sizing:border-box;
         text-decoration: none;  
         color: inherit;  
-        padding: var(--space-md);
+        padding: var(--space-lg) var(--space-md);
         border: 1px solid var(--color-border);
         border-radius: var(--curve-sm);
         transition: all 0.3s var(--ease-out-spring);
@@ -701,7 +698,6 @@ const projects = [
         perspective: 1000px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
         gap: calc(var(--space-xs)/2);
         min-height: auto; /* Remove fixed height to allow content to determine size */
     }

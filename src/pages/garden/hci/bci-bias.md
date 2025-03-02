@@ -6,9 +6,7 @@ growth: "evergreen"
 lastModified: "2024-09-26"
 topics: ["Human-computer interaction", "Brain-computer interface", "Ethics"]
 connections:
-  # - { title: "Design System Components", url: "/garden/ux/design-system-components" }
-  # - { title: "Color Contrast Guide", url: "/garden/design/color-contrast" }
-  # - { title: "Inclusive Design Principles", url: "/garden/design/inclusive-design-principles" }
+  - { title: "Exploring game interaction using brain-computer interfaces", url: "/garden/hci/bci-and-games" }
 
 ---
 

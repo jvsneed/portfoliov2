@@ -1,11 +1,14 @@
 ---
-title: "Balancing high fidelity prototyping and agile in digital design"
-date: "November 27, 2023"
-excerpt: "Communication and consideration of how designs are shared are critical to an effective design process."
-tags: ["UX Design", "Prototyping", "Agile"]
-layout: "../../layouts/BlogPost.astro"
+layout: ../../../layouts/GardenNote.astro
+title: Balancing high fidelity prototyping and agile in digital design
+description: Communication and consideration of how designs are shared are critical to an effective design process.
+lastModified: November 27, 2023
+topics:
+  - User experience
+  - Interface design
 featured: false
 ---
+
 Communication and consideration of how designs are shared are critical to an effective design process.
 
 Different design processes are advocated for design teams to collaborate, develop effectively, and transition designs to implementation teams. Communication and consideration of how designs are shared are critical to an effective design process.

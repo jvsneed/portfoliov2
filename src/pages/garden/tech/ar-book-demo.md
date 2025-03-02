@@ -4,7 +4,6 @@ title: My first(basic) augmented reality project...how fun!
 description: I dabbled in AR and found a beginner-friendly use case.
 lastModified: February 17, 2025
 topics:
-  - Technology
   - User Experience
   - Extended Reality
 connections:

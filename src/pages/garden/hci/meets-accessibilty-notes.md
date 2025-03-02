@@ -3,9 +3,10 @@ layout: ../../../layouts/GardenNote.astro
 title: "Notes from the Meets Accessibility Conference"
 description: "The presenters and chat shared tons of great resources and I learned a few things."
 lastModified: "2025-02-25"
-topics: ["accessibility", "learning"]
+topics: ["accessibility"]
 connections:
   - { title: "All of my bookmarks", url: "/garden/miscellaneous/bookmarks" }
+  - { title: "How to incorporate accessibility into every step of the software development lifecycle", url: "/garden/tech/accessibility-in-sdlc" }
 image: "/images/gardem/meets-accessibility-resources.png"
 ---
 
