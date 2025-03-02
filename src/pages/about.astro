@@ -1,5 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const currentBook = {
+    title: "Against Reduction: Designing a Human Future with Machines",
+    image: "/images/current-book.png",
+    link: "https://literal.club/book/noelani-arista-sasha-costanza-chock-vafa-ghazavi-suzanne-kite-against-reduction-yne8c"
+};
 ---
 
 <Layout>
@@ -72,6 +78,42 @@ import Layout from '../layouts/Layout.astro';
                     </div>
                     <div class="media">
                         <h3>Media</h3>
+                        <div class="current-read">
+                            {currentBook.link ? (
+                                <a href={currentBook.link} 
+                                   class="book"
+                                   target="_blank"
+                                   rel="noopener noreferrer">
+                                    <div class="book-spine"></div>
+                                    <div class="book-cover">
+                                        <img 
+                                            src={currentBook.image}
+                                            alt={`Currently reading: ${currentBook.title}`}
+                                        />
+                                        <div class="book-shine"></div>
+                                    </div>
+                                    <div class="book-pages"></div>
+                                </a>
+                            ) : (
+                                <div class="book">
+                                    <div class="book-spine"></div>
+                                    <div class="book-cover">
+                                        <img 
+                                            src={currentBook.image}
+                                            alt={`Currently reading: ${currentBook.title}`}
+                                        />
+                                        <div class="book-shine"></div>
+                                    </div>
+                                    <div class="book-pages"></div>
+                                </div>
+                            )}
+                        </div>
+
+
+
+
+
+
                         <div class="vinyl-player">
 
                             <div class="vinyl-disc">
@@ -100,8 +142,7 @@ import Layout from '../layouts/Layout.astro';
                             </script>
                         </div>
 
-
-
+                        
                     </div>
                     
                 </aside>
@@ -173,7 +214,7 @@ import Layout from '../layouts/Layout.astro';
     .link-label {
         font-family: var(--font-mono);
         font-size: 0.875rem;
-        color: var(--color-muted);
+        color: var (--color-muted);
     }
 
     .link-text {
@@ -479,6 +520,67 @@ import Layout from '../layouts/Layout.astro';
             animation: none;
         }
     }
+
+    .current-read {
+        padding: var(--space-md) 0;
+    }
+
+    .current-read h4 {
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        color: var(--color-accent);
+        margin-bottom: var(--space-lg);
+    }
+
+    .book {
+        position: relative;
+        width: 200px;
+        height: 300px;
+        margin: 0 auto;
+        padding: 0;
+        perspective: 2000px;
+        display: block; /* For anchor tag */
+        text-decoration: none; /* For anchor tag */
+        cursor: pointer; /* Show pointer only when it's a link */
+    }
+
+    a.book::after {
+        content: "↗";
+        position: absolute;
+        top: -1.5rem;
+        right: -1.5rem;
+        color: var(--color-accent);
+        font-size: 1.2rem;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    a.book:hover::after {
+        opacity: 1;
+    }
+
+    .book-cover {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        background: var(--color-surface);
+        border-radius: 4px;
+        box-shadow: 
+            -20px 20px 30px rgba(0, 0, 0, 0.2),
+            -6px 6px 10px rgba(0, 0, 0, 0.1),
+            inset -2px 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .book-cover img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 4px 0 0 4px;
+    }
+
+
+
 </style>
 
 <script>
