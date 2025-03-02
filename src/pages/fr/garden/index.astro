@@ -37,86 +37,118 @@ const sortedNotes = gardenNotes
 
 const translations = {
     title: "Jardin Numérique",
-    intro: "Contrairement à un blog, le Jardin Numérique est une collection évolutive de notes et de réflexions qui se développent au fil du temps. C'est ici que je collecte et affine mes pensées, idées et connaissances sur des sujets qui m'intéressent. L'idée est d'\"apprendre en public\".",
+    intro: "Contrairement à un blog, le Jardin Numérique est une collection évolutive de notes et de réflexions qui se développent au fil du temps.",
     learnMore: "En savoir plus sur les jardins numériques",
-    searchLabel: "Rechercher des notes",
-    filterByTag: "Filtrer par tag",
-    allTags: "tous les tags",
+    searchNotes: "Chercher dans les notes",
+    filterAndSearch: "Filtrer & Chercher",
+    allTopics: "tous les sujets",
+    topics: "Sujets",
     tended: "Dernière mise à jour le",
-    language: "Langue"
+    closeFilters: "Fermer les filtres",
+    notesFound: (count: number) => `${count} note${count !== 1 ? 's' : ''} trouvée${count !== 1 ? 's' : ''}`,
 };
 ---
 
 <Layout>
     <div class="page-container">
         <header class="header-content">
-            <h1 class="section-title">{translations.title}</h1>
-            <p class="garden-intro">
-                {translations.intro}
-                <a href="https://maggieappleton.com/garden-history/" target="_blank" rel="noopener">
-                    {translations.learnMore}
-                </a>
-            </p>
+            <div class="header-top">
+                <h1 class="section-title">{translations.title}</h1>
+                <p class="garden-intro">
+                    {translations.intro}
+                    <a href="https://maggieappleton.com/garden-history/" target="_blank" rel="noopener">
+                        {translations.learnMore}
+                    </a>
+                </p>
+            </div>
+
+            <div class="garden-buttons">
+                <button class="filter-button" aria-expanded="false" aria-label={translations.filterAndSearch}>
+                    <span class="filter-label">{translations.filterAndSearch}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="4" y1="21" x2="4" y2="14"/>
+                        <line x1="4" y1="10" x2="4" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="12"/>
+                        <line x1="12" y1="8" x2="12" y2="3"/>
+                        <line x1="20" y1="21" x2="20" y2="16"/>
+                        <line x1="20" y1="12" x2="20" y2="3"/>
+                    </svg>
+                </button>
+                <GardenTranslation currentPath="/fr/garden" />
+            </div>
         </header>
 
-        <div class="garden-layout">
-            <aside class="garden-sidebar">
-                <div class="sidebar-section">
-                    <GardenTranslation currentPath="/fr/garden" />
+        <div class="active-filters" aria-live="polite"></div>
+
+        <main class="notes-content">
+            <div class="notes-grid">
+                {sortedNotes.map((note) => (
+                    <a href={note.url} 
+                       class="note-card" 
+                       data-categories={note.frontmatter.topics?.map(normalizeTag).join('|')}>
+                        <time class="last-tended">
+                            {new Date(note.frontmatter.lastModified).toLocaleDateString('fr-FR', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            })}
+                        </time>
+                        <h2>{note.frontmatter.title}</h2>
+                        <p>{note.frontmatter.description}</p>
+                    </a>
+                ))}
+            </div>
+        </main>
+
+        <div class="filter-drawer" hidden>
+            <div class="drawer-scrim"></div>
+            <div class="drawer-panel" role="dialog" aria-labelledby="drawer-title">
+                <div class="drawer-header">
+                    <h2 id="drawer-title" class="drawer-title">{translations.filterAndSearch}</h2>
+                    <button class="close-drawer" aria-label={translations.closeFilters}>×</button>
                 </div>
                 
-                <div class="sidebar-section">
-                    <h2>{translations.searchLabel}</h2>
-                    <input 
-                        type="search" 
-                        id="garden-search"
-                        class="search-input" 
-                        aria-label={translations.searchLabel}
-                    />
-                </div>
+                <div class="drawer-content">
+                    <div class="search-section" role="search">
+                        <div class="search-field">
+                            <h3 class="section-heading" id="search-label">{translations.searchNotes}</h3>
+                            <div class="search-input-wrapper">
+                                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                </svg>
+                                <input 
+                                    type="search" 
+                                    id="garden-search"
+                                    class="search-input"
+                                    aria-labelledby="search-label"
+                                />
+                            </div>
+                        </div>
+                        <div class="search-results" aria-live="polite">
+                            <span class="results-count"></span>
+                        </div>
+                    </div>
 
-                <div class="sidebar-section">
-                    <h2>{translations.filterByTag}</h2>
-                    <div class="filter-tags">
-                        <button class="tag active" data-category="all">
-                            {translations.allTags}
-                            <span class="count">{gardenNotes.length}</span>
-                        </button>
-                        {allCategories.map(category => (
-                            <button class="tag" data-category={category}>
-                                {category}
-                                <span class="count">{categoryCount[category]}</span>
+                    <div class="filter-section">
+                        <h3 class="section-heading">{translations.topics}</h3>
+                        <div class="filter-tags" role="group" aria-label={translations.topics}>
+                            <button class="tag active" data-category="all">
+                                {translations.allTopics}
+                                <span class="count">{gardenNotes.length}</span>
                             </button>
-                        ))}
+                            {allCategories.map(category => (
+                                <button class="tag" data-category={category}>
+                                    {category}
+                                    <span class="count">{categoryCount[category]}</span>
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 </div>
-            </aside>
-
-            <main class="garden-content">
-                <div class="notes-grid">
-                    {sortedNotes.map((note) => (
-                        <a href={note.url} 
-                           class="note-card" 
-                           data-categories={note.frontmatter.topics?.map(normalizeTag).join('|')}>
-                            <div class="note-header">
-                                <time class="last-tended">
-                                    {translations.tended} {new Date(note.frontmatter.lastModified).toLocaleDateString('fr-FR', {
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric'
-                                    })}
-                                </time>
-                            </div>
-                            <h2>{note.frontmatter.title}</h2>
-                            <p>{note.frontmatter.description}</p>
-                        </a>
-                    ))}
-                </div>
-            </main>
+            </div>
         </div>
-        <div class="cursor-text"></div>
     </div>
-    <GardenBadge />
 </Layout>
 
 <style>
@@ -292,6 +324,137 @@ const translations = {
             grid-template-columns: 1fr;
         }
     }
+
+    .garden-buttons {
+        display: flex;
+        gap: var(--space-sm);
+    }
+
+    .filter-button {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        padding: 0.75rem 1rem;
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--curve-sm);
+        cursor: pointer;
+        transition: all 0.3s var(--ease-out-spring);
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .filter-button:hover {
+        color: var(--color-fg);
+        border-color: var(--color-accent);
+    }
+
+    .filter-button[aria-expanded="true"] {
+        background: var(--color-accent);
+        color: white;
+        border-color: var(--color-accent);
+    }
+
+    .filter-drawer {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: flex;
+    }
+
+    .drawer-scrim {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 1000;
+    }
+
+    .filter-drawer[hidden] {
+        pointer-events: none;
+    }
+
+    .filter-drawer:not([hidden]) {
+        .drawer-scrim {
+            opacity: 1;
+        }
+        .drawer-panel {
+            transform: translateX(0);
+        }
+    }
+
+    .drawer-panel {
+        position: relative;
+        width: min(400px, 90vw);
+        height: 100%;
+        background: var(--color-surface);
+        border-right: 1px solid var(--color-border);
+        transform: translateX(-100%);
+        transition: transform 0.3s var(--ease-out-spring);
+        display: flex;
+        flex-direction: column;
+        z-index: 1001;
+    }
+
+    .drawer-header {
+        position: sticky;
+        top: 0;
+        background: var(--color-surface);
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-sm) var(--space-lg);
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .drawer-content {
+        flex: 1;
+        padding: var(--space-lg);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .section-heading {
+        font-size: 0.875rem;
+        font-family: var(--font-mono);
+        color: var(--color-muted);
+        margin: 0;
+        font-weight: 500;
+        padding-top: var(--space-sm);
+        padding-bottom: 1rem;
+    }
+
+    .search-section {
+        margin-bottom: var(--space-sm);
+    }
+
+    .drawer-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0;
+        color: var(--color-fg);
+    }
+
+    @media (max-width: 768px) {
+        .drawer-content {
+            padding-bottom: calc(var(--space-xl) * 2);
+        }
+        
+        .header-bottom {
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .filter-button {
+            width: 100%;
+            justify-content: center;
+        }
+    }
 </style>
 
 <script>
@@ -299,9 +462,46 @@ const translations = {
         style: CSSStyleDeclaration;
     }
 
+    const filterButton = document.querySelector('.filter-button') as HTMLButtonElement;
+    const filterDrawer = document.querySelector('.filter-drawer') as HTMLElement;
+    const closeDrawer = document.querySelector('.close-drawer') as HTMLButtonElement;
+    const activeFiltersContainer = document.querySelector('.active-filters') as HTMLElement;
     const filterButtons = document.querySelectorAll<HTMLButtonElement>('.tag');
     const noteCards = document.querySelectorAll<NoteElement>('.note-card');
     const searchInput = document.getElementById('garden-search') as HTMLInputElement;
+    const resultsCount = document.querySelector('.results-count') as HTMLElement;
+    const drawerScrim = document.querySelector('.drawer-scrim') as HTMLElement;
+    
+    interface FilterState {
+        activeFilters: string[];
+        searchTerm: string;
+    }
+
+    const state: FilterState = {
+        activeFilters: [],
+        searchTerm: ""
+    };
+
+    function updateActiveFilters(filters: string[]) {
+        state.activeFilters = filters;
+        
+        activeFiltersContainer.innerHTML = filters
+            .map(filter => `
+                <span class="filter-chip">
+                    ${filter}
+                    <button onclick="removeFilter('${filter}')" aria-label="Supprimer le filtre ${filter}">×</button>
+                </span>
+            `)
+            .join('');
+
+        filterButton.setAttribute('aria-expanded', (filters.length > 0).toString());
+        filterDrawer.hidden = filters.length === 0;
+
+        filterButtons.forEach(btn => {
+            const category = btn.dataset.category || 'all';
+            btn.classList.toggle('active', filters.includes(category));
+        });
+    }
 
     function normalizeTag(tag: string): string {
         return tag.toLowerCase().trim();
@@ -310,9 +510,11 @@ const translations = {
     function filterNotes(category: string) {
         const normalizedCategory = category.toLowerCase().trim();
         
-        filterButtons.forEach(btn => {
-            btn.classList.toggle('active', normalizeTag(btn.dataset.category || '') === normalizedCategory);
-        });
+        if (category === 'all') {
+            updateActiveFilters([]);
+        } else {
+            updateActiveFilters([category]);
+        }
 
         noteCards.forEach(card => {
             if (category === 'all') {
@@ -321,10 +523,39 @@ const translations = {
             }
 
             const categories = (card.dataset.categories || '').split('|');
-            card.style.display = categories.some(cat => normalizeTag(cat) === normalizedCategory) ? '' : 'none';
+            const hasCategory = categories.some(cat => 
+                normalizeTag(cat) === normalizedCategory
+            );
+            
+            card.style.display = hasCategory ? '' : 'none';
         });
     }
 
+    // Drawer controls
+    filterButton?.addEventListener('click', () => {
+        filterDrawer.hidden = false;
+        filterButton.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+        // Force a reflow to trigger animation
+        filterDrawer.offsetHeight;
+    });
+
+    function closeFilterDrawer() {
+        filterDrawer.hidden = true;
+        filterButton.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+    }
+
+    closeDrawer?.addEventListener('click', closeFilterDrawer);
+    drawerScrim?.addEventListener('click', closeFilterDrawer);
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !filterDrawer.hidden) {
+            closeFilterDrawer();
+        }
+    });
+
+    // Filter button handlers
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             const category = button.dataset.category || 'all';
@@ -332,17 +563,33 @@ const translations = {
         });
     });
 
+    // Search functionality with French text
     searchInput?.addEventListener('input', (e) => {
         const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+        state.searchTerm = searchTerm;
+        let visibleCount = 0;
         
         noteCards.forEach(note => {
             const title = note.querySelector('h2')?.textContent?.toLowerCase() || '';
             const description = note.querySelector('p')?.textContent?.toLowerCase() || '';
-            const matches = title.includes(searchTerm) || description.includes(searchTerm);
+            const topics = note.getAttribute('data-topics')?.toLowerCase() || '';
+            
+            const matches = title.includes(searchTerm) || 
+                          description.includes(searchTerm) || 
+                          topics.includes(searchTerm);
+
             note.style.display = matches ? '' : 'none';
+            if (matches) visibleCount++;
         });
+
+        if (searchTerm && resultsCount) {
+            resultsCount.textContent = `${visibleCount} note${visibleCount !== 1 ? 's' : ''} trouvée${visibleCount !== 1 ? 's' : ''}`;
+        } else if (resultsCount) {
+            resultsCount.textContent = '';
+        }
     });
 
+    // Initialize from session storage
     document.addEventListener('DOMContentLoaded', () => {
         const selectedCategory = sessionStorage.getItem('selectedCategory');
         if (selectedCategory) {

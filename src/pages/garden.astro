@@ -2,15 +2,17 @@
 import Layout from '../layouts/Layout.astro';
 import GardenTranslation from '../components/GardenTranslation.astro';
 
-// Fetch all garden note files
+interface Controls {
+    total: number;
+    active: boolean;
+}
+
 const gardenNotes = await Astro.glob('./garden/**/*.md');
 
-// Add helper function for consistent tag normalization
 function normalizeTag(tag: string): string {
     return tag.toLowerCase().trim();
 }
 
-// Update how we prepare tag data
 const categoryCount = gardenNotes.reduce((acc, note) => {
     note.frontmatter.topics?.forEach(topic => {
         const normalizedTopic = normalizeTag(topic);
@@ -23,94 +25,208 @@ const allCategories = [...new Set(gardenNotes.flatMap(note =>
     note.frontmatter.topics?.map(normalizeTag) || []
 ))].sort();
 
-// Add safety checks for the growth stage
-const sortedNotes = gardenNotes
-    .sort((a, b) => {
-        return new Date(b.frontmatter.lastModified).getTime() - new Date(a.frontmatter.lastModified).getTime();
-    });
-
-// Use normalized tags in data preparation
-const links = gardenNotes.flatMap(note => 
-    (note.frontmatter.topics || [])
-        .map(topic => ({
-            source: note.url,
-            target: normalizeTag(topic)
-        }))
-);
+const sortedNotes = gardenNotes.sort((a, b) => {
+    return new Date(b.frontmatter.lastModified).getTime() - new Date(a.frontmatter.lastModified).getTime();
+});
 ---
 
 <Layout>
     <div class="page-container">
         <header class="header-content">
-            <h1 class="section-title">Digital Garden</h1>
-            <p class="garden-intro">Unlike a blog, the Digital Garden is a growing collection of notes and thoughts that evolve over time. This is where I collect and refine ideas on topics that catch my interest. The idea here is to "learn in public". 
-                <a href="https://maggieappleton.com/garden-history/" target="_blank" rel="noopener">Learn more about digital gardens</a>.
-            </p>
+            <div class="header-top">
+                <h1 class="section-title">Digital Garden</h1>
+                <p class="garden-intro">
+                    Unlike a blog, the Digital Garden is a growing collection of notes and thoughts that evolve over time. This is where I collect ideas on topics that catch my interest. The idea here is to "learn in public". <a href="https://maggieappleton.com/garden-history/" target="_blank">Learn more about digital gardens.</a>
+                </p>
+
+            </div>
+
+
+            <div class="garden-buttons">
+                <button class="filter-button" aria-expanded="false" aria-label="Open filters">
+                    <span class="filter-label">Filter & Search</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="4" y1="21" x2="4" y2="14"/>
+                        <line x1="4" y1="10" x2="4" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="12"/>
+                        <line x1="12" y1="8" x2="12" y2="3"/>
+                        <line x1="20" y1="21" x2="20" y2="16"/>
+                        <line x1="20" y1="12" x2="20" y2="3"/>
+                    </svg>
+                </button>
+                <GardenTranslation currentPath="/garden" />
+            </div>
         </header>
 
-        <div class="garden-layout">
-            <aside class="garden-sidebar">
-                <div class="sidebar-section">
-                    <GardenTranslation currentPath="/garden" />
+        <div class="active-filters" aria-live="polite">
+            <!-- Active filter chips will be inserted here via JS -->
+        </div>
+
+        <main class="notes-content">
+            <div class="notes-grid">
+                {sortedNotes.map((note) => (
+                    <a href={note.url} 
+                       class="note-card" 
+                       data-categories={note.frontmatter.topics?.map(normalizeTag).join('|')}>
+                        <time class="last-tended">{new Date(note.frontmatter.lastModified).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        })}</time>
+                        <h2>{note.frontmatter.title}</h2>
+                        <p>{note.frontmatter.description}</p>
+                    </a>
+                ))}
+            </div>
+        </main>
+
+        <div class="filter-drawer" hidden>
+            <div class="drawer-scrim"></div>
+            <div class="drawer-panel" role="dialog" aria-labelledby="drawer-title">
+                <div class="drawer-header">
+                    <h2 id="drawer-title" class="drawer-title">Filter & Search Notes</h2>
+                    <button class="close-drawer" aria-label="Close filters">×</button>
                 </div>
                 
-                <div class="sidebar-section">
-                    <h2>Search notes</h2>
-                    <input 
-                        type="search" 
-                        id="garden-search"
-                        class="search-input" 
-                        aria-label="Search notes"
-                    />
-                </div>
+                <div class="drawer-content">
+                    <div class="search-section" role="search">
+                        <div class="search-field">
+                            <h3 class="section-heading" id="search-label">Search through all notes</h3>
+                            <div class="search-input-wrapper">
+                                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                </svg>
+                                <input 
+                                    type="search" 
+                                    id="garden-search"
+                                    class="search-input"
+                                    aria-labelledby="search-label"
+                                />
+                            </div>
+                        </div>
+                        <div class="search-results" aria-live="polite">
+                            <span class="results-count"></span>
+                        </div>
+                    </div>
 
-                <div class="sidebar-section">
-                    <h2>Filter by tag</h2>
-                    <div class="filter-tags">
-                        <button class="tag active" data-category="all">
-                            all tags
-                            <span class="count">{gardenNotes.length}</span>
-                        </button>
-                        {allCategories.map(category => (
-                            <button class="tag" data-category={category}>
-                                {category}
-                                <span class="count">{categoryCount[category]}</span>
+                    <div class="filter-section">
+                        <h3 class="section-heading">Topics</h3>
+                        <div class="filter-tags" role="group" aria-label="Filter by topic">
+                            <button class="tag active" data-category="all">
+                                all topics
+                                <span class="count">{gardenNotes.length}</span>
                             </button>
-                        ))}
+                            {allCategories.map(category => (
+                                <button class="tag" data-category={category}>
+                                    {category}
+                                    <span class="count">{categoryCount[category]}</span>
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 </div>
-            </aside>
-
-            <main class="garden-content">
-                <div class="notes-grid">
-                    {sortedNotes.map((note) => (
-                        <a href={note.url} 
-                           class="note-card" 
-                           data-categories={note.frontmatter.topics?.map(normalizeTag).join('|')}>
-                            <div class="note-header">
-                                <time class="last-tended">{new Date(note.frontmatter.lastModified).toLocaleDateString('en-US', {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric'
-                                })}</time>
-                            </div>
-                            <h2>{note.frontmatter.title}</h2>
-                            <p>{note.frontmatter.description}</p>
-                            {/* <div class="note-topics">
-                                {note.frontmatter.topics?.map(topic => (
-                                    <span class="topic-tag">{topic}</span>
-                                ))}
-                            </div> */}
-                        </a>
-                    ))}
-                </div>
-            </main>
+            </div>
         </div>
-        <div class="cursor-text"></div>
     </div>
 </Layout>
 
 <style>
+    .header-top {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+        margin-bottom: var(--space-md);
+    }
+
+    .header-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: var(--space-lg);
+        margin-top: var(--space-md);
+    }
+
+    .controls-bar {
+        position: sticky;
+        top: 4rem;
+        display: flex;
+        gap: var(--space-md);
+        padding: var(--space-md) 0;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        z-index: 10;
+        border-bottom: 1px solid var(--color-border);
+        margin-bottom: var(--space-lg);
+    }
+
+    .search-wrapper {
+        flex: 1;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-fg);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--curve-sm);
+        transition: all 0.3s var(--ease-out-spring);
+    }
+
+    .filter-toggle {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        padding: 0.75rem 1rem;
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-fg);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--curve-sm);
+        cursor: pointer;
+        transition: all 0.3s var(--ease-out-spring);
+    }
+
+    .filter-count {
+        padding: 0.25rem 0.5rem;
+        background: var(--color-border);
+        border-radius: 12px;
+        font-size: 0.75rem;
+        color: var (--color-muted);
+    }
+
+    .filter-toggle[aria-expanded="true"] {
+        background: var(--color-accent);
+        color: white;
+        border-color: var(--color-accent);
+    }
+
+    .filter-toggle[aria-expanded="true"] .filter-count {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+    }
+
+    .filter-panel {
+        padding: var(--space-md);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--curve-sm);
+        margin-bottom: var(--space-lg);
+    }
+
+    .filter-panel[hidden] {
+        display: none;
+    }
+
+    .filter-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var (--space-xs);
+    }
 
     .garden-header {
         margin-bottom: var(--space-xl);
@@ -119,6 +235,7 @@ const links = gardenNotes.flatMap(note =>
     .garden-intro {
         color: var(--color-muted);
         max-width: 65ch;
+        margin: 0;
     }
 
     .garden-layout {
@@ -152,10 +269,10 @@ const links = gardenNotes.flatMap(note =>
         font-family: var(--font-mono);
         font-size: 0.875rem;
         color: var(--color-fg);
-        background: var(--color-surface);
-        border: 1px solid var(--color-border);
+        background: var (--color-surface);
+        border: 1px solid var (--color-border);
         border-radius: var(--curve-sm);
-        transition: all 0.3s var(--ease-out-spring);
+        transition: all 0.3s var (--ease-out-spring);
     }
 
     .search-input:focus {
@@ -167,7 +284,7 @@ const links = gardenNotes.flatMap(note =>
     .filter-tags {
         display: flex;
         flex-direction: column;
-        gap: var(--space-xs);
+        gap: var (--space-xs);
     }
 
     .garden-filters {
@@ -178,30 +295,85 @@ const links = gardenNotes.flatMap(note =>
         border-radius: var(--curve-sm);
     }
 
-    .search-section {
-        margin-bottom: var(--space-md);
+    .search-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .search-input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .search-label {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
+        margin-bottom: 0.25rem;
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 1rem;
+        color: var(--color-muted);
+        pointer-events: none;
+        transition: color 0.2s ease;
     }
 
     .search-input {
         width: 100%;
-        padding: 0.75rem 1rem;
+        padding: 0.875rem 1rem 0.875rem 2.75rem;
         font-family: var(--font-mono);
-        font-size: 1rem;
+        font-size: 0.875rem;
         color: var(--color-fg);
-        background: var(--color-surface);
-        border: 1px solid var(--color-border);
+        background: var(--color-bg);
+        border: 2px solid var(--color-border);
         border-radius: var(--curve-sm);
-        transition: all 0.3s var(--ease-out-spring);
+        transition: all 0.2s ease;
+    }
+
+    .search-input:hover {
+        border-color: color-mix(in srgb, var(--color-border) 80%, var(--color-accent));
     }
 
     .search-input:focus {
         outline: none;
         border-color: var(--color-accent);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 25%, transparent);
+        background: white;
+    }
+
+    .search-input:focus + .search-icon {
+        color: var(--color-accent);
     }
 
     .search-input::placeholder {
         color: var(--color-muted);
+        opacity: 0.7;
+    }
+
+    .search-results {
+        margin-top: 0.5rem;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--color-muted);
+        height: 1.5em;
+    }
+
+    @media (max-width: 768px) {
+        .search-input {
+            font-size: 1rem;
+            padding: 1rem 1rem 1rem 3rem;
+        }
+
+        .search-icon {
+            bottom: 1rem;
+        }
+
+        .search-label {
+            font-size: 1rem;
+        }
     }
 
     .filter-section h2 {
@@ -214,7 +386,7 @@ const links = gardenNotes.flatMap(note =>
     .category-tags {
         display: flex;
         flex-wrap: wrap;
-        gap: var(--space-xs);
+        gap: var (--space-xs);
     }
 
     .tag {
@@ -338,6 +510,161 @@ const links = gardenNotes.flatMap(note =>
         display: none;
     }
 
+    .garden-buttons{
+        display: flex;
+        gap: var(--space-sm);
+    }
+    .filter-button {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        padding: 0.75rem 1rem;
+        font-family: var(--font-mono);
+        font-size: 1rem;
+        color: var(--color-muted);
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--curve-sm);
+        cursor: pointer;
+        transition: all 0.3s var(--ease-out-spring);
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .filter-button:hover {
+        color: var(--color-fg);
+        border-color: var(--color-accent);
+    }
+
+    .filter-button[aria-expanded="true"] {
+        background: var(--color-accent);
+        color: white;
+        border-color: var(--color-accent);
+    }
+
+    .filter-drawer {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: flex;
+    }
+
+    .drawer-scrim {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .drawer-panel {
+        position: relative;
+        width: min(400px, 90vw);
+        height: 100%;
+        background: var(--color-surface);
+        border-right: 1px solid var(--color-border);
+        transform: translateX(-100%);
+        transition: transform 0.3s var(--ease-out-spring);
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    .drawer-content {
+        flex: 1;
+        padding: var(--space-lg);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+
+    /* Ensure filter section doesn't get cut off */
+    .filter-section {
+        padding-bottom: var(--space-xl);
+    }
+
+    /* Add some bottom padding to the last tag for better spacing */
+    .filter-tags .tag:last-child {
+        margin-bottom: var(--space-md);
+    }
+
+    @media (max-width: 768px) {
+        .drawer-content {
+            padding-bottom: calc(var(--space-xl) * 2);
+        }
+    }
+
+    .filter-drawer[hidden] {
+        pointer-events: none;
+    }
+
+    .filter-drawer:not([hidden]) {
+        .drawer-scrim {
+            opacity: 1;
+        }
+        .drawer-panel {
+            transform: translateX(0);
+        }
+    }
+
+    .drawer-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0;
+        color: var(--color-fg);
+    }
+
+    .section-heading {
+        font-size: 0.875rem;
+        font-family: var(--font-mono);
+        color: var(--color-muted);
+        margin: 0;
+        font-weight: 500;
+        padding-top:var(--space-sm);
+        padding-bottom: 1rem;
+    }
+
+    .search-section {
+        margin-bottom: var(--space-sm);
+    }
+
+    .search-label {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
+        margin-bottom: 0.25rem;
+    }
+
+    .drawer-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-sm) var(--space-lg);
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .drawer-content {
+        padding: var(--space-lg);
+        height: calc(100vh - 70px);
+        overflow-y: auto;
+    }
+
+    .close-drawer {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background: none;
+        font-size: 1.5rem;
+        color: var(--color-muted);
+        cursor: pointer;
+        transition: color 0.2s ease;
+    }
+
+    .close-drawer:hover {
+        color: var(--color-accent);
+    }
 
     @media (max-width: 768px) {
         .garden-layout {
@@ -374,84 +701,207 @@ const links = gardenNotes.flatMap(note =>
         .notes-grid {
             grid-template-columns: 1fr;
         }
+
+        .header-bottom {
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .filter-button {
+            width: 100%;
+            justify-content: center;
+        }
+
+    .garden-buttons{
+        flex-direction:column;
+        width: 100%;
+    }
+   
     }
 </style>
 
 <script>
+    interface DrawerElements {
+        filterButton: HTMLButtonElement;
+        filterDrawer: HTMLDivElement;
+        closeDrawer: HTMLButtonElement;
+        drawerScrim: HTMLDivElement;
+        activeFilters: HTMLDivElement;
+        body: HTMLElement;
+    }
+
     interface NoteElement extends HTMLElement {
         style: CSSStyleDeclaration;
     }
 
-    const filterButtons = document.querySelectorAll<HTMLButtonElement>('.tag');
-    const noteCards = document.querySelectorAll<NoteElement>('.note-card');
+    interface FilterState {
+        activeFilters: string[];
+        searchTerm: string;
+    }
 
-    function filterNotes(category: string) {
-        const normalizedCategory = category.toLowerCase().trim();
+    function initializeDrawerControls() {
+        const elements = {
+            filterButton: document.querySelector<HTMLButtonElement>('.filter-button'),
+            filterDrawer: document.querySelector<HTMLDivElement>('.filter-drawer'),
+            closeDrawer: document.querySelector<HTMLButtonElement>('.close-drawer'),
+            drawerScrim: document.querySelector<HTMLDivElement>('.drawer-scrim'),
+            activeFilters: document.querySelector<HTMLDivElement>('.active-filters'),
+            body: document.body
+        };
+
+        // Safety check
+        if (!elements.filterButton || !elements.filterDrawer || !elements.closeDrawer || 
+            !elements.drawerScrim || !elements.activeFilters) {
+            console.warn("Missing drawer elements");
+            return;
+        }
+
+        const drawer = elements as DrawerElements;
+
+        // Clean up existing listeners
+        const newButton = drawer.filterButton.cloneNode(true) as HTMLButtonElement;
+        const newCloseButton = drawer.closeDrawer.cloneNode(true) as HTMLButtonElement;
+        const newScrim = drawer.drawerScrim.cloneNode(true) as HTMLDivElement;
         
-        // Update button states
-        filterButtons.forEach(btn => {
-            btn.classList.remove('active');
-            if (normalizeTag(btn.dataset.category || '') === normalizedCategory) {
-                btn.classList.add('active');
+        drawer.filterButton.parentNode?.replaceChild(newButton, drawer.filterButton);
+        drawer.closeDrawer.parentNode?.replaceChild(newCloseButton, drawer.closeDrawer);
+        drawer.drawerScrim.parentNode?.replaceChild(newScrim, drawer.drawerScrim);
+
+        function openDrawer() {
+            drawer.filterDrawer.hidden = false;
+            newButton.setAttribute('aria-expanded', 'true');
+            drawer.body.style.overflow = 'hidden';
+        }
+
+        function closeDrawer() {
+            drawer.filterDrawer.hidden = true;
+            newButton.setAttribute('aria-expanded', 'false');
+            drawer.body.style.overflow = '';
+        }
+
+        // Add fresh event listeners
+        newButton.addEventListener('click', openDrawer);
+        newCloseButton.addEventListener('click', closeDrawer);
+        newScrim.addEventListener('click', closeDrawer);
+
+        // Escape key handler
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !drawer.filterDrawer.hidden) {
+                closeDrawer();
             }
         });
 
-        // Filter notes
-        noteCards.forEach(card => {
-            if (category === 'all') {
-                card.style.display = '';
-                return;
-            }
+        // Initialize filter functionality
+        const filterButtons = document.querySelectorAll<HTMLButtonElement>('.tag');
+        const noteCards = document.querySelectorAll<NoteElement>('.note-card');
+        const searchInput = document.getElementById('garden-search') as HTMLInputElement;
+        const resultsCount = document.querySelector<HTMLElement>('.results-count');
 
-            const categories = (card.dataset.categories || '').split('|');
-            const hasCategory = categories.some(cat => 
-                normalizeTag(cat) === normalizedCategory
-            );
+        const state: FilterState = {
+            activeFilters: [],
+            searchTerm: ""
+        };
+
+        function updateActiveFilters(filters: string[]) {
+            state.activeFilters = filters;
             
-            card.style.display = hasCategory ? '' : 'none';
+            drawer.activeFilters.innerHTML = filters
+                .map(filter => `
+                    <span class="filter-chip">
+                        ${filter}
+                        <button onclick="removeFilter('${filter}')" aria-label="Remove ${filter} filter">×</button>
+                    </span>
+                `)
+                .join('');
+
+            newButton.setAttribute('aria-expanded', (filters.length > 0).toString());
+            drawer.filterDrawer.hidden = filters.length === 0;
+
+            filterButtons.forEach(btn => {
+                const category = btn.dataset.category || 'all';
+                btn.classList.toggle('active', filters.includes(category));
+            });
+        }
+
+        function filterNotes(category: string) {
+            const normalizedCategory = category.toLowerCase().trim();
+            
+            if (category === 'all') {
+                updateActiveFilters([]);
+            } else {
+                updateActiveFilters([category]);
+            }
+
+            noteCards.forEach(card => {
+                if (category === 'all') {
+                    card.style.display = '';
+                    return;
+                }
+
+                const categories = (card.dataset.categories || '').split('|');
+                const hasCategory = categories.some(cat => 
+                    normalizeTag(cat) === normalizedCategory
+                );
+                
+                card.style.display = hasCategory ? '' : 'none';
+            });
+        }
+
+        // Set up filter button handlers
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const category = button.dataset.category || 'all';
+                filterNotes(category);
+            });
         });
+
+        // Set up search functionality
+        if (searchInput && resultsCount) {
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+                let visibleCount = 0;
+                
+                noteCards.forEach(note => {
+                    const title = note.querySelector('h2')?.textContent?.toLowerCase() || '';
+                    const description = note.querySelector('p')?.textContent?.toLowerCase() || '';
+                    const matches = title.includes(searchTerm) || description.includes(searchTerm);
+                    note.style.display = matches ? '' : 'none';
+                    if (matches) visibleCount++;
+                });
+
+                if (searchTerm) {
+                    resultsCount.textContent = `${visibleCount} note${visibleCount !== 1 ? 's' : ''} found`;
+                } else {
+                    resultsCount.textContent = '';
+                }
+            });
+        }
+
+        // Reset initial state
+        drawer.filterDrawer.hidden = true;
+        newButton.setAttribute('aria-expanded', 'false');
+        drawer.body.style.overflow = '';
     }
 
-    // Helper function for consistent tag normalization
-    function normalizeTag(tag: string): string {
-        return tag.toLowerCase().trim();
-    }
+    // Initialize on first load
+    initializeDrawerControls();
 
-    // Set up filter button click handlers
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const category = button.dataset.category || 'all';
-            filterNotes(category);
-        });
-    });
+    // Re-initialize after Astro page transitions
+    document.addEventListener('astro:page-load', initializeDrawerControls);
 
-    // Handle initial filter if one is set in session storage
-    document.addEventListener('DOMContentLoaded', () => {
-        const selectedCategory = sessionStorage.getItem('selectedCategory');
-        if (selectedCategory) {
-            filterNotes(selectedCategory);
-            sessionStorage.removeItem('selectedCategory');
+    // Clean up before page transitions
+    document.addEventListener('astro:before-swap', () => {
+        const filterDrawer = document.querySelector<HTMLDivElement>('.filter-drawer');
+        const filterButton = document.querySelector<HTMLButtonElement>('.filter-button');
+        
+        if (filterDrawer && !filterDrawer.hidden) {
+            filterDrawer.hidden = true;
+            filterButton?.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
         }
     });
 
-    // Add search functionality
-    const searchInput = document.getElementById('garden-search') as HTMLInputElement;
-    const notes = document.querySelectorAll<HTMLElement>('.note-card');
-
-    searchInput?.addEventListener('input', (e) => {
-        const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
-        
-        notes.forEach(note => {
-            const title = note.querySelector('h2')?.textContent?.toLowerCase() || '';
-            const description = note.querySelector('p')?.textContent?.toLowerCase() || '';
-            const topics = note.getAttribute('data-topics')?.toLowerCase() || '';
-            
-            const matches = title.includes(searchTerm) || 
-                          description.includes(searchTerm) || 
-                          topics.includes(searchTerm);
-
-            note.style.display = matches ? '' : 'none';
-        });
-    });
-
+    function normalizeTag(tag: string): string {
+        return tag.toLowerCase().trim();
+    }
 </script>

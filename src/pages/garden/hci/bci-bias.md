@@ -1,7 +1,7 @@
 ---
 layout: ../../../layouts/GardenNote.astro
 title: "Themes on bias in brain-computer interface algorithms"
-description: "Key principles for creating accessible digital experiences"
+description: "List of research findings on BCI ethics for my research paper"
 growth: "evergreen"
 lastModified: "2024-09-26"
 topics: ["Human-computer interaction", "Brain-computer interface", "Ethics"]

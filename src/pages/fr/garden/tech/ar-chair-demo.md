@@ -2,7 +2,7 @@
 layout: ../../../../layouts/GardenNote.astro
 title: La réalité augmentée (RA) dans une expérience consommateur (iOS uniquement)
 description: J’ai créé un faux site de meubles pour intégrer une expérience en RA, permettant aux utilisateurs de visualiser des modèles 3D de meubles chez eux.
-lastModified: 20 février 2025
+lastModified: 2025-02-20
 topics:
   - Technologie
   - Expérience utilisateur

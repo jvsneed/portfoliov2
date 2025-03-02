@@ -1,7 +1,7 @@
 ---
 layout: ../../../layouts/GardenNote.astro
 title: "Exploring game interaction using brain-computer interfaces"
-description: "Key principles for creating accessible digital experiences"
+description: "How might low-risk, non-invasive brain-computer interfaces (BCI) provide a nobel and more inclusive gaming experience?"
 growth: "evergreen"
 lastModified: "2023-12-26"
 topics: ["Human-computer interaction", "Brain-computer interface", "Interface design"]

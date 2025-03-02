@@ -6,9 +6,8 @@ function normalizePath(path: string) {
 
 const currentPath = normalizePath(Astro.url.pathname);
 const links = [
-    { path: '/', label: 'Portfolio' },
-    { path: '/writing/', label: 'Blog' },
-    { path: '/garden/', label: 'Garden' },
+    { path: '/#portfolio', label: 'Portfolio' },
+    { path: '/garden/', label: 'Digital Garden' },
     { path: '/about/', label: 'About' }
 ];
 ---
