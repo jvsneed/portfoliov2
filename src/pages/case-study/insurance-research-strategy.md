@@ -58,11 +58,11 @@ The digital transformation at Pekin Insurance began delivering tangible results,
     <div class="text-col">
         <b>Core Framework Elements</b>
         <ul>
-            <li>Set a clear vision goals.</li>
-            <li>Ensure stakeholders are updated frequently and involved in decision making.</li>
-            <li>Establish and guide research methods and processes.</li>
-            <li>Standardized test scripts and logs to ensure consistent data collection through resources and templates.</li>
-            <li>Regular coaching, mentoring, and feedback to upskill team members in research methods.</li>
+            <li>Set a clear vision and goals</li>
+            <li>Ensure stakeholders are updated frequently and involved in decision making</li>
+            <li>Establish and guide research methods and processes</li>
+            <li>Standardized test scripts and logs to ensure consistent data collection through resources and templates</li>
+            <li>Regular coaching, mentoring, and feedback to upskill team members in research methods</li>
         </ul>
     </div>
 </div>
@@ -261,7 +261,7 @@ It was clear that data was hard to come by as analytics tools were used minimall
 <section id="outcome">
 
 ## Outcomes
-Using context mapping, I visualized relationships and dependencies between insured customers, agents, and internal business functions like claims, underwriting, and IT. This exercise highlighted systemic issues, including:
+Using context mapping, I visualized relationships and dependencies between insured customers, agents, and internal business functions like claims, underwriting, and IT. This exercise highlighted systemic issues.
 <img src="/images/insurance-research-strategy/context-map.png" style="max-width:50%; display: flex; margin: 3rem auto;" alt="A service blueprint showing the user flow for claims along with touchpoints and opportunities for improvement" />
 
 >Outcome: The map clarified areas where improved communication and automation could deliver the most value, enabling cross-functional alignment.
@@ -275,7 +275,7 @@ I designed a strategy-to-delivery map to align company goals, department objecti
 - Identified key opportunities, like paperless billing integration and agent onboarding optimization.
 - Outlined measurable outcomes, such as cost savings and improved task success rates.
 
->Impact: This framework enabled leadership to visualize how strategic goals were directly supported by actionable initiatives, fostering alignment across teams.
+>Impact: This framework enabled leadership and the team to visualize how strategic goals were directly supported by tactical initiatives.
 
 
 ### Tactical Roadmap
