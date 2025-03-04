@@ -35,24 +35,42 @@ function formatDate(dateStr: string) {
 }
 
 // Fetch both blog posts and garden notes
-const posts = await Astro.glob('./articles/*.md');
-const gardenNotes = await Astro.glob('./garden/**/*.md');
+const postsGlob = import.meta.glob<WritingItem>('./articles/*.md', { eager: true });
+const gardenNotesGlob = import.meta.glob<WritingItem>('./garden/**/*.md', { eager: true });
+
+// Convert glob results to arrays
+const posts = Object.values(postsGlob);
+const gardenNotes = Object.values(gardenNotesGlob);
 
 // Combine and filter for featured items
-const featuredWriting = ([...posts, ...gardenNotes] as WritingItem[])
-    .filter(item => item.frontmatter.featured)
-    .sort((a, b) => {
-        const dateA = new Date(a.frontmatter.lastModified || a.frontmatter.date || '');
-        const dateB = new Date(b.frontmatter.lastModified || b.frontmatter.date || '');
-        return dateB.getTime() - dateA.getTime();
+const featuredItems = ([...posts, ...gardenNotes] as WritingItem[])
+    .filter((post: WritingItem) => post.frontmatter.featured)
+    .sort((a: WritingItem, b: WritingItem) => {
+        // Safely get dates with fallbacks
+        const getDateValue = (item: WritingItem): number => {
+            const dateStr = item.frontmatter.lastModified || item.frontmatter.date;
+            if (!dateStr) return 0;
+            return new Date(dateStr).getTime();
+        };
+        
+        return getDateValue(b) - getDateValue(a);
     })
     .slice(0, 3); // Limit to 3 featured items
 
-const postsArray = Object.values(posts);
+const postsArray = Object.values(postsGlob);
 
 // Now TypeScript knows the types
 const latestPosts = postsArray
-    .sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime())
+    .sort((a: WritingItem, b: WritingItem) => {
+        // Safely get dates with fallbacks
+        const getDateValue = (item: WritingItem): number => {
+            const dateStr = item.frontmatter.date;
+            if (!dateStr) return 0;
+            return new Date(dateStr).getTime();
+        };
+        
+        return getDateValue(b) - getDateValue(a);
+    })
     .slice(0, 2);
 
 const projects = [
@@ -121,6 +139,19 @@ const projects = [
             </div>
         </main>
 
+        <div class="launch-announcement-container">
+            <div class="launch-announcement">
+                <div class="announcement-content">
+                    <span class="pulse-dot"></span>
+                    <span class="announcement-text">Currently working on:</span>
+                    <a href="https://userexperience.directory/" target="_blank" rel="noopener noreferrer" class="announcement-link">
+                        UX Research Directory
+                        <span class="arrow-icon" aria-hidden="true">→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
         <div class="interaction-layer">
             <div class="magnetic-area" data-strength="0.2"></div>
             <div class="cursor-follower"></div>
@@ -161,7 +192,7 @@ const projects = [
             <h2 class="section-title">Featured writing</h2>
             <p>A mix of featured blog posts and digital garden notes. Digital garden notes are available in French🇫🇷 and English🇺🇸. </p>
             <div class="writing-grid">
-                {featuredWriting.map((item) => (
+                {featuredItems.map((item) => (
                     <a href={item?.url} class="writing-card">
                         <span class="content-type">
                             {item?.url?.includes("/garden/") ? "Digital garden note" : "Blog post"}
@@ -401,7 +432,7 @@ const projects = [
     } 
 
     .portfolio-preview {
-        padding: var(--space-xl) var(--space-lg) var(--space-md) var(--space-lg);
+        padding: var(--space-md) var(--space-lg) var(--space-md) var(--space-lg);
         margin: 0 auto;
         max-width: var(--max-width);
     }
@@ -1000,10 +1031,127 @@ const projects = [
     }
 
 
-    @media (max-width: 768px) {
+  
         .swiper-slide {
             width: 100% !important;
             margin-bottom: 0 !important;
+        }
+    }
+
+    /* Launch Announcement Styles */
+    .launch-announcement-container {
+        max-width: var(--max-width);
+        margin: var(--space-xl) auto var(--space-xs) auto;
+        padding: 0 var(--space-lg);
+    }
+
+    .launch-announcement {
+        border-radius: var(--curve-sm);
+        overflow: hidden;
+        background: linear-gradient(90deg, rgba(212, 57, 0, 0.05) 0%, rgba(212, 57, 0, 0.1) 100%);
+        border: 1px solid rgba(212, 57, 0, 0.2);
+        position: relative;
+    }
+
+    .announcement-content {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem var(--space-md);
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-accent);
+        gap: 0.75rem;
+    }
+
+    .pulse-dot {
+        width: 8px;
+        height: 8px;
+        background-color: var(--color-accent);
+        border-radius: 50%;
+        display: inline-block;
+        animation: announcement-pulse 2s infinite;
+    }
+
+    .announcement-text {
+        font-weight: 500;
+    }
+
+    .announcement-link {
+        margin-left: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--color-accent);
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s var(--ease-out-spring);
+    }
+
+    .announcement-link:hover, 
+    .announcement-link:focus-visible {
+        text-decoration: underline;
+    }
+
+    .announcement-link:hover .arrow-icon,
+    .announcement-link:focus-visible .arrow-icon {
+        transform: translateX(3px);
+    }
+
+    .arrow-icon {
+        transition: transform 0.3s var(--ease-out-spring);
+    }
+
+    @keyframes announcement-pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(212, 57, 0, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 6px rgba(212, 57, 0, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(212, 57, 0, 0);
+        }
+    }
+
+    /* Media queries for the announcement */
+    @media (max-width: 768px) {
+        .launch-announcement-container {
+            padding: 0 var(--space-xs);
+        }
+        
+        .announcement-content {
+            flex-wrap: wrap;
+            padding: 0.75rem var(--space-sm);
+        }
+
+        .announcement-link {
+            margin-left: 0;
+            width: 100%;
+            margin-top: 0.25rem;
+            padding-left: 1rem;
+        }
+    }
+
+    /* High contrast mode support for announcement */
+    @media (forced-colors: active) {
+        .launch-announcement {
+            border: 1px solid Highlight;
+        }
+
+        .pulse-dot {
+            background-color: Highlight;
+            animation: none;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .pulse-dot {
+            animation: none;
+        }
+
+        .announcement-link:hover .arrow-icon,
+        .announcement-link:focus-visible .arrow-icon {
+            transform: none;
         }
     }
 </style>

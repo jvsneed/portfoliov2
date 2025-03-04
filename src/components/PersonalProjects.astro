@@ -3,27 +3,32 @@
 const personalProjects = [
 {
         title: "UX Research Directory",
-        description: "A decision guide and directory of UX researcher methods.",
+        description: "A decision guide and directory of UX researcher methods. Compare UX research methods and choose the best one for your goals, timeline, and team size.",
         link: "https://userexperience.directory/",
-        image: "/images/projects/ux-directory.png"
+        image: "/images/projects/ux-directory.png",
+        status: "launched",
+        isNew: true
     },
 {
         title: "VIA LABS",
         description: "Experimental design lab exploring web interactions, 3d, animation, and more.",
         link: "https://via-labs.pages.dev/",
-        image: "/images/projects/via-labs.png"
+        image: "/images/projects/via-labs.png",
+        status: "launched"
     },
     {
         title: "Focus Boost",
         description: "A simple pomodoro based productivity tool that uses dopamine stacking to help you stay focused.",
         link: "https://focusboost.explorethis.quest/",
-        image: "/images/projects/focus-boost.png"
+        image: "/images/projects/focus-boost.png",
+        status: "launched"
     },
     {
-        title: "Coming soon: Virēre Studio",
-        description: "Coming soon! Design studio work showcasing freelance design projects.",
+        title: "Virēre Studio",
+        description: "Design studio work showcasing freelance design projects.",
         link: "#",
-        image: "/images/projects/virere.png"
+        image: "/images/projects/virere.png",
+        status: "coming-soon"
     }
 
 ];
@@ -47,12 +52,25 @@ const personalProjects = [
                tabindex="0">
                 <div class="panel-background" aria-hidden="true">
                     <img src={project.image} alt="" loading="lazy" />
+                    {project.status === "launched" && 
+                        <span class="status-badge" aria-label="Launched project">
+                            <span class="dot"></span>Live
+                        </span>
+                    }
+                    {project.status === "coming-soon" && 
+                        <span class="status-badge coming-soon" aria-label="Coming soon project">
+                            <span class="dot coming-soon"></span>Coming Soon
+                        </span>
+                    }
                 </div>
                 <div class="panel-content">
                     <h3 class="project-title" id={`project-title-${index}`}>{project.title}</h3>
                     <div class="project-details">
                         <p class="project-description">{project.description}</p>
-                        <span class="view-project">View Project <span class="arrow" aria-hidden="true">→</span></span>
+                        <span class="view-project">
+                            {project.status === "coming-soon" ? "Learn More" : "View Project"} 
+                            <span class="arrow" aria-hidden="true">→</span>
+                        </span>
                     </div>
                     <span class="sr-only">Opens in a new tab</span>
                 </div>
@@ -66,10 +84,11 @@ const personalProjects = [
         max-width: var(--max-width);
         margin: 0 auto;
         background: none;
+        
     }
 
     .section-header {
-        margin-bottom: var(--space-lg);
+        margin-bottom: var(--space-md);
     }
 
     .section-title {
@@ -171,6 +190,76 @@ const personalProjects = [
         max-width: 100%;
     }
 
+    .status-badge {
+        position: absolute;
+        top: var(--space-xs);
+        left: var(--space-xs);
+        z-index: 3;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.25rem 0.5rem;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 1rem;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: white;
+        white-space: nowrap;
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .status-badge.coming-soon {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .dot {
+        width: 6px;
+        height: 6px;
+        background-color: #4CAF50;
+        border-radius: 50%;
+        display: inline-block;
+        animation: pulse 2s infinite;
+    }
+
+    .dot.coming-soon {
+        background-color: #FFC107;
+        animation: pulse-yellow 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 6px rgba(76, 175, 80, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+        }
+    }
+
+    @keyframes pulse-yellow {
+        0% {
+            box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 6px rgba(255, 193, 7, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+        }
+    }
+
+    .accordion-panel:hover .status-badge,
+    .accordion-panel:focus-visible .status-badge {
+        background-color: rgba(0, 0, 0, 0.7);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(2px);
+    }
+
     .accordion-panel:hover .project-title,
     .accordion-panel:focus-visible .project-title {
         transform: translateY(-10px);
@@ -256,6 +345,19 @@ const personalProjects = [
         
         .view-project {
             border: 1px solid ButtonText;
+        }
+
+        .status-badge {
+            border: 1px solid ButtonText;
+        }
+
+        .dot {
+            background-color: Highlight;
+            animation: none;
+        }
+        
+        .dot.coming-soon {
+            background-color: Highlight;
         }
     }
 
@@ -357,7 +459,6 @@ const personalProjects = [
         .panel-content {
             padding: var(--space-sm);
             background: linear-gradient(to top, rgb(44, 44, 44) 0%, rgba(44, 44, 44, 0.902) 70%, rgba(44, 44, 44, 0) 100%);
-
         }
     }
 
@@ -387,6 +488,10 @@ const personalProjects = [
         .accordion-panel:focus-visible .project-details {
             max-height: 200px;
             opacity: 1;
+        }
+
+        .dot {
+            animation: none;
         }
     }
 </style>
