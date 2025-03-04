@@ -1,0 +1,450 @@
+---
+// PersonalProjects.astro - A component for displaying personal projects in an accordion-style layout
+const personalProjects = [
+{
+        title: "UX Research Directory",
+        description: "A decision guide and directory of UX researcher methods.",
+        link: "https://userexperience.directory/",
+        image: "/images/projects/ux-directory.png"
+    },
+{
+        title: "VIA LABS",
+        description: "Experimental design lab exploring web interactions, 3d, animation, and more.",
+        link: "https://via-labs.pages.dev/",
+        image: "/images/projects/via-labs.png"
+    },
+    {
+        title: "Focus Boost",
+        description: "A simple pomodoro based productivity tool that uses dopamine stacking to help you stay focused.",
+        link: "https://focusboost.explorethis.quest/",
+        image: "/images/projects/focus-boost.png"
+    },
+    {
+        title: "Coming soon: Virēre Studio",
+        description: "Coming soon! Design studio work showcasing freelance design projects.",
+        link: "#",
+        image: "/images/projects/virere.png"
+    }
+
+];
+---
+
+<section class="personal-projects-section" aria-labelledby="side-projects-title">
+    <div class="section-header">
+        <h2 class="section-title" id="side-projects-title">Personal projects</h2>
+        <p class="section-description">I love to learn and explore technology related projects. Below are some creative explorations outside of my professional research practice.</p>
+    </div>
+    
+    <div class="projects-accordion" role="list">
+        {personalProjects.map((project, index) => (
+            <a href={project.link} 
+               class="accordion-panel" 
+               data-index={index} 
+               target="_blank" 
+               rel="noopener noreferrer"
+               role="listitem"
+               aria-labelledby={`project-title-${index}`}
+               tabindex="0">
+                <div class="panel-background" aria-hidden="true">
+                    <img src={project.image} alt="" loading="lazy" />
+                </div>
+                <div class="panel-content">
+                    <h3 class="project-title" id={`project-title-${index}`}>{project.title}</h3>
+                    <div class="project-details">
+                        <p class="project-description">{project.description}</p>
+                        <span class="view-project">View Project <span class="arrow" aria-hidden="true">→</span></span>
+                    </div>
+                    <span class="sr-only">Opens in a new tab</span>
+                </div>
+            </a>
+        ))}
+    </div>
+</section>
+
+<style>
+    .personal-projects-section {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        background: none;
+    }
+
+    .section-header {
+        margin-bottom: var(--space-lg);
+    }
+
+    .section-title {
+        font-family: var(--font-special);
+        font-size: 2rem;
+        margin-bottom: var(--space-xs);
+        font-weight: 600;
+    }
+
+    .section-description {
+        color: var(--color-muted);
+        max-width: 60ch;
+        line-height: 1.6;
+        font-family: var(--font-sans);
+    }
+
+    .projects-accordion {
+        display: flex;
+        flex-direction: row;
+        height: 450px;
+        gap: var(--space-xs);
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .accordion-panel {
+        position: relative;
+        flex: 1;
+        overflow: hidden;
+        transition: flex 0.6s var(--ease-out-spring);
+        border-radius: var(--curve-sm);
+        text-decoration: none;
+        color: var(--color-fg);
+        border: 1px solid var(--color-border);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .accordion-panel:hover, 
+    .accordion-panel:focus-visible {
+        flex: 3;
+        border-color: var(--color-accent);
+    }
+
+    .accordion-panel:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 2px;
+    }
+
+    .panel-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .panel-background img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 1s var(--ease-out-spring);
+    }
+
+    .accordion-panel:hover .panel-background img,
+    .accordion-panel:focus-visible .panel-background img {
+        transform: scale(1.05);
+    }
+
+    .panel-content {
+        position: relative;
+        z-index: 2;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: var(--space-md);
+        /* background: linear-gradient(to top, rgba(44, 44, 44, 0.886) 0%, rgba(44, 44, 44, 0.4) 40%, rgba(44, 44, 44, 0) 100%); */
+        transition: all 0.4s ease;
+        overflow: hidden;
+    }
+
+    .accordion-panel:hover .panel-content,
+    .accordion-panel:focus-visible .panel-content {
+        background: linear-gradient(to top, rgb(44, 44, 44) 0%, rgba(44, 44, 44, 0.85) 50%, rgba(44, 44, 44, 0.2) 100%);
+    }
+
+    .project-title {
+        font-family: var(--font-special);
+        font-size: 1.5rem;
+        font-weight: 500;
+        margin: 0;
+        padding: 0;
+        color: white;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        transition: transform 0.4s var(--ease-out-spring);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+
+    .accordion-panel:hover .project-title,
+    .accordion-panel:focus-visible .project-title {
+        transform: translateY(-10px);
+        white-space: normal;
+    }
+
+    .project-details {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: all 0.6s var(--ease-out-spring);
+        width: 100%;
+    }
+
+    .accordion-panel:hover .project-details,
+    .accordion-panel:focus-visible .project-details {
+        max-height: 200px;
+        opacity: 1;
+        margin-top: var(--space-sm);
+    }
+
+    .project-description {
+        color: rgba(255, 255, 255, 0.9);
+        margin: 0;
+        line-height: 1.6;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        font-family: var(--font-sans);
+    }
+
+    .view-project {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: white;
+        margin-top: var(--space-md);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background-color: var(--color-accent);
+        border-radius: 2px;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+    }
+
+    .accordion-panel:hover .view-project,
+    .accordion-panel:focus-visible .view-project {
+        background-color: var(--color-accent);
+        transform: translateY(0);
+    }
+
+    .arrow {
+        transition: transform 0.3s var(--ease-out-spring);
+    }
+
+    .accordion-panel:hover .arrow,
+    .accordion-panel:focus-visible .arrow {
+        transform: translateX(5px);
+    }
+
+    /* Screen reader only text */
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
+
+    /* High contrast mode support */
+    @media (forced-colors: active) {
+        .accordion-panel {
+            border: 2px solid ButtonText;
+        }
+        
+        .accordion-panel:hover,
+        .accordion-panel:focus-visible {
+            border-color: Highlight;
+        }
+        
+        .view-project {
+            border: 1px solid ButtonText;
+        }
+    }
+
+    /* Tablet styles */
+    @media (max-width: 1024px) {
+        .personal-projects-section {
+            padding: var(--space-lg) var(--space-md);
+        }
+
+        .projects-accordion {
+            height: 400px;
+        }
+
+        .project-title {
+            font-size: 1.35rem;
+        }
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+        .personal-projects-section {
+            padding: var(--space-lg) var(--space-xs);
+        }
+
+        .section-header {
+            margin-bottom: var(--space-lg);
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+        }
+
+        .projects-accordion {
+            flex-direction: column;
+            height: auto;
+            gap: var(--space-md);
+        }
+
+        .accordion-panel {
+            height: 250px;
+            flex: none;
+            width: 100%;
+        }
+
+        .accordion-panel:hover,
+        .accordion-panel:focus-visible {
+            flex: none;
+            transform: translateY(-8px);
+        }
+
+        .project-details {
+            max-height: none;
+            opacity: 1;
+            margin-top: var(--space-sm);
+        }
+
+        .project-description {
+            font-size: 0.95rem;
+        }
+
+        .accordion-panel .project-title {
+            transform: none;
+            white-space: normal;
+        }
+
+        .accordion-panel:hover .project-title,
+        .accordion-panel:focus-visible .project-title {
+            transform: none;
+        }
+
+        .project-title {
+            white-space: normal;
+            font-size: 1.35rem;
+        }
+    }
+
+    /* Small mobile styles */
+    @media (max-width: 480px) {
+        .personal-projects-section {
+            padding: var(--space-md) var(--space-xs);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+        }
+
+        .section-description {
+            font-size: 0.9rem;
+        }
+
+        .accordion-panel {
+            height: 200px;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+        }
+
+        .panel-content {
+            padding: var(--space-sm);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .accordion-panel,
+        .panel-background img,
+        .panel-content,
+        .project-title,
+        .project-details,
+        .view-project,
+        .arrow {
+            transition: none;
+        }
+        
+        .accordion-panel:hover,
+        .accordion-panel:focus-visible,
+        .accordion-panel:hover .panel-background img,
+        .accordion-panel:focus-visible .panel-background img,
+        .accordion-panel:hover .project-title,
+        .accordion-panel:focus-visible .project-title,
+        .accordion-panel:hover .arrow,
+        .accordion-panel:focus-visible .arrow {
+            transform: none;
+        }
+        
+        .accordion-panel:hover .project-details,
+        .accordion-panel:focus-visible .project-details {
+            max-height: 200px;
+            opacity: 1;
+        }
+    }
+</style>
+
+<script>
+    // Add keyboard navigation for the accordion
+    document.addEventListener('astro:page-load', () => {
+        const panels = document.querySelectorAll('.accordion-panel');
+        
+        panels.forEach((panel, index) => {
+            // Handle keyboard navigation
+            panel.addEventListener('keydown', function(e) {
+                const keyEvent = e as KeyboardEvent;
+                
+                // Enter or Space activates the link
+                if (keyEvent.key === 'Enter' || keyEvent.key === ' ') {
+                    e.preventDefault();
+                    if (panel instanceof HTMLElement) {
+                        panel.click();
+                    }
+                }
+                
+                // Arrow keys for navigation between panels
+                if (keyEvent.key === 'ArrowRight' || keyEvent.key === 'ArrowDown') {
+                    e.preventDefault();
+                    const nextPanel = panels[index + 1] || panels[0];
+                    (nextPanel as HTMLElement).focus();
+                }
+                
+                if (keyEvent.key === 'ArrowLeft' || keyEvent.key === 'ArrowUp') {
+                    e.preventDefault();
+                    const prevPanel = panels[index - 1] || panels[panels.length - 1];
+                    (prevPanel as HTMLElement).focus();
+                }
+                
+                // Home and End keys
+                if (keyEvent.key === 'Home') {
+                    e.preventDefault();
+                    (panels[0] as HTMLElement).focus();
+                }
+                
+                if (keyEvent.key === 'End') {
+                    e.preventDefault();
+                    (panels[panels.length - 1] as HTMLElement).focus();
+                }
+            });
+            
+            // Ensure focus styles match hover styles
+            panel.addEventListener('focus', function() {
+                if (panel instanceof HTMLElement) {
+                    // Apply focus styles programmatically if needed
+                }
+            });
+            
+            panel.addEventListener('blur', function() {
+                if (panel instanceof HTMLElement) {
+                    // Remove focus styles programmatically if needed
+                }
+            });
+        });
+    });
+</script> 

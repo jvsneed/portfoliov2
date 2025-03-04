@@ -1,4 +1,5 @@
 ---
+import PersonalProjects from '../components/PersonalProjects.astro';
 import Layout from '../layouts/Layout.astro';
 
 const currentBook = {
@@ -149,7 +150,8 @@ const currentBook = {
                 
             </section>
 
-           
+            <PersonalProjects />
+
         </div>
     </div>
 
@@ -166,7 +168,6 @@ const currentBook = {
 
     .content-grid {
         display: grid;
-        gap: var(--space-xl);
     }
 
     .intro-section {
