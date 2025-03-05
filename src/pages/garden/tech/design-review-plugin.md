@@ -11,8 +11,8 @@ connections:
 featured: true
 ---
 
+[Checkout the Design Review Notes Plugin](https://www.figma.com/community/plugin/1479149610770303057/design-review-notes)
 
-The plugin is currently under review by Figma, but I'll update this post with a link once it's approved.
 <iframe width="100%" height="400" src="https://www.youtube.com/embed/8O91lO7KJbI?si=sJ4bJPTJQDBMatga" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ## **Why I built this**
