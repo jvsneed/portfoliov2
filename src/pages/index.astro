@@ -144,12 +144,13 @@ const projects = [
                 <div class="announcement-content">
                     <span class="pulse-dot"></span>
                     <span class="announcement-text">Currently working on:</span>
-                    <a href="https://userexperience.directory/" target="_blank" rel="noopener noreferrer" class="announcement-link">
-                        UX Research Directory
-                        <span class="arrow-icon" aria-hidden="true">→</span>
-                    </a>
+                        <a href="https://userexperience.directory/" target="_blank" rel="noopener noreferrer" class="announcement-link">
+                            UX Research Directory
+                            <span class="arrow-icon" aria-hidden="true">→</span>
+                        </a>
+    
                 </div>
-            </div>
+                </div>
         </div>
 
         <div class="interaction-layer">
@@ -1056,6 +1057,7 @@ const projects = [
     .announcement-content {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         padding: 0.75rem var(--space-md);
         font-family: var(--font-mono);
         font-size: 0.875rem;
@@ -1074,6 +1076,10 @@ const projects = [
 
     .announcement-text {
         font-weight: 500;
+    }
+    .announcement-links {
+        display: flex;
+        flex-direction: column;
     }
 
     .announcement-link {

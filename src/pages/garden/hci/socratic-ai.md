@@ -23,7 +23,7 @@ Here are my thoughts on AI-AI decision making using the Socratic Method.
 ## Summary
 Large language models (LLMs) can be enhanced by having multiple AI agents work together on a task, rather than relying on a single model prompt. In the article, different agents take on distinct roles (like “analyst” or “proofreader”) to leverage their unique strengths as a team​.
 
-In particular, the authors draw inspiration from the Socratic method. Which intro to philosophy fails to warn could be seen as combative by close-minded people (am I funny yet?). The goal, however, is to elicit deeper analytical thinking in LLMs. Traditional prompting strategies such as Chain-of-Thought (CoT) or ReAct have improved LLM reasoning by making them explain step-by-step, but these methods rely on fixed, 
+In particular, the authors draw inspiration from the Socratic method. Which intro to philosophy fails to warn could be seen as combative by close-minded people (am I funny yet?). The goal, however, is to elicit deeper analytical thinking in LLMs. Traditional prompting strategies such as Chain-of-Thought (CoT) or ReAct have improved LLM reasoning by making them explain step-by-step, but these methods rely on fixed prompt templates and "meticulously crafted prompting".
 
 By contrast, a Socratic approach encourages free-form inquiry: multiple LLMs ask each other questions, challenge answers, and build on ideas in an open dialogue​.
 
