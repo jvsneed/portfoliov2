@@ -27,12 +27,12 @@ In human-computer interaction, perceived control refers to a user’s sense of a
 Error tolerance describes how much fault a user is willing to accept from a system before losing confidence or abandoning it. It plays a pivotal role in technology adoption. If users encounter too many errors early on, they may decide the product is unreliable, but if errors are infrequent, minor, or easily fixed, users may be more forgiving and continue using the technology. A key factor is whether the system design helps users recover from errors gracefully. Usability research shows that users (even experts) will make mistakes, so interfaces should account for that. 
 
 ### Whose error is it anyway?
-I've observed many people using systems throughout my career, and I've yet to find a distinct pattern for how and how "blame" is passed on to a system, with the exception of one scenario: the system is new. How users attribute an error can dramatically shape their experience. Anyone who's done a usability test has experienced likely seen one of two scenarios:
+I've observed many people using systems throughout my career, and I've yet to find a distinct pattern for how and how "blame" is passed on to a system, with the exception of one scenario: the system is new. How users attribute an error can dramatically shape their experience. Anyone who's ran a usability test has likely experienced one or both scenarios:
 - The user self depracates, questioning their abilities, when in reality, the issue is caused by a bad design decision (this is easy to remedy in studies, but much harder to correct in the real world, as these users are likely to abandon the system altogether)
 - The user slips or makes an error, but shifts fault on the system (this is harder to course-correct in a controlled study, but easier to fix with more advanced users by reinforcing system updates)
 
 Misattribution is harmful. Users blaming themselves may frustrated with technology in general, whereas users blaming the system may abandon it outright. As you can see by my very sophisticated graphic, you have to get past the early adopter phase of the adoption curve for a new system or product to take off.
-<img src="/images/garden/adoption-error.png" style="max-width:100%;" alt="A bell curve titled The technology adoption curve with an arrow pointing to the left of the curve stating don't screw up here">
+<img src="/images/garden/adoption-error.png" style="max-width:100%; margin:3rem 0;" alt="A bell curve titled The technology adoption curve with an arrow pointing to the left of the curve stating don't screw up here">
 
 
 I'll probably write more about error handling in another note...Now on to the study idea.
