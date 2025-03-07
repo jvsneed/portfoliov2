@@ -12,16 +12,16 @@ connections:
 featured: true
 ---
 
-In [Exploring game interaction using brain-computer interfaces](/garden/hci/bci-and-games), I noted that additional research to explore is how the perceived reliability of a system could impact the mainstream adoption of new techologies like brain-computer interfaces. I find this to be an important topic to explore because incorporating new and assistive tech into mainstream use cases, like gaming, can help make these tools more cheaper and more widely accessible.
+In [Exploring game interaction using brain-computer interfaces](/garden/hci/bci-and-games), I noted that additional research to explore is how the perceived reliability of a system could impact the mainstream adoption of new techologies like brain-computer interfaces. I find this to be an important topic to explore because incorporating new and assistive tech into mainstream use cases, like gaming, can help make these tools cheaper and more widely accessible.
 
-I update the UX Research Directory with the [Wizard of Oz testing method](https://userexperience.directory/methods/wizard-of-oz-testing/), and used BCI as an example test scenario...so I thought I'd write out a short research proposal on the topic. Maybe someday, I'll have the means to explore this topic.
+I update the UX Research Directory with the [Wizard of Oz testing method](https://userexperience.directory/methods/wizard-of-oz-testing/), and used BCI as an example test scenario...so I thought I'd write out a short research proposal on the topic. Maybe someday, I'll have the means to explore this concept.
 
 
-First, let's explore a few concepts...
+First, let me set a baseline of what I know...
 
 ## Existing research
 ### Perceived control / user agency
-In human-computer interaction, perceived control refers to a user’s sense of agency or feeling “in charge” of the technology. Users strongly want the feeling that their actions directly influence the system’s response [1]​. Interfaces should respond predictably to user input and avoid unexpected actions, so users feel they are steering the interaction rather than the system taking over​. This is a widely known interface design heuristic. If users feel in control, even within the constraints of the system, they tend to be more confident and engaged, regardless of how much control they actually hav [2]​.
+In human-computer interaction, perceived control refers to a user’s sense of agency or feeling in charge of the technology. Users strongly want the feeling that their actions directly influence the system’s response [1]​. Interfaces should respond predictably to user input and avoid unexpected actions, so users feel they are steering the interaction rather than the system taking over​. This is a widely known interface design heuristic. If users feel in control, even within the constraints of the system, they tend to be more confident and engaged, regardless of how much control they actually have [2]​.
 
 ### Error tolerance
 Error tolerance describes how much fault a user is willing to accept from a system before losing confidence or abandoning it. It plays a pivotal role in technology adoption. If users encounter too many errors early on, they may decide the product is unreliable, but if errors are infrequent, minor, or easily fixed, users may be more forgiving and continue using the technology. A key factor is whether the system design helps users recover from errors gracefully. Usability research shows that users (even experts) will make mistakes, so interfaces should account for that. 
@@ -31,8 +31,8 @@ I've observed many people using systems throughout my career, and I've yet to fi
 - The user self depracates, questioning their abilities, when in reality, the issue is caused by a bad design decision (this is easy to remedy in studies, but much harder to correct in the real world, as these users are likely to abandon the system altogether)
 - The user slips or makes an error, but shifts fault on the system (this is harder to course-correct in a controlled study, but easier to fix with more advanced users by reinforcing system updates)
 
-Misattribution is harmful. Users blaming themselves may persist with a subpar system or feel frustrated with technology in general, whereas users blaming the system may abandon it outright. 
-
+Misattribution is harmful. Users blaming themselves may frustrated with technology in general, whereas users blaming the system may abandon it outright. As you can see by my very sophisticated graphic, you have to get past the early adopter phase of the adoption curve for a new system or product to take off.
+<img src="/images/garden/adoption-error.png" style="max-width:100%;" alt="A bell curve titled The technology adoption curve with an arrow pointing to the left of the curve stating don't screw up here">
 
 
 I'll probably write more about error handling in another note...Now on to the study idea.
