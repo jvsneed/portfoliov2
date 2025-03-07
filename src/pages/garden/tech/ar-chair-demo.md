@@ -10,7 +10,7 @@ topics:
 connections:
   - title: I made my first(basic) augmented reality project, and it was fun!
     url: /garden/tech/ar-book-demo
-featured: true
+featured: false
 ---
 
 **Demo available at [obliq.johannasneed.com](https://obliq.johannasneed.com) or see video below** 
