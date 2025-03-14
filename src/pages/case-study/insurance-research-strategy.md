@@ -99,7 +99,8 @@ The transformation was guided by a structured, iterative approach, ensuring that
                 Discover
                 </h3>
                 <p style="font-weight: bold; margin-bottom: 10px;">Conducted in-depth mixed-methods research</p>
-                    Using interviews, workshops, competitive analysis, data analysis, and workflow mapping to uncover the pain points impacting agents and customers. Insights ranged from usability challenges to gaps in technical integration.
+                 <p style="color: #555;">
+                                 Using interviews, workshops, competitive analysis, data analysis, and workflow mapping to uncover the pain points impacting agents and customers. Insights ranged from usability challenges to gaps in technical integration.
                 </p>
             </div>
             <!-- Card 2 -->
