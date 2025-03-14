@@ -17,7 +17,7 @@ description: "Leading a user experience strategy to guide Pekin Insurance's digi
 <section id="overview">
 
 ## Overview
-This project evaluated the accessibility of ZocDoc.com, a healthcare information website, for users with blindness and low vision (BLV). 
+This project evaluated the accessibility of ZocDoc.com, a healthcare information website, for users with blindness and low vision (BLV). This study was conducted as part of the Masters in Human-Computer Interaction program at DePaul. We chose ZocDoc because they welcome feedback related to accessibility enhancements.
 
 **Objectives**
 - Identify accessibility barriers for BLV users when using ZocDoc to search for providers and schedule appointments.

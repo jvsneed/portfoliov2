@@ -17,7 +17,7 @@ description: "Redesigning the information architecture (IA) of the Peoria PlayHo
 <section id="overview">
 
 ## Overview
-This project focused on redesigning the information architecture (IA) of the Peoria PlayHouse Children's Museum’s mobile site to improve the overall user navigation experience. The museum’s mission is to provide children with tools and inspiration to explore and create, but its outdated website made it difficult for users to find critical information such as event details, tickets, and membership options. 
+This project focused on redesigning the information architecture (IA) of the Peoria PlayHouse Children's Museum’s mobile site to improve the overall user navigation experience. The museum’s mission is to provide children with tools and inspiration to explore and create, but its outdated website made it difficult for users to find critical information such as event details, tickets, and membership options. This study was conducted as part of the Masters in Human-Computer Interaction program at DePaul.
 
 **Objective**
 The primary goal of this redesign was to create a more intuitive structure that would serve the museum’s diverse user base, including caregivers, community supporters, and family gifters.
