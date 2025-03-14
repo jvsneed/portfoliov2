@@ -10,7 +10,7 @@ overview: "This study aimed to identify the obstacles bling and low vision (BLV)
 color: "#FF4444"
 portfolioImage: "/pekin-thumbnail.png"
 category: "UX Research Strategy ✦ Product Leadership"
-description: "Leading a user research strategy to guide Pekin Insurance's digital transformation."
+description: "Leading a user experience strategy to guide Pekin Insurance's digital transformation."
 
 ---
 

@@ -9,8 +9,8 @@ heroImage: "/silverdesign-hero.png"
 overview: "With the lack of a design framework specifically tailored for senior users, UX designers and engineers often lack the tools needed to create accessible designs for this age group. Our team aimed to develop a comprehensive framework that includes design guidelines, an evaluation checklist, and UI components to enhance accessibility and inclusivity for senior users. The project is live at www.silverux.design."
 color: "#FF4444"
 portfolioImage: "/pekin-thumbnail.png"
-category: "UX Research Strategy ✦ Product Leadership"
-description: "Leading a user research strategy to guide Pekin Insurance's digital transformation."
+category: "UX Strategy ✦ Product Leadership"
+description: "Leading a user experience strategy to guide Pekin Insurance's digital transformation."
 
 ---
 

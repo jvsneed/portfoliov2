@@ -6,11 +6,11 @@ timeline: "2023 & 2024 - 6 months initial with 2 years of ongoing research"
 team: "I managed the team comprised of UX and engineering"
 tools: ["Visio", "PowerPoint", "Figjam", "Figma"]
 heroImage: "/pekin-hero.png"
-overview: "My role as Digital Experience Manager involved establishing a user research strategy to inform decisions, enhance products, and ensure alignment with user needs."
+overview: "My role as Digital Experience Manager involved establishing a user experience strategy to inform decisions, enhance products, and ensure alignment with user needs."
 color: "#FF4444"
 portfolioImage: "/pekin-thumbnail.png"
-category: "UX Research Strategy ✦ Product Leadership"
-description: "Leading a user research strategy to guide Pekin Insurance's digital transformation."
+category: "UX Strategy ✦ Product Leadership"
+description: "Leading a user experience strategy to guide Pekin Insurance's digital transformation."
 
 ---
 
