@@ -8,6 +8,7 @@ connections:
   - { title: "All of my bookmarks", url: "/garden/miscellaneous/bookmarks" }
   - { title: "How to incorporate accessibility into every step of the software development lifecycle", url: "/garden/tech/accessibility-in-sdlc" }
 image: "/images/gardem/meets-accessibility-resources.png"
+featured: true
 ---
 
 I attended the Smashing Meets Accessibility conference online last week. Between the speakers and the chat, a ton of great links were shared. I collected them in my [bookmarks](/garden/miscellaneous/bookmarks):

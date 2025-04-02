@@ -4,7 +4,7 @@ date: "November 21, 2024"
 excerpt: "By embedding accessibility into every phase of the software development lifecycle, we create products that work for everyone."
 tags: ["Accessibility", "Web Development"]
 layout: "../../layouts/BlogPost.astro"
-featured: false
+featured: true
 image: "/images/articles/accessibility-in-sdlc.png"
 ---
 

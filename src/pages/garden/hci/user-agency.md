@@ -9,7 +9,7 @@ connections:
   - { title: "Exploring game interaction using brain-computer interfaces", url: "/garden/hci/bci-and-games" }
   - { title: "Themes on bias in brain-computer interface algorithms", url: "/garden/hci/bci-bias" }
 
-featured: true
+featured: false
 ---
 
 In [Exploring game interaction using brain-computer interfaces](/garden/hci/bci-and-games), I noted that additional research to explore is how the perceived reliability of a system could impact the mainstream adoption of new techologies like brain-computer interfaces. I find this to be an important topic to explore because incorporating new and assistive tech into mainstream use cases, like gaming, can help make these tools cheaper and more widely accessible.

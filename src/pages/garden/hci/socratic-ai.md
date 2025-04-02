@@ -9,7 +9,7 @@ connections:
   # - { title: "Design System Components", url: "/garden/ux/design-system-components" }
   # - { title: "Color Contrast Guide", url: "/garden/design/color-contrast" }
   # - { title: "Inclusive Design Principles", url: "/garden/design/inclusive-design-principles" }
-featured: true
+featured: false
 
 
 ---
