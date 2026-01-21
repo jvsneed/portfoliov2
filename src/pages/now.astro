@@ -1,0 +1,144 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+    title="Now - Johanna Sneed"
+    description="What I'm currently working on, learning, and thinking about"
+    type="website">
+    <div class="page-container">
+        <header class="now-header">
+            <h1 class="section-title">What I'm doing now</h1>
+            <p class="header-subtitle">Last updated: January 2026</p>
+        </header>
+
+        <main class="now-content">
+            <section>
+                <h2>Working on</h2>
+                <p>I started a new job as a Digital Accessibility Delivery Lead in mid-2025, and I've been enjoying learning from experts in the field and learning more about how large scale organizations manage accessibility. I've also enjoyed stepping back into an individual contributor role. I loved formally leading others, but this works well for the current phase of my life.</p>
+                <br>
+                <p>I'm maintaining the <a href="https://userexperience.directory/" target="_blank" rel="noopener noreferrer" class="intro-link">UX Research Directory</a> and <a href="https://www.figma.com/community/plugin/1479149610770303057/design-review-notes" target="_blank" rel="noopener noreferrer" class="intro-link">Design Review Notes plugin (which recently surpassed 100 users!)</a> </p>
+
+                <br>
+                <p>I am currently writing a book on incorporating resiliency into UX design practices. The process has been challenging but rewarding.</p>
+            
+              
+            </section>
+
+            <section>
+                <h2>Hobbies</h2>
+                <p>I'm currently studying for my amateur radio license. I'm only a couple of weeks in, but feeling good about the progress so far.</p>
+                <br>
+                <p>I've been diving into crafts, like beadwork to help with mindfulness and creativity.</p>
+            
+            </section>
+
+            <section>
+                <h2>Media</h2>
+                <ul>
+                <li>Reading: I've been reading a lot of technical books during the book writing process, so the list is long. Otherwise, trying to get through <i>Listen for the Lie</i></li>
+                <li>Watching: Traitors!!</li>
+                <li>Playing: Just starting Hades II, and my husband recently got me into WoW</li>
+
+                </ul>
+   
+            </section>
+
+            <section class="inspiration-section">
+                <h2>About this page</h2>
+                <p>
+                    This page is inspired by <a href="https://nownownow.com/">nownownow.com</a>, a directory of people's "now" pages. 
+                    It's a way to share what I'm currently focused on without maintaining a personal blog.
+                </p>
+            </section>
+        </main>
+    </div>
+</Layout>
+
+<style>
+    .page-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: var(--space-xl) var(--space-lg);
+    }
+
+    .now-header {
+        margin-bottom: var(--space-xl);
+        padding-top: var(--space-xl);
+    }
+
+    .now-header h1 {
+        margin: 0 0 var(--space-xs) 0;
+    }
+
+    .header-subtitle {
+        font-family: var(--font-mono);
+        font-size: 0.875rem;
+        color: var(--color-muted);
+        margin: 0;
+    }
+
+    .now-content {
+        display: grid;
+        gap: var(--space-md);
+        max-width: 65ch;
+    }
+
+    section h2 {
+        font-family: var(--font-special);
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 0 var(--space-sm) 0;
+    }
+
+    section ul {
+        list-style: disc;
+        margin: 0;
+        padding-left: var(--space-lg);
+    }
+
+    section li {
+        margin-bottom: var(--space-sm);
+        line-height: 1.6;
+        color: var(--color-fg);
+    }
+
+    section p {
+        margin: 0;
+        line-height: 1.6;
+        color: var(--color-fg);
+    }
+
+    .inspiration-section {
+        padding: var(--space-lg);
+        border: 1px dashed var(--color-border);
+        border-radius: var(--curve-sm);
+        background-color: rgba(212, 57, 0, 0.03);
+    }
+
+    .inspiration-section a {
+        color: var(--color-accent);
+        text-decoration: underline;
+        transition: color 0.2s ease;
+    }
+
+    .inspiration-section a:hover,
+    .inspiration-section a:focus-visible {
+        color: var(--color-fg);
+    }
+
+    .inspiration-section a:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 2px;
+    }
+
+    @media (max-width: 768px) {
+        .page-container {
+            padding: var(--space-lg) var(--space-sm);
+        }
+
+        section h2 {
+            font-size: 1.25rem;
+        }
+    }
+</style>

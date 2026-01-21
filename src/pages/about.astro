@@ -1,10 +1,10 @@
----
+<!-- ---
 import Layout from '../layouts/Layout.astro';
 
 const currentBook = {
-    title: "Against Reduction: Designing a Human Future with Machines",
-    image: "/images/current-book.png",
-    link: "https://literal.club/book/noelani-arista-sasha-costanza-chock-vafa-ghazavi-suzanne-kite-against-reduction-yne8c"
+    title: "The Design Conductors: Your Essential Guide to Design Operations",
+    image: "/images/current-book.jpg",
+    link: "https://rosenfeldmedia.com/books/design-operations/"
 };
 ---
 
@@ -20,11 +20,9 @@ const currentBook = {
             <section class="intro-section">
                 <div class="bio-content">
                     <p>
-                        I've been working professionally building sites and products since 2012, but I have been designing and developing things for as long as I can remember. I love the process of creating, whether it's a website, a product, or a piece of art. My goal is to make the world a more beautiful and functional place.
+                        I've been working professionally building sites and products since 2012, but I have been designing and developing things for as long as I can remember. I love the process of creating, whether it's a website, a product, or a piece of art. My goal is to make the world a more functional place.
                     </p>
-                    <p>
-                        I research and design with inclusivity at the core, drawing on years of experience leading teams and managing large-scale implementations. I've worked across research, design, and technology strategy to deliver solutions that work for everyone.
-                    </p>
+
 
                     
                     <div class="philosophy-section">
@@ -77,13 +75,13 @@ const currentBook = {
 
                     </div>
                     <div class="media">
-                        <h3>Media</h3>
                         <div class="current-read">
                             {currentBook.link ? (
                                 <a href={currentBook.link} 
                                    class="book"
                                    target="_blank"
-                                   rel="noopener noreferrer">
+                                   rel="noopener noreferrer"
+                                   aria-label={`${currentBook.title} - opens in new window`}>
                                     <div class="book-spine"></div>
                                     <div class="book-cover">
                                         <img 
@@ -114,12 +112,12 @@ const currentBook = {
 
 
 
-                        <div class="vinyl-player">
+                        <div class="vinyl-player" role="region" aria-label="Now playing from Last.fm">
 
                             <div class="vinyl-disc">
                                 <div class="vinyl-grooves"></div>
                                 <div class="vinyl-label">
-                                    <h4>Listening To</h4>
+                                    <h3>Listening To</h3>
                                     <div class="song-info">
                                         <span id="song">Loading song...</span>
                                     </div>
@@ -220,8 +218,14 @@ const currentBook = {
         transition: color 0.3s var(--ease-out-spring);
     }
 
-    .contact-link:hover .link-text {
+    .contact-link:hover .link-text,
+    .contact-link:focus-visible .link-text {
         color: var(--color-accent);
+    }
+
+    .contact-link:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 2px;
     }
 
     .music-section {
@@ -440,14 +444,15 @@ const currentBook = {
         animation: counter-rotate 20s linear infinite;
     }
 
-    .vinyl-label h4 {
-        font-size: 0.9rem;  // Slightly larger
+    .vinyl-label h3 {
+        font-size: 0.9rem;  
         margin: 0;
         font-family: var(--font-mono);
         opacity: 0.9;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         line-height: .5;
+        font-weight: 600;
     }
 
     .song-info {
@@ -487,8 +492,8 @@ const currentBook = {
     }
 
     .powered-by {
-        font-size: 0.6rem;
-        opacity: 0.7;
+        font-size: 0.75rem;
+        opacity: 0.8;
         margin-top: 0.25rem;
     }
 
@@ -517,17 +522,20 @@ const currentBook = {
         .vinyl-disc, .vinyl-label {
             animation: none;
         }
+        .song-info span {
+            animation: none;
+        }
     }
 
     .current-read {
         padding: var(--space-md) 0;
     }
 
-    .current-read h4 {
+    .book-section-title {
         font-family: var(--font-mono);
         font-size: 0.9rem;
         color: var(--color-accent);
-        margin-bottom: var(--space-lg);
+        margin: 0 0 var(--space-lg) 0;
     }
 
     .book {
@@ -553,8 +561,15 @@ const currentBook = {
         transition: opacity 0.3s ease;
     }
 
-    a.book:hover::after {
+    a.book:hover::after,
+    a.book:focus-visible::after {
         opacity: 1;
+    }
+
+    a.book:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 4px;
+        border-radius: 4px;
     }
 
     .book-cover {
@@ -590,4 +605,4 @@ const currentBook = {
 
         card.addEventListener('mousemove', handleMouseMove);
     });
-</script>
+</script> -->

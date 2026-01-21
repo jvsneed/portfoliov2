@@ -1,77 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import type { MarkdownInstance } from 'astro';
-// Add Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
-import PersonalProjects from '../components/PersonalProjects.astro';
 
-interface Frontmatter {
-    title: string;
-    date?: string;
-    excerpt?: string;
-    description?: string;
-    tags?: string[];
-    featured?: boolean;
-    lastModified?: string;
-}
-
-interface BlogPost {
-    frontmatter: Frontmatter;
+interface WritingItem extends MarkdownInstance<{ title: string; date?: string; featured?: boolean }> {
     url: string;
 }
 
-interface WritingItem extends MarkdownInstance<Frontmatter> {
-    url: string;
+function getItemDate(item: WritingItem): number {
+    const dateStr = item.frontmatter.date;
+    return dateStr ? new Date(dateStr).getTime() : 0;
 }
 
-// Add formatDate function
-function formatDate(dateStr: string) {
-    return new Date(dateStr).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
-}
-
-// Fetch both blog posts and garden notes
 const postsGlob = import.meta.glob<WritingItem>('./articles/*.md', { eager: true });
 const gardenNotesGlob = import.meta.glob<WritingItem>('./garden/**/*.md', { eager: true });
 
-// Convert glob results to arrays
-const posts = Object.values(postsGlob);
-const gardenNotes = Object.values(gardenNotesGlob);
+const allWriting = [...Object.values(postsGlob), ...Object.values(gardenNotesGlob)];
 
-// Combine and filter for featured items
-const featuredItems = ([...posts, ...gardenNotes] as WritingItem[])
-    .filter((post: WritingItem) => post.frontmatter.featured)
-    .sort((a: WritingItem, b: WritingItem) => {
-        // Safely get dates with fallbacks
-        const getDateValue = (item: WritingItem): number => {
-            const dateStr = item.frontmatter.lastModified || item.frontmatter.date;
-            if (!dateStr) return 0;
-            return new Date(dateStr).getTime();
-        };
-        
-        return getDateValue(b) - getDateValue(a);
-    })
-    .slice(0, 3); // Limit to 3 featured items
+const featuredItems = allWriting
+    .filter((item: WritingItem) => item.frontmatter.featured)
+    .sort((a, b) => getItemDate(b) - getItemDate(a))
+    .slice(0, 3);
 
-const postsArray = Object.values(postsGlob);
-
-// Now TypeScript knows the types
-const latestPosts = postsArray
-    .sort((a: WritingItem, b: WritingItem) => {
-        // Safely get dates with fallbacks
-        const getDateValue = (item: WritingItem): number => {
-            const dateStr = item.frontmatter.date;
-            if (!dateStr) return 0;
-            return new Date(dateStr).getTime();
-        };
-        
-        return getDateValue(b) - getDateValue(a);
-    })
-    .slice(0, 2);
 
 const projects = [
 {
@@ -119,48 +70,45 @@ const projects = [
 ---
 
 <Layout
-    title="Johanna Sneed | Senior Researcher"
-    description="UX researcher, strategist, and inclusive design advocate focusing on accessible digital experiences."
+    title="Johanna's Personal Website"
+    description="UX researcher and inclusive digital design advocate."
     image="/site-preview.png"
     type="website">
     <div class="editorial-container">
         <main class="content-area" data-section="intro">
-            <div class="hero-sequence">
-                <div class="name-block">
-                    <h1 class="hero-title">
-                            <span class="text" style="transform: none; opacity: 1;">johanna sneed</span>
-                    </h1>
-                    <div class="role-tags" style="opacity: 1;">
-                        <span class="role-tag">UX Researcher</span>
-                        <span class="divider"></span>
-                        <span class="role-tag">Inclusive Design Advocate</span>
+            <div class="hero-wrapper">
+                <div class="hero-left">
+                    <h1 class="hero-title">Johanna Sneed</h1>
+                    <div class="now-playing-inline" id="now-playing-inline">
+                        <span class="track-icon">♫</span>
+                        <span class="track-loading">Loading...</span>
                     </div>
+                </div>
+                <div class="hero-right">
+                    <p class="hero-intro">
+                        Thanks for stopping by! This is my personal website, where I share thoughts and projects about whatever I want =]. You can see what I'm working on <a href="/now">now</a> or if you are interested in reviewing my work/UX case studies but do not have a password, please contact me.
+                    </p>
                 </div>
             </div>
         </main>
 
-        <!-- <div class="launch-announcement-container">
-            <div class="launch-announcement">
-                <div class="announcement-content">
-                    <span class="pulse-dot"></span>
-                    <span class="announcement-text">Currently working on:</span>
-                        <a href="https://userexperience.directory/" target="_blank" rel="noopener noreferrer" class="announcement-link">
-                            UX Research Directory
-                            <span class="arrow-icon" aria-hidden="true">→</span>
-                        </a>
-    
-                </div>
-                </div>
-        </div> -->
-
-        <div class="interaction-layer">
-            <div class="magnetic-area" data-strength="0.2"></div>
-            <div class="cursor-follower"></div>
-        </div>
+ <section class="writing-section">
+            <h2 class="section-title">Garden Notes</h2>
+            <div class="writing-grid">
+                {featuredItems.map((item) => (
+                    <a href={item?.url} class="writing-card">
+                        <span class="content-type">
+                            {item?.url?.includes("/garden/") ? "Digital garden note" : "Blog post"}
+                        </span>
+                        <h3 class="project-title">{item.frontmatter.title}</h3>
+                    </a>
+                ))}
+            </div>
+        </section>
 
         <section class="portfolio-preview" data-section="work">
             <div class="preview-header">
-                <h2 class="section-title" id="portfolio">User experience case studies</h2>
+                <h2 class="section-title" id="portfolio">Case studies</h2>
                 <div class="nav-controls">
                     <button class="nav-arrow prev custom-prev" aria-label="Previous projects">←</button>
                     <button class="nav-arrow next custom-next" aria-label="Next projects">→</button>
@@ -188,72 +136,81 @@ const projects = [
                 </div>
             </div>
         </section>
-
-        <section class="writing-section">
-            <h2 class="section-title">Featured writing</h2>
-            <p>A mix of featured blog posts and digital garden notes.</p>
-            <div class="writing-grid">
-                {featuredItems.map((item) => (
-                    <a href={item?.url} class="writing-card">
-                        <span class="content-type">
-                            {item?.url?.includes("/garden/") ? "Digital garden note" : "Blog post"}
-                        </span>
-                        <h3 class="project-title">{item.frontmatter.title}</h3>
-                    </a>
-                ))}
-            </div>
-        </section>
-        <PersonalProjects />
-
-
-
-        <!-- <section class="blog-preview" data-section="blog">
-            <div class="preview-header writing">
-                <h2 class="section-title">Latest writing</h2>
-                <div class="preview-nav">
-                    <a href="/writing" class="view-all">All writing →</a>
-                </div>
-            </div>
-            
-            <div class="blog-posts">
-                {latestPosts.map((post) => (
-                    <a href={post.url} class="blog-card">
-                        <time class="post-date">{formatDate(post.frontmatter.date)}</time>
-                        {/* <div class="post-meta">
-                            {post.frontmatter.tags.map((tag: string) => (
-                                <span class="post-category">{tag}</span>
-                            ))}
-                        </div> */}
-                        <h3 class="post-title">{post.frontmatter.title}</h3>
-                        <p class="post-excerpt">{post.frontmatter.excerpt}</p>
-                        <span class="read-more">
-                            Read article <span class="arrow">→</span>
-                        </span>
-                    </a>
-                ))}
-            </div>
-        </section> -->
     </div>
 </Layout>
 
 <style>
+    /* Hero Section - Simplified */
+    .hero-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: var(--space-xl);
+        padding: 0 var(--space-xl);
+        max-width: var(--max-width);
+        margin: 0 auto;
+    }
+
+    .content-area {
+        padding: 10vh 0;
+    }
+
+    .hero-title {
+        font-family: var(--font-special);
+        font-weight: 800;
+        font-size: clamp(2rem, 6vw, 4rem);
+        line-height: 1;
+        margin: 0 0 var(--space-xs) 0;
+        letter-spacing: -0.04em;
+    }
+
+    .hero-subtitle {
+        font-family: var(--font-mono);
+        font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+        color: var(--color-muted);
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    .hero-intro {
+        font-size: clamp(1rem, 1.2vw, 1.2rem);
+        line-height: 1.6;
+        color: var(--color-fg);
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .hero-wrapper {
+            display: block;
+            gap: 0;
+            padding: 0 var(--space-sm);
+        }
+
+        .hero-left {
+            margin-bottom: var(--space-lg);
+        }
+
+        .hero-title {
+            font-size: clamp(1.5rem, 10vw, 3rem);
+        }
+
+        .hero-intro {
+            font-size: 1rem;
+        }
+    }
+
+    /* OLD HERO STYLES - Keeping for reference but not used */
     main {
         background-color: white;
         max-width: 100%;
         min-width: 100%;
     }
 
-    .content-area {
-        padding: 30vh 0rem;
-        max-width: var(--max-width);
-        margin: 0 auto;
-    }
-
     .hero-sequence {
         position: relative;
         padding: 0 var(--space-xl);
         max-width: 100%;
-        display: flex;
+        display: none;
     }
 
     .name-block {
@@ -276,10 +233,47 @@ const projects = [
         width: 100%;
         font-size: clamp(2rem, 15vw, 15rem);
         letter-spacing: -0.06em;
-        color: var (--color-fg);
+        color: var(--color-fg);
         white-space: nowrap;
         text-align:right;
     }
+    /* Optional split layout for hero */
+    .hero--split {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        align-items: end;
+        gap: var(--space-lg);
+    }
+
+    .hero-subtitle {
+        margin: var(--space-xs) 0 0 0;
+        font-family: var(--font-mono);
+        font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+        color: var(--color-muted);
+        text-align: right;
+    }
+
+    /* Centered layout */
+    .hero--centered {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        text-align: center;
+    }
+    .hero--centered .name-block { margin: 0 auto; }
+    .hero--centered .hero-title span { text-align: center; }
+    .hero--centered .hero-subtitle { text-align: center; }
+
+    /* Left-aligned layout */
+    .hero--left {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+        text-align: left;
+    }
+    .hero--left .name-block { margin: 0; }
+    .hero--left .hero-title span { text-align: left; }
+    .hero--left .hero-subtitle { text-align: left; }
 
     .hero-title .char {
         display: inline-block;
@@ -816,6 +810,59 @@ const projects = [
         }
     }
 
+    .intro-section {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 var(--space-lg);
+        margin-bottom: var(--space-xl);
+    }
+
+    .intro-content {
+        max-width: 65ch;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .intro-text {
+        font-size: clamp(1.25rem, 2vw, 1.5rem);
+        line-height: 1.5;
+        color: var(--color-muted);
+    }
+
+    .highlight {
+        color: var(--color-accent);
+        font-family: var(--font-special);
+    }
+
+    @media (max-width: 768px) {
+        .intro-section {
+            padding: 0 var(--space-sm);
+            margin-bottom: var(--space-lg);
+        }
+
+        .intro-text {
+            font-size: 1.125rem;
+            text-align: left;
+        }
+
+        .hero--split {
+            display: block;
+        }
+
+        .hero-subtitle {
+            text-align: left;
+        }
+
+        .hero--centered {
+            text-align: center;
+            justify-content: center;
+        }
+        .hero--left {
+            justify-content: flex-start;
+            text-align: left;
+        }
+    }
+
 /* Unified media queries */
 @media (max-width: 1024px) {
         .featured-projects {
@@ -1165,65 +1212,44 @@ const projects = [
             transform: none;
         }
     }
+
+    /* Now Playing Inline */
+    .now-playing-inline {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: var(--space-sm);
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        color: var(--color-fg);
+    }
+
+    .track-icon {
+        font-size: 1rem;
+        animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-4px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .track-icon {
+            animation: none;
+        }
+    }
 </style>
 
 <script>
-    import gsap from 'gsap';
-    import { ScrollTrigger } from 'gsap/ScrollTrigger';
-    import SplitType from 'split-type';
     import Swiper from 'swiper';
     import { Navigation } from 'swiper/modules';
-    
-    gsap.registerPlugin(ScrollTrigger);
 
     // Scroll progress indicator
     window.addEventListener('scroll', () => {
         const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
         const progressBar = document.querySelector('.scroll-progress') as HTMLElement;
         progressBar?.style.setProperty('--scroll', `${scrollPercent}%`);
-    });
-
-    // Initialize title animation after DOM content is loaded
-    document.addEventListener('DOMContentLoaded', () => {
-        const titleText = new SplitType('.hero-title .text', {
-            types: 'chars',
-            tagName: 'span'
-        });
-
-        const heroTitle = document.querySelector('.hero-sequence') as HTMLElement;
-        const chars = document.querySelectorAll('.hero-title .char');
-
-        if (heroTitle && chars.length > 0) {
-            // Mouse move handler for title animation
-            heroTitle.addEventListener('mousemove', (e: MouseEvent) => {
-                const rect = heroTitle.getBoundingClientRect();
-                const mouseX = e.clientX - rect.left;
-                const mouseY = e.clientY - rect.top;
-                
-                chars.forEach((char) => {
-                    const charRect = char.getBoundingClientRect();
-                    const charX = charRect.left - rect.left + charRect.width / 2;
-                    const charY = charRect.top - rect.top + charRect.height / 2;
-                    
-                    const distance = Math.hypot(mouseX - charX, mouseY - charY);
-                    const maxDistance = 300;
-                    const influence = Math.max(0, 1 - distance / maxDistance);
-                    
-                    const scale = 1 + influence * 0.3;
-                    const weight = 400 + influence * 400;
-                    
-                    (char as HTMLElement).style.transform = `scale(${scale})`;
-                    (char as HTMLElement).style.fontWeight = weight.toString();
-                });
-            });
-
-            heroTitle.addEventListener('mouseleave', () => {
-                chars.forEach((char) => {
-                    (char as HTMLElement).style.transform = 'scale(1)';
-                    (char as HTMLElement).style.fontWeight = '400';
-                });
-            });
-        }
     });
 
     function initProjectNavigation() {
@@ -1286,4 +1312,40 @@ const projects = [
     document.addEventListener('astro:before-swap', () => {
         if (cleanup) cleanup();
     });
+
+    // Spotify Now Playing
+    function fetchSpotifyTrack() {
+        const user = 'sjalssokande';
+        const url = `https://lastfm-last-played.biancarosa.com.br/${user}/latest-song`;
+        
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const trackElement = document.getElementById('now-playing-inline');
+                if (trackElement && data.track) {
+                    const artist = data.track.artist['#text'] || 'Unknown Artist';
+                    const song = data.track.name || 'Unknown Track';
+                    
+                    trackElement.innerHTML = `
+                        <span class="track-icon">♫</span>
+                        <span class="track-artist">${artist}</span>
+                        <span> — </span>
+                        <span class="track-name">${song}</span>
+                    `;
+                }
+            })
+            .catch(err => {
+                console.log('Spotify track fetch error:', err);
+                const trackElement = document.getElementById('now-playing-inline');
+                if (trackElement) {
+                    trackElement.innerHTML = '<span class="track-loading">Not playing</span>';
+                }
+            });
+    }
+
+    // Fetch on page load
+    fetchSpotifyTrack();
+
+    // Refresh every 30 seconds
+    setInterval(fetchSpotifyTrack, 30000);
 </script>

@@ -10,10 +10,10 @@
     "build:css": "postcss src/styles/global.css -o public/styles/global.css"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^12.2.1",
+    "@astrojs/cloudflare": "^12.6.12",
     "@motionone/dom": "^10.18.0",
     "@types/d3": "^7.4.3",
-    "astro": "^5.2.5",
+    "astro": "^5.16.12",
     "d3": "^7.9.0",
     "gsap": "^3.12.7",
     "lottie-web": "^5.12.2",

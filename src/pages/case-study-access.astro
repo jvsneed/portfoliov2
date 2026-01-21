@@ -1,0 +1,225 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+interface Props {
+  redirect?: string;
+}
+
+const redirect = new URL(Astro.request.url).searchParams.get('redirect') || '/portfolio';
+const errorMessage = new URL(Astro.request.url).searchParams.get('error');
+---
+
+<Layout
+  title="Case Study Access"
+  description="Enter password to access case studies"
+  type="website">
+  <div class="access-container">
+    <button class="back-button" onclick="window.history.back()" aria-label="Go back">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+    </button>
+    <div class="access-card">
+      <h1>Case Study Access</h1>
+      <p class="description">This case study is password protected. Please enter the password to continue.</p>
+      
+      <form id="passwordForm" method="POST">
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter password"
+            required
+            autofocus
+          />
+        </div>
+        {errorMessage && (
+          <div class="error-message">
+            Incorrect password. Please try again.
+          </div>
+        )}
+        <button type="submit" class="submit-button">Access</button>
+      </form>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .access-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: var(--space-lg);
+    background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-bg) 100%);
+    position: relative;
+  }
+
+  .back-button {
+    position: absolute;
+    top: var(--space-lg);
+    left: var(--space-lg);
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--color-border);
+    background: white;
+    border-radius: var(--curve-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    color: var(--color-fg);
+  }
+
+  .back-button:hover {
+    background-color: var(--color-surface);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .back-button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .access-card {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--curve-md);
+    padding: var(--space-xl);
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    margin: 0 0 var(--space-sm) 0;
+    font-family: var(--font-special);
+    font-weight: 800;
+  }
+
+  .description {
+    color: var(--color-muted);
+    margin: 0 0 var(--space-lg) 0;
+    line-height: 1.6;
+  }
+
+  .form-group {
+    margin-bottom: var(--space-md);
+  }
+
+  label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: var(--space-xs);
+    color: var(--color-fg);
+  }
+
+  input[type="password"] {
+    width: 100%;
+    padding: 0.75rem var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--curve-sm);
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+  }
+
+  input[type="password"]:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(212, 57, 0, 0.1);
+  }
+
+  .error-message {
+    background-color: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    border-radius: var(--curve-sm);
+    padding: var(--space-sm);
+    color: #dc3545;
+    margin-bottom: var(--space-md);
+    font-size: 0.875rem;
+  }
+
+  .submit-button {
+    width: 100%;
+    padding: 0.75rem var(--space-md);
+    background-color: var(--color-accent);
+    color: white;
+    border: none;
+    border-radius: var(--curve-sm);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+  }
+
+  .submit-button:hover {
+    background-color: #b8361e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 57, 0, 0.3);
+  }
+
+  .submit-button:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .access-container {
+      padding: var(--space-md);
+    }
+
+    .back-button {
+      top: var(--space-md);
+      left: var(--space-md);
+    }
+
+    .access-card {
+      padding: var(--space-lg);
+    }
+
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+<script define:vars={{ redirect }}>
+  document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const password = document.getElementById('password').value;
+    
+    try {
+      const response = await fetch('/api/authenticate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password }),
+      });
+
+      if (response.ok) {
+        // Redirect to the original case study or portfolio
+        window.location.href = redirect;
+      } else {
+        // Show error and add error parameter to URL
+        const currentUrl = new URL(window.location);
+        currentUrl.searchParams.set('error', 'true');
+        window.location.href = currentUrl.toString();
+      }
+    } catch (error) {
+      console.error('Authentication error:', error);
+      alert('An error occurred. Please try again.');
+    }
+  });
+</script>
