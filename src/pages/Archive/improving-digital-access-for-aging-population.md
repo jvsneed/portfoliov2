@@ -1,4 +1,4 @@
----
+<!-- ---
 layout: ../../../layouts/GardenNote.astro
 title: "Research backed approaches to design user interfaces for the aging population"
 description: "Modern web design moves fast, and as interfaces become more minimal, one group is often left out: older adults. Here's how you can fix that."
@@ -135,4 +135,4 @@ Yang, M., & Huang, H. (2015). Research on Interaction Design of Intelligent Mobi
 
 
 
-
+ -->

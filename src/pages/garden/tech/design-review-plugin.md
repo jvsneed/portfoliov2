@@ -27,11 +27,11 @@ I wanted a way to improve async design reviews and capture design decisions with
 
 ## **Basic plugin architecture**
 ### **Figma plugin API basics**
-- `figma.showUI(__html__);` → Displays the custom UI for review input.
-- `figma.ui.onmessage` → Listens for user input from the UI.
-- `figma.createFrame();` → Creates a review frame on the canvas.
-- `figma.currentPage.selection` → Gets the currently selected element.
-- `figma.notify()` → Provides in-app notifications to guide users.
+- `figma.showUI(__html__);`  Displays the custom UI for review input.
+- `figma.ui.onmessage` Listens for user input from the UI.
+- `figma.createFrame();` Creates a review frame on the canvas.
+- `figma.currentPage.selection` Gets the currently selected element.
+- `figma.notify()` Provides in-app notifications to guide users.
 
 ### **Handling user input & review metadata**
 When the user submits the form, the plugin extracts comments, status, and reviewer name. The review data is stored using pluginData (local storage) on the added review frame.
