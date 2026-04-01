@@ -1,6 +1,6 @@
 ---
 import Layout from './Layout.astro';
-import GardenBadge from '../components/GardenBadge.astro';
+
 const { frontmatter } = Astro.props;
 const { title, role, timeline, team, tools, heroImage, overview, color = 'var(--color-accent)' } = frontmatter;
 
@@ -49,7 +49,6 @@ const socialImage = heroImage || '/site-preview.png';
          <slot />
         </div>
     </article>
-    <!-- <GardenBadge /> -->
 
 </Layout>
 

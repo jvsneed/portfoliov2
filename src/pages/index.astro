@@ -14,9 +14,8 @@ function getItemDate(item: WritingItem): number {
 }
 
 const postsGlob = import.meta.glob<WritingItem>('./articles/*.md', { eager: true });
-const gardenNotesGlob = import.meta.glob<WritingItem>('./garden/**/*.md', { eager: true });
 
-const allWriting = [...Object.values(postsGlob), ...Object.values(gardenNotesGlob)];
+const allWriting = [...Object.values(postsGlob)];
 
 const featuredItems = allWriting
     .filter((item: WritingItem) => item.frontmatter.featured)
@@ -86,25 +85,11 @@ const projects = [
                 </div>
                 <div class="hero-right">
                     <p class="hero-intro">
-                        Thanks for stopping by! This is my personal website, where I share thoughts and projects about whatever I want =]. You can see what I'm working on <a href="/now">now</a> or if you are interested in reviewing my work/UX case studies but do not have a password, please contact me.
+                        Thanks for stopping by! If you are interested in reviewing my work/UX case studies but do not have a password, please contact me.
                     </p>
                 </div>
             </div>
         </main>
-
- <!-- <section class="writing-section">
-            <h2 class="section-title">Garden Notes</h2>
-            <div class="writing-grid">
-                {featuredItems.map((item) => (
-                    <a href={item?.url} class="writing-card">
-                        <span class="content-type">
-                            {item?.url?.includes("/garden/") ? "Digital garden note" : "Blog post"}
-                        </span>
-                        <h3 class="project-title">{item.frontmatter.title}</h3>
-                    </a>
-                ))}
-            </div>
-        </section> -->
 
         <section class="portfolio-preview" data-section="work">
             <div class="preview-header">

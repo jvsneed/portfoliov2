@@ -9,11 +9,10 @@ export function getTranslationUrl(currentUrl: string): string | null {
     
     // Check if we're on a French page
     if (normalizedUrl.startsWith("/fr/")) {
-        // Convert /fr/garden/... to /garden/...
         return normalizedUrl.replace(/^\/fr/, "");
     }
     
-    // Convert /garden/... to /fr/garden/...
+    // Convert to French equivalent
     return `/fr${normalizedUrl}`;
 }
 
